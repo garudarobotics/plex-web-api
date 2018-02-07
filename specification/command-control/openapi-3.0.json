@@ -1,0 +1,891 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Garuda Plex Command and Control API",
+    "description": "Command and Control API to control drone remotely and access drone telemetry data",
+    "version": "0.0.1-DRAFT"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000/api/v1",
+      "description": "Development Server"
+    }
+  ],
+  "paths": {
+    "/telemetry/{droneId}": {
+      "post": {
+        "tags": [
+          "drone"
+        ],
+        "summary": "Get latest telemetry data",
+        "description": "Get latest telemetry data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Telemetry Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Telemetry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drones": {
+      "get": {
+        "tags": [
+          "drone"
+        ],
+        "summary": "Get all drones in system",
+        "description": "Return drones in system.",
+        "responses": {
+          "200": {
+            "description": "Drones available in system",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Drones"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drone/{droneId}": {
+      "get": {
+        "tags": [
+          "drone"
+        ],
+        "summary": "Get information for a specific drone",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drone information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Drone"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/droneCommandLog/{commandLogId}": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get status of a command log, for troubleshooting purpose",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "commandLogId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Command Log ID of command"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Command Log Information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandLog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/takeOff": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to take-off",
+        "description": "Command drone to take-off. Drone will arm and take off.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Take off properties.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TakeOffProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/move": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to move",
+        "description": "Manually command drone to move based on relative location",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Move Properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/yaw": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to yaw",
+        "description": "Command drone to yaw based on given properties.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Yaw Properties",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/YawProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/navigate": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to navigate to a target GPS coordinate",
+        "description": "Command drone to navigate to a target GPS coordinate. Drone will travel to target coordinate autonomously in straight line.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Navigate Properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NavigateProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/follow": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to follow target",
+        "description": "Command drone to follow target. Drone will identify subject specified in target point and autonomously follow target.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Target Properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/hold": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to hold",
+        "description": "Command drone to hold at current position",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/returnToHome": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to return to home",
+        "description": "Command drone to return to home position. Drone will navigate to home position and land.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/setReturnHomeAltitude": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Set return to home altitude",
+        "description": "Set altitude that drone will ascend or descend to when performing return to home command.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Set return to home altitude properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnHomeAltitudeProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/setHomePosition": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Set Home Position for Drone",
+        "description": "Set Home Position for Drone, this will affect return to home command. If drone is returning to home, this action will change the destination for drone to return to.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Return to location command properties",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnLocationProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/land": {
+      "post": {
+        "tags": [
+          "droneCommand"
+        ],
+        "summary": "Command drone to land",
+        "description": "Command drone to land at current GPS coordinate immediately to ground. When landed, drone will unarm.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    },
+    "/drone/{droneId}/setCameraPitch": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Set camera pitch angle",
+        "description": "Set camera pitch angle. Gimbal will move to specified angle.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/droneId"
+          }
+        ],
+        "requestBody": {
+          "description": "Camera Pitch Properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameraProperties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/commandLog"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "droneId": {
+        "name": "droneId",
+        "in": "path",
+        "required": true,
+        "description": "Drone ID",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "commandLog": {
+        "description": "Command Log ID which can be used for troubleshooting",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CommandLog"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Telemetry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Telemetry Record ID"
+          },
+          "droneId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Drone ID"
+          },
+          "batteryId": {
+            "type": "string",
+            "description": "Battery ID"
+          },
+          "time": {
+            "type": "integer",
+            "format": "int64",
+            "description": "GPS Time epoch where coordinate is reported"
+          },
+          "lat": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "GPS latitude of drone in decimal degree"
+          },
+          "long": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "GPS longtitude of drone in decimal degree"
+          },
+          "alt": {
+            "type": "string",
+            "format": "metres",
+            "description": "GPS altitude of drone in metres above mean sea level (MAMSL) measures to nearest cm"
+          },
+          "yaw": {
+            "type": "string",
+            "format": "degrees",
+            "description": "Magnetic heading in degrees"
+          },
+          "pitch": {
+            "type": "string",
+            "format": "degrees",
+            "description": "Pitch angle in degrees. Positive values when drone is pitching forwards"
+          },
+          "roll": {
+            "type": "string",
+            "format": "degrees",
+            "description": "Roll angle in degrees. Positive values when drone startboard is tilt up."
+          },
+          "agl": {
+            "type": "string",
+            "format": "metres",
+            "description": "Altitude of drone above ground level relative to home position in metres measures to nearest cm."
+          },
+          "flightMode": {
+            "type": "string",
+            "description": "Flight mode that drone is flying"
+          },
+          "failsafe": {
+            "type": "string",
+            "nullable": true,
+            "description": "Current fail safe status if its activated."
+          },
+          "flightTime": {
+            "type": "integer",
+            "description": "Number of seconds elapsed since drone take off, 0 if grounded"
+          },
+          "armTime": {
+            "type": "integer",
+            "description": "Number of seconds elapsed since drone armed, 0 if drone is disarmed"
+          },
+          "gndSpeed": {
+            "type": "string",
+            "format": "metres",
+            "description": "Ground speed in metres per second measures in neareset centimetres."
+          },
+          "airSpeed": {
+            "type": "string",
+            "format": "metres",
+            "description": "Air speed in metres per second measures in neareest centimetres"
+          },
+          "battVolt": {
+            "type": "string",
+            "description": "Battery voltage in volts up to two decimal places"
+          },
+          "battCurr": {
+            "type": "string",
+            "description": "Battery current in amperes up to two decimal places"
+          },
+          "battLife": {
+            "type": "string",
+            "description": "Battery remaining charge in percent"
+          },
+          "satCount": {
+            "type": "integer",
+            "format": "Number of GPS satellites that drone connected to"
+          },
+          "gpsHAcc": {
+            "type": "string",
+            "description": "GPS Horizontal accuracy in metres measures up to micrometres"
+          },
+          "gpsVAcc": {
+            "type": "string",
+            "description": "GPS Vertical accuracy in metres measures up to micrometres"
+          },
+          "homeLat": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Latitude of Home point in decimal degrees"
+          },
+          "homeLong": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Longitude of Home point in decimal degrees"
+          },
+          "homeAlt": {
+            "type": "string",
+            "format": "metres",
+            "description": "Altitude of Home point in metres above mean sea level measures up to nearest centimetres"
+          }
+        }
+      },
+      "Drone": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Drone ID to be used to request for more information from other API",
+            "example": "8b594775-abe8-4409-9ce3-b298da488dee"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of Drone",
+            "example": "Phantom 3 Professional"
+          },
+          "brand": {
+            "type": "string",
+            "description": "Brand of Drone",
+            "example": "DJI"
+          },
+          "category": {
+            "type": "string",
+            "description": "Drone category",
+            "example": "Quadcopter"
+          },
+          "totalFlights": {
+            "type": "integer",
+            "description": "Number of times Drone has flied"
+          },
+          "totalAirtime": {
+            "type": "string",
+            "description": "Number of hours Drone has flown measures in nearest minute up to two decimal places"
+          }
+        }
+      },
+      "Drones": {
+        "type": "object",
+        "required": [
+          "count",
+          "data"
+        ],
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "number of drones in response",
+            "example": 2
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Drone IDs",
+              "example": [
+                "8b594775-abe8-4409-9ce3-b298da488dee",
+                "9d0330b4-2935-4a07-ba79-28aa6289c34c"
+              ]
+            }
+          }
+        }
+      },
+      "CameraProperties": {
+        "type": "object",
+        "required": [
+          "pitchAngle"
+        ],
+        "properties": {
+          "pitchAngle": {
+            "type": "number",
+            "format": "float",
+            "minimum": 0,
+            "maximum": 90,
+            "description": "Move camera gimbal to specified degree"
+          }
+        }
+      },
+      "TargetProperties": {
+        "type": "object",
+        "required": [
+          "coordinateX",
+          "coordinateY"
+        ],
+        "properties": {
+          "coordinateX": {
+            "type": "integer",
+            "description": "X Coordinate of target to be followed from camera feed"
+          },
+          "coordinateY": {
+            "type": "integer",
+            "description": "Y Coordinate of target to be followed from camera"
+          }
+        }
+      },
+      "ReturnLocationProperties": {
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "properties": {
+          "latitude": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Latitude of target coordinate in decimal degrees according to WGS84"
+          },
+          "longitude": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Longitude of target coordinate in decimal degrees according to WGS84"
+          },
+          "altitude": {
+            "type": "number",
+            "format": "float",
+            "description": "Altitude that drone will descned or ascend, before navigating back to specified latitude and longitude. If unspecified, drone will maintain current altitude above mean sea level"
+          }
+        }
+      },
+      "NavigateProperties": {
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "properties": {
+          "latitude": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Latitude of target coordinate in decimal degrees according to WGS84"
+          },
+          "longitude": {
+            "type": "string",
+            "format": "decimalDegrees",
+            "description": "Longitude of target coordinate in decimal degrees according to WGS84"
+          },
+          "altitude": {
+            "type": "string",
+            "nullable": true,
+            "format": "mamsl",
+            "description": "Altitude of target coordinate in metres above mean sea level (MAMSL) measures to nearest centimetres, if null, drone will maintain at current altitude"
+          }
+        }
+      },
+      "MoveProperties": {
+        "type": "object",
+        "required": [
+          "forward",
+          "left",
+          "down"
+        ],
+        "properties": {
+          "forward": {
+            "type": "string",
+            "format": "metres",
+            "description": "Distance for done to travel forward in metres measures in neasrest centimetres. If negative values provided, drone will travel backwards"
+          },
+          "left": {
+            "type": "string",
+            "format": "metres",
+            "description": "Distance for drone to travel left in metres measured in nearest centimetres. If negative values is provided, drone will travel right."
+          },
+          "down": {
+            "type": "string",
+            "format": "metres",
+            "description": "Distance for drone to descend in metres measured in nearest centimetres. If positive values is provided, drone will ascend."
+          }
+        }
+      },
+      "YawProperties": {
+        "type": "object",
+        "required": [
+          "degree"
+        ],
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "clockwise",
+              "anticlockwise"
+            ],
+            "default": "clockwise",
+            "description": "Direction for Drone to yaw"
+          },
+          "speed": {
+            "type": "string",
+            "format": "degree",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.5,
+            "description": "Speed of drone to rotate in degree per second measures up to two decimal places"
+          },
+          "degree": {
+            "type": "string",
+            "format": "degree",
+            "minimum": 0,
+            "maximum": 360,
+            "description": "Degree measures up to two decimal places. If relative is true, degree will be amount that drone will yaw to. If relative is false, degree is the target that drone will yaw to where 0 is north"
+          },
+          "relative": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, drone will yaw , if false, drone will yaw by degree amount, where 0 is north regardless of drone currently pointing to"
+          }
+        }
+      },
+      "ReturnHomeAltitudeProperties": {
+        "type": "object",
+        "required": [
+          "altitude"
+        ],
+        "properties": {
+          "altitude": {
+            "type": "string",
+            "format": "metres",
+            "minimum": 0,
+            "description": "Target Altitude in metres measures to nearest centimetres relative to home position, where drone will descend or ascend when executing command to return to home"
+          }
+        }
+      },
+      "TakeOffProperties": {
+        "type": "object",
+        "properties": {
+          "altitude": {
+            "type": "string",
+            "format": "metres",
+            "minimum": 0,
+            "description": "Target Altitude in metres measures to nearest centimetres where drone will take off relative to home position"
+          }
+        }
+      },
+      "CommandLog": {
+        "type": "object",
+        "required": [
+          "id",
+          "createdBy",
+          "createdDate"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CommandLogDetail": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommandLog"
+          }
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "pending"
+            ],
+            "description": "Status of command whether it has been received by GCS"
+          },
+          "command": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CameraProperties"
+              },
+              {
+                "$ref": "#/components/schemas/TargetProperties"
+              },
+              {
+                "$ref": "#/components/schemas/ReturnLocationProperties"
+              },
+              {
+                "$ref": "#/components/schemas/NavigateProperties"
+              },
+              {
+                "$ref": "#/components/schemas/MoveProperties"
+              },
+              {
+                "$ref": "#/components/schemas/YawProperties"
+              },
+              {
+                "$ref": "#/components/schemas/TakeOffProperties"
+              },
+              {
+                "$ref": "#/components/schemas/ReturnHomeAltitudeProperties"
+              }
+            ],
+            "type": "object",
+            "description": "Command that was send out by command center",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Camera",
+                  "Target",
+                  "ReturnLocation",
+                  "Navigate",
+                  "Move",
+                  "Yaw",
+                  "TakeOff"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "drone",
+      "description": "Drone Management"
+    },
+    {
+      "name": "droneCommand",
+      "description": "List of available commands to drone"
+    },
+    {
+      "name": "admin",
+      "description": "Admin API for troubleshooting and advanced configuration"
+    }
+  ]
+}

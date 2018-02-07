@@ -145,6 +145,7 @@ window.onload = function() {
     "schemas": {
       "AirspaceCollection": {
         "type": "object",
+		"description" : "Valid GeoJSON RFC7946 FeatureCollection object",
         "properties": {
           "type": {
             "type": "string",
@@ -163,6 +164,7 @@ window.onload = function() {
       },
       "Airspace": {
         "type": "object",
+		"description": "Valid GeoJSON RFC7946 Feature object with extended foreign members (lastUpdatedDate)",
         "properties": {
           "id": {
             "type": "string",
@@ -233,7 +235,7 @@ window.onload = function() {
               "protected",
               "prohibited",
               "national-park",
-              "aerodome-within-5km"
+              "aerodrome"
             ]
           },
           "owner": {
@@ -309,9 +311,10 @@ window.onload = function() {
       "description": "Airspace Data"
     }
   ]
-}, dom_id: '#swagger-ui',
+},
+dom_id: '#swagger-ui',
     deepLinking: true,
-    presets: [
+	presets: [
       SwaggerUIBundle.presets.apis,
       SwaggerUIStandalonePreset,
 	  DisableTryItOutPlugin

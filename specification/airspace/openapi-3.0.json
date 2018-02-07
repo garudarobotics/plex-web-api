@@ -55,6 +55,7 @@
     "schemas": {
       "AirspaceCollection": {
         "type": "object",
+		"description" : "Valid GeoJSON RFC7946 FeatureCollection object",
         "properties": {
           "type": {
             "type": "string",
@@ -73,6 +74,7 @@
       },
       "Airspace": {
         "type": "object",
+		"description": "Valid GeoJSON RFC7946 Feature object with extended foreign members (lastUpdatedDate)",
         "properties": {
           "id": {
             "type": "string",
@@ -143,7 +145,7 @@
               "protected",
               "prohibited",
               "national-park",
-              "aerodome-within-5km"
+              "aerodrome"
             ]
           },
           "owner": {

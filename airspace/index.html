@@ -93,7 +93,7 @@ window.onload = function() {
   "info": {
     "title": "Garuda Plex Airspace API",
     "description": "Specification for Airspace API for airspace information gathered by Garuda Robotics",
-    "version": "0.0.1-DRAFT"
+    "version": "0.0.2-DRAFT"
   },
   "servers": [
     {
@@ -195,6 +195,11 @@ window.onload = function() {
                 "description": "Name of location / airspace or event",
                 "example": "National Day 2017"
               },
+			  "type": {
+				"type": "string",
+				"description": "Category for airspace",
+				"example": "military_property"
+			  }
               "description": {
                 "type": "string",
                 "description": "Additional note about location / airspace or event",
@@ -214,8 +219,7 @@ window.onload = function() {
         "type": "object",
         "required": [
           "id",
-          "owner",
-          "type"
+          "owner"
         ],
         "properties": {
           "id": {

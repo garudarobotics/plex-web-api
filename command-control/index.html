@@ -547,9 +547,9 @@ window.onload = function() {
             "description": "Battery ID"
           },
           "time": {
-            "type": "integer",
+            "type": "string",
             "format": "int64",
-            "description": "GPS Time epoch where coordinate is reported"
+            "description": "GPS Time epoch where coordinate is reported in millisecond"
           },
           "lat": {
             "type": "string",
@@ -596,12 +596,12 @@ window.onload = function() {
             "description": "Current fail safe status if its activated."
           },
           "flightTime": {
-            "type": "integer",
-            "description": "Number of seconds elapsed since drone take off, 0 if grounded"
+            "type": "string",
+            "description": "Time elapsed since drone take off, 0 if grounded in millisecond"
           },
           "armTime": {
-            "type": "integer",
-            "description": "Number of seconds elapsed since drone armed, 0 if drone is disarmed"
+            "type": "string",
+            "description": "Time elapsed since drone armed, 0 if drone is disarmed in millisecond"
           },
           "gndSpeed": {
             "type": "string",

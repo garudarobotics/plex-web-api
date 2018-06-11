@@ -1,891 +1,1203 @@
 {
-	"openapi": "3.0.0",
-	"info": {
-		"title": "Garuda Plex Command and Control API",
-		"description": "Command and Control API to control drone remotely and access drone telemetry data",
-		"version": "0.0.1-DRAFT"
-	},
-	"servers": [
-		{
-			"url": "https://localhost:3000/api/v1",
-			"description": "Development Server"
-		}
-	],
-	"paths": {
-		"/telemetry/{droneId}": {
-			"post": {
-				"tags": [
-					"drone"
-				],
-				"summary": "Get latest telemetry data",
-				"description": "Get latest telemetry data",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Telemetry Data",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Telemetry"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/drones": {
-			"get": {
-				"tags": [
-					"drone"
-				],
-				"summary": "Get all drones in system",
-				"description": "Return drones in system.",
-				"responses": {
-					"200": {
-						"description": "Drones available in system",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Drones"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/drone/{droneId}": {
-			"get": {
-				"tags": [
-					"drone"
-				],
-				"summary": "Get information for a specific drone",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Drone information",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Drone"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/droneCommandLog/{commandLogId}": {
-			"get": {
-				"tags": [
-					"admin"
-				],
-				"summary": "Get status of a command log, for troubleshooting purpose",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "commandLogId",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Command Log ID of command"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Command Log Information",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CommandLog"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/takeOff": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to take-off",
-				"description": "Command drone to take-off. Drone will arm and take off.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Take off properties.",
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/TakeOffProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/move": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to move",
-				"description": "Manually command drone to move based on relative location",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Move Properties",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/MoveProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/yaw": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to yaw",
-				"description": "Command drone to yaw based on given properties.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Yaw Properties",
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/YawProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/navigate": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to navigate to a target GPS coordinate",
-				"description": "Command drone to navigate to a target GPS coordinate. Drone will travel to target coordinate autonomously in straight line.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Navigate Properties",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/NavigateProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/follow": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to follow target",
-				"description": "Command drone to follow target. Drone will identify subject specified in target point and autonomously follow target.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Target Properties",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/TargetProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/hold": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to hold",
-				"description": "Command drone to hold at current position",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/returnToHome": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to return to home",
-				"description": "Command drone to return to home position. Drone will navigate to home position and land.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/setReturnHomeAltitude": {
-			"post": {
-				"tags": [
-					"admin"
-				],
-				"summary": "Set return to home altitude",
-				"description": "Set altitude that drone will ascend or descend to when performing return to home command.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Set return to home altitude properties",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ReturnHomeAltitudeProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/setHomePosition": {
-			"post": {
-				"tags": [
-					"admin"
-				],
-				"summary": "Set Home Position for Drone",
-				"description": "Set Home Position for Drone, this will affect return to home command. If drone is returning to home, this action will change the destination for drone to return to.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Return to location command properties",
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ReturnLocationProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/land": {
-			"post": {
-				"tags": [
-					"droneCommand"
-				],
-				"summary": "Command drone to land",
-				"description": "Command drone to land at current GPS coordinate immediately to ground. When landed, drone will unarm.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		},
-		"/drone/{droneId}/setCameraPitch": {
-			"post": {
-				"tags": [
-					"admin"
-				],
-				"summary": "Set camera pitch angle",
-				"description": "Set camera pitch angle. Gimbal will move to specified angle.",
-				"parameters": [
-					{
-						"$ref": "#/components/parameters/droneId"
-					}
-				],
-				"requestBody": {
-					"description": "Camera Pitch Properties",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CameraProperties"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"$ref": "#/components/responses/commandLog"
-					}
-				}
-			}
-		}
-	},
-	"components": {
-		"parameters": {
-			"droneId": {
-				"name": "droneId",
-				"in": "path",
-				"required": true,
-				"description": "Drone ID",
-				"schema": {
-					"type": "string"
-				}
-			}
-		},
-		"responses": {
-			"commandLog": {
-				"description": "Command Log ID which can be used for troubleshooting",
-				"content": {
-					"application/json": {
-						"schema": {
-							"$ref": "#/components/schemas/CommandLog"
-						}
-					}
-				}
-			}
-		},
-		"schemas": {
-			"Telemetry": {
-				"type": "object",
-				"properties": {
-					"id": {
-						"type": "string",
-						"format": "uuid",
-						"description": "Telemetry Record ID"
-					},
-					"droneId": {
-						"type": "string",
-						"format": "uuid",
-						"description": "Drone ID"
-					},
-					"batteryId": {
-						"type": "string",
-						"description": "Battery ID"
-					},
-					"time": {
-						"type": "string",
-						"format": "int64",
-						"description": "GPS Time epoch where coordinate is reported in millisecond"
-					},
-					"lat": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "GPS latitude of drone in decimal degree"
-					},
-					"long": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "GPS longtitude of drone in decimal degree"
-					},
-					"alt": {
-						"type": "string",
-						"format": "metres",
-						"description": "GPS altitude of drone in metres above mean sea level (MAMSL) measures to nearest cm"
-					},
-					"yaw": {
-						"type": "string",
-						"format": "degrees",
-						"description": "Magnetic heading in degrees"
-					},
-					"pitch": {
-						"type": "string",
-						"format": "degrees",
-						"description": "Pitch angle in degrees. Positive values when drone is pitching forwards"
-					},
-					"roll": {
-						"type": "string",
-						"format": "degrees",
-						"description": "Roll angle in degrees. Positive values when drone startboard is tilt up."
-					},
-					"agl": {
-						"type": "string",
-						"format": "metres",
-						"description": "Altitude of drone above ground level relative to home position in metres measures to nearest cm."
-					},
-					"flightMode": {
-						"type": "string",
-						"description": "Flight mode that drone is flying"
-					},
-					"failsafe": {
-						"type": "string",
-						"nullable": true,
-						"description": "Current fail safe status if its activated."
-					},
-					"flightTime": {
-						"type": "string",
-						"description": "Time elapsed since drone take off, 0 if grounded in millisecond"
-					},
-					"armTime": {
-						"type": "string",
-						"description": "Time elapsed since drone armed, 0 if drone is disarmed in millisecond"
-					},
-					"gndSpeed": {
-						"type": "string",
-						"format": "metres",
-						"description": "Ground speed in metres per second measures in neareset centimetres."
-					},
-					"airSpeed": {
-						"type": "string",
-						"format": "metres",
-						"description": "Air speed in metres per second measures in neareest centimetres"
-					},
-					"battVolt": {
-						"type": "string",
-						"description": "Battery voltage in volts up to two decimal places"
-					},
-					"battCurr": {
-						"type": "string",
-						"description": "Battery current in amperes up to two decimal places"
-					},
-					"battLife": {
-						"type": "string",
-						"description": "Battery remaining charge in percent"
-					},
-					"satCount": {
-						"type": "integer",
-						"format": "Number of GPS satellites that drone connected to"
-					},
-					"gpsHAcc": {
-						"type": "string",
-						"description": "GPS Horizontal accuracy in metres measures up to micrometres"
-					},
-					"gpsVAcc": {
-						"type": "string",
-						"description": "GPS Vertical accuracy in metres measures up to micrometres"
-					},
-					"homeLat": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Latitude of Home point in decimal degrees"
-					},
-					"homeLong": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Longitude of Home point in decimal degrees"
-					},
-					"homeAlt": {
-						"type": "string",
-						"format": "metres",
-						"description": "Altitude of Home point in metres above mean sea level measures up to nearest centimetres"
-					}
-				}
-			},
-			"Drone": {
-				"type": "object",
-				"properties": {
-					"id": {
-						"type": "string",
-						"description": "Drone ID to be used to request for more information from other API",
-						"example": "8b594775-abe8-4409-9ce3-b298da488dee"
-					},
-					"model": {
-						"type": "string",
-						"description": "Model of Drone",
-						"example": "Phantom 3 Professional"
-					},
-					"brand": {
-						"type": "string",
-						"description": "Brand of Drone",
-						"example": "DJI"
-					},
-					"category": {
-						"type": "string",
-						"description": "Drone category",
-						"example": "Quadcopter"
-					},
-					"totalFlights": {
-						"type": "integer",
-						"description": "Number of times Drone has flied"
-					},
-					"totalAirtime": {
-						"type": "string",
-						"description": "Number of hours Drone has flown measures in nearest minute up to two decimal places"
-					}
-				}
-			},
-			"Drones": {
-				"type": "object",
-				"required": [
-					"count",
-					"data"
-				],
-				"properties": {
-					"count": {
-						"type": "integer",
-						"description": "number of drones in response",
-						"example": 2
-					},
-					"data": {
-						"type": "array",
-						"items": {
-							"type": "string",
-							"description": "Drone IDs",
-							"example": [
-								"8b594775-abe8-4409-9ce3-b298da488dee",
-								"9d0330b4-2935-4a07-ba79-28aa6289c34c"
-							]
-						}
-					}
-				}
-			},
-			"CameraProperties": {
-				"type": "object",
-				"required": [
-					"pitchAngle"
-				],
-				"properties": {
-					"pitchAngle": {
-						"type": "number",
-						"format": "float",
-						"minimum": 0,
-						"maximum": 90,
-						"description": "Move camera gimbal to specified degree"
-					}
-				}
-			},
-			"TargetProperties": {
-				"type": "object",
-				"required": [
-					"coordinateX",
-					"coordinateY"
-				],
-				"properties": {
-					"coordinateX": {
-						"type": "integer",
-						"description": "X Coordinate of target to be followed from camera feed"
-					},
-					"coordinateY": {
-						"type": "integer",
-						"description": "Y Coordinate of target to be followed from camera"
-					}
-				}
-			},
-			"ReturnLocationProperties": {
-				"type": "object",
-				"required": [
-					"latitude",
-					"longitude"
-				],
-				"properties": {
-					"latitude": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Latitude of target coordinate in decimal degrees according to WGS84"
-					},
-					"longitude": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Longitude of target coordinate in decimal degrees according to WGS84"
-					},
-					"altitude": {
-						"type": "number",
-						"format": "float",
-						"description": "Altitude that drone will descned or ascend, before navigating back to specified latitude and longitude. If unspecified, drone will maintain current altitude above mean sea level"
-					}
-				}
-			},
-			"NavigateProperties": {
-				"type": "object",
-				"required": [
-					"latitude",
-					"longitude"
-				],
-				"properties": {
-					"latitude": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Latitude of target coordinate in decimal degrees according to WGS84"
-					},
-					"longitude": {
-						"type": "string",
-						"format": "decimalDegrees",
-						"description": "Longitude of target coordinate in decimal degrees according to WGS84"
-					},
-					"altitude": {
-						"type": "string",
-						"nullable": true,
-						"format": "mamsl",
-						"description": "Altitude of target coordinate in metres above mean sea level (MAMSL) measures to nearest centimetres, if null, drone will maintain at current altitude"
-					}
-				}
-			},
-			"MoveProperties": {
-				"type": "object",
-				"required": [
-					"forward",
-					"left",
-					"down"
-				],
-				"properties": {
-					"forward": {
-						"type": "string",
-						"format": "metres",
-						"description": "Distance for done to travel forward in metres measures in neasrest centimetres. If negative values provided, drone will travel backwards"
-					},
-					"left": {
-						"type": "string",
-						"format": "metres",
-						"description": "Distance for drone to travel left in metres measured in nearest centimetres. If negative values is provided, drone will travel right."
-					},
-					"down": {
-						"type": "string",
-						"format": "metres",
-						"description": "Distance for drone to descend in metres measured in nearest centimetres. If positive values is provided, drone will ascend."
-					}
-				}
-			},
-			"YawProperties": {
-				"type": "object",
-				"required": [
-					"degree"
-				],
-				"properties": {
-					"direction": {
-						"type": "string",
-						"enum": [
-							"clockwise",
-							"anticlockwise"
-						],
-						"default": "clockwise",
-						"description": "Direction for Drone to yaw"
-					},
-					"speed": {
-						"type": "string",
-						"format": "degree",
-						"minimum": 0,
-						"maximum": 1,
-						"default": 0.5,
-						"description": "Speed of drone to rotate in degree per second measures up to two decimal places"
-					},
-					"degree": {
-						"type": "string",
-						"format": "degree",
-						"minimum": 0,
-						"maximum": 360,
-						"description": "Degree measures up to two decimal places. If relative is true, degree will be amount that drone will yaw to. If relative is false, degree is the target that drone will yaw to where 0 is north"
-					},
-					"relative": {
-						"type": "boolean",
-						"default": false,
-						"description": "If true, drone will yaw , if false, drone will yaw by degree amount, where 0 is north regardless of drone currently pointing to"
-					}
-				}
-			},
-			"ReturnHomeAltitudeProperties": {
-				"type": "object",
-				"required": [
-					"altitude"
-				],
-				"properties": {
-					"altitude": {
-						"type": "string",
-						"format": "metres",
-						"minimum": 0,
-						"description": "Target Altitude in metres measures to nearest centimetres relative to home position, where drone will descend or ascend when executing command to return to home"
-					}
-				}
-			},
-			"TakeOffProperties": {
-				"type": "object",
-				"properties": {
-					"altitude": {
-						"type": "string",
-						"format": "metres",
-						"minimum": 0,
-						"description": "Target Altitude in metres measures to nearest centimetres where drone will take off relative to home position"
-					}
-				}
-			},
-			"CommandLog": {
-				"type": "object",
-				"required": [
-					"id",
-					"createdBy",
-					"createdDate"
-				],
-				"properties": {
-					"id": {
-						"type": "string",
-						"format": "uuid"
-					},
-					"createdBy": {
-						"type": "string"
-					},
-					"createdDate": {
-						"type": "string",
-						"format": "date-time"
-					}
-				}
-			},
-			"CommandLogDetail": {
-				"type": "object",
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/CommandLog"
-					}
-				],
-				"properties": {
-					"status": {
-						"type": "string",
-						"enum": [
-							"received",
-							"pending"
-						],
-						"description": "Status of command whether it has been received by GCS"
-					},
-					"command": {
-						"oneOf": [
-							{
-								"$ref": "#/components/schemas/CameraProperties"
-							},
-							{
-								"$ref": "#/components/schemas/TargetProperties"
-							},
-							{
-								"$ref": "#/components/schemas/ReturnLocationProperties"
-							},
-							{
-								"$ref": "#/components/schemas/NavigateProperties"
-							},
-							{
-								"$ref": "#/components/schemas/MoveProperties"
-							},
-							{
-								"$ref": "#/components/schemas/YawProperties"
-							},
-							{
-								"$ref": "#/components/schemas/TakeOffProperties"
-							},
-							{
-								"$ref": "#/components/schemas/ReturnHomeAltitudeProperties"
-							}
-						],
-						"type": "object",
-						"description": "Command that was send out by command center",
-						"properties": {
-							"type": {
-								"type": "string",
-								"enum": [
-									"Camera",
-									"Target",
-									"ReturnLocation",
-									"Navigate",
-									"Move",
-									"Yaw",
-									"TakeOff"
-								]
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"tags": [
-		{
-			"name": "drone",
-			"description": "Drone Management"
-		},
-		{
-			"name": "droneCommand",
-			"description": "List of available commands to drone"
-		},
-		{
-			"name": "admin",
-			"description": "Admin API for troubleshooting and advanced configuration"
-		}
-	]
+  "swagger": "2.0",
+  "info": {
+    "description": "GR Media Microservice API Documentation",
+    "version": "1.0.0",
+    "title": "GR Media Microservice"
+  },
+  "host": "one.garuda.io",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/collections": {
+      "get": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Get a list of collections",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections of a certain company"
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections made by a certain user"
+          },
+          {
+            "name": "createdOn",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections made on a certain day"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string",
+            "description": "Get a collection by its name"
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections in a project"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/Collection"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collection": {
+      "post": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Add a new collection to the database",
+        "operationId": "addCollection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Document object given by the client to the server",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Album 1"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "company_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "collection_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "2018-05-31T10:40:52Z"
+                    },
+                    "media": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Album 1"
+                    },
+                    "path": {
+                      "type": "string",
+                      "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "properties": {
+                      "type": "object",
+                      "properties": {
+                        "company_id": {
+                          "type": "string",
+                          "example": "16093c440370bb24ee65a12b6c00ff0a"
+                        },
+                        "project_id": {
+                          "type": "string",
+                          "example": "Project 1"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collection/{collection_id}": {
+      "get": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Returns data of a collection designated by its collection_id",
+        "operationId": "getCollectionById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "collection_id of the collection to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/Collection"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Updates a collection's data",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "collection_id of the collection to edit",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Document object given by the client to the server",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Album 1"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "company_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/Collection"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Deletes a collection and all its media",
+        "operationId": "deleteCollection",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "collection_id of the collection to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted collection",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media": {
+      "get": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Get a list of media",
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media in a certain collection"
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media of a certain company"
+          },
+          {
+            "name": "created_by",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media added by a certain user"
+          },
+          {
+            "name": "created_on",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media made on a certain day"
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media of a certain extension"
+          },
+          {
+            "name": "file_name",
+            "in": "query",
+            "type": "string",
+            "description": "Get a media by its file name"
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "type": "string",
+            "description": "Query by object's location values ie. ?location.name=Ministop&location.city=Quezon%20City"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media in a project"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media of a certain type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/Media"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Add media to a collection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "array of an object that contains file name, location, and type",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection_id": {
+                  "type": "string",
+                  "example": "16093c440370bb24ee65a12b6c00ff0a"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "file_name": {
+                        "type": "string",
+                        "example": "file_name1.jpg"
+                      },
+                      "location": {
+                        "type": "object",
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "example": "14.64652,"
+                          },
+                          "lng": {
+                            "type": "number",
+                            "example": 121.059199
+                          }
+                        }
+                      },
+                      "properties": {
+                        "type": "object",
+                        "properties": {
+                          "company_id": {
+                            "type": "string",
+                            "example": "16093c440370bb24ee65a12b6c00ff0a"
+                          },
+                          "project_id": {
+                            "type": "string",
+                            "example": "Project 1"
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "image"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "collection_id": {
+                  "type": "string",
+                  "example": "16093c440370bb24ee65a12b6c00ff0a"
+                },
+                "created_by": {
+                  "type": "string",
+                  "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "file_name": {
+                        "type": "string",
+                        "example": "file_name1.jpg"
+                      },
+                      "file_id": {
+                        "type": "string",
+                        "example": "5b17c7da0497a749bc300d70"
+                      },
+                      "upload_path": {
+                        "type": "string",
+                        "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/collections/16093c440370bb24ee65a12b6c00ff0a/5b17c7da0497a749bc300d70/file_name1.jpg?AWSAccessKeyId=[access-key-omitted]&Expires=1470666057&Signature=[signature-omitted]"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully operation but some files are not signed and saved. Note: this will be 200 in the actual API, Swagger doesn't allow me to specify this as 200",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "collection_id": {
+                  "type": "string",
+                  "example": "16093c440370bb24ee65a12b6c00ff0a"
+                },
+                "created_by": {
+                  "type": "string",
+                  "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "file_name": {
+                        "type": "string",
+                        "example": "file_name1.jpg"
+                      },
+                      "error": {
+                        "type": "string",
+                        "example": "Duplicate file name in the collection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/{media_id}": {
+      "get": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Returns data of a media designated by its _id",
+        "operationId": "getMediaById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "_id of the media to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/Media"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Updates data of a media designated by its _id",
+        "operationId": "putMedia",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "_id of the media to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file_name": {
+                  "type": "string",
+                  "example": "file_name1.jpg"
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "lat": {
+                      "type": "number",
+                      "example": "14.64652,"
+                    },
+                    "lng": {
+                      "type": "number",
+                      "example": 121.059199
+                    }
+                  }
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "company_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project 1"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "example": "image"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted file",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/Media"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Deletes a media",
+        "operationId": "deletMedia",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "_id of the media to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted file",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/{media_id}/permissions": {
+      "put": {
+        "tags": [
+          "Media Permisision API"
+        ],
+        "summary": "Manage read and write permissions of a media",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "_id of the media to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                },
+                "admin": {
+                  "type": "string",
+                  "example": true
+                },
+                "read": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "write": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated media perimission",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "media_id": {
+                      "type": "string",
+                      "example": "5b17c7da0497a749bc300d70"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "read": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "write": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Collection": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "2018-05-31T10:40:52Z"
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": [
+              "034611ca922f665baa9444059f41317d",
+              "034611ca922f665baa9444059f4117bc",
+              "034611ca922f665baa9444059f411fc4"
+            ]
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "Album 1"
+        },
+        "path": {
+          "type": "string",
+          "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "type": "string",
+              "example": "16093c440370bb24ee65a12b6c00ff0a"
+            },
+            "project_id": {
+              "type": "string",
+              "example": "Project 1"
+            },
+            "total_items": {
+              "type": "integer"
+            },
+            "total_size": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "Media": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "034611ca922f665baa9444059f411fc4"
+        },
+        "collection_id": {
+          "type": "string",
+          "example": "16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "2018-05-31T10:40:52Z"
+        },
+        "extension": {
+          "type": "string",
+          "example": "png"
+        },
+        "file_name": {
+          "type": "string",
+          "example": "picture1.png"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "modified_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "modified_on": {
+          "type": "string",
+          "example": "2018-06-01T10:40:52Z"
+        },
+        "path": {
+          "type": "string",
+          "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a/034611ca922f665baa9444059f411fc4/picture1.png"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "type": "string",
+              "example": "16093c440370bb24ee65a12b6c00ff0a"
+            },
+            "project_id": {
+              "type": "string",
+              "example": "Project 1"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "image",
+            "video",
+            "audio",
+            "document",
+            "orthomosaic",
+            "3dmodel",
+            "log",
+            "file"
+          ]
+        }
+      }
+    },
+    "MediaPermission": {
+      "type": "object",
+      "description": "Designates user permissions of a media",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "034611ca922f665baa9444059f437d67"
+        },
+        "media_id": {
+          "type": "string",
+          "example": "034611ca922f665baa9444059f411fc4"
+        },
+        "admins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": [
+              "30dd879c-ee2f-11db-8314-0800200c9a66"
+            ]
+          }
+        },
+        "read": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": [
+              "30dd879c-ee2f-11db-8314-0800200c9a66",
+              "d5d3a274-5a15-4f0f-92e3-376c0eef3135",
+              "47d467fa-5664-47f1-9e5b-860a0c86e21c"
+            ]
+          }
+        },
+        "write": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": [
+              "30dd879c-ee2f-11db-8314-0800200c9a66",
+              "d5d3a274-5a15-4f0f-92e3-376c0eef3135"
+            ]
+          }
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "description": "These values are obtained through the Google Reverse Geocoding API (https://developers.google.com/maps/documentation/geocoding/intro#GeocodingResponses) THIS WILL NOT BE A MODEL IN THE DB",
+      "properties": {
+        "street_number": {
+          "type": "string"
+        },
+        "route": {
+          "type": "string"
+        },
+        "intersection": {
+          "type": "string"
+        },
+        "political": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "administrative_area_level_1": {
+          "type": "string"
+        },
+        "administrative_area_level_2": {
+          "type": "string"
+        },
+        "administrative_area_level_3": {
+          "type": "string"
+        },
+        "administrative_area_level_4": {
+          "type": "string"
+        },
+        "administrative_area_level_5": {
+          "type": "string"
+        },
+        "colloquial_area": {
+          "type": "string"
+        },
+        "locality": {
+          "type": "string"
+        },
+        "ward": {
+          "type": "string"
+        },
+        "premise": {
+          "type": "string"
+        },
+        "subpremise": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "natural_feature": {
+          "type": "string"
+        },
+        "airport": {
+          "type": "string"
+        },
+        "park": {
+          "type": "string"
+        },
+        "point_of_interest": {
+          "type": "string"
+        },
+        "formatted_address": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "number",
+          "example": 14.64652
+        },
+        "lng": {
+          "type": "number",
+          "example": 121.059199
+        }
+      }
+    },
+    "All Possible Media Properties": {
+      "type": "object",
+      "description": "THIS WILL NOT BE A MODEL IN THE DB",
+      "properties": {
+        "thumb_path": {
+          "type": "string"
+        },
+        "preview_path": {
+          "type": "string"
+        },
+        "company_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        },
+        "camera_make": {
+          "type": "string"
+        },
+        "camera_model": {
+          "type": "string"
+        },
+        "focal_length": {
+          "type": "number"
+        },
+        "focal_length_35mm": {
+          "type": "number"
+        },
+        "aperture": {
+          "type": "number"
+        },
+        "fov": {
+          "type": "number"
+        },
+        "image_size": {
+          "type": "string"
+        },
+        "megapixels": {
+          "type": "string"
+        },
+        "shutter_speed": {
+          "type": "string"
+        },
+        "iso": {
+          "type": "number"
+        },
+        "flash": {
+          "type": "number"
+        },
+        "min_zoom": {
+          "type": "number"
+        },
+        "max_zoom": {
+          "type": "number"
+        },
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "tile_path": {
+          "type": "string"
+        },
+        "model_type": {
+          "type": "string"
+        },
+        "texture_path": {
+          "type": "string"
+        },
+        "mesh_path": {
+          "type": "string"
+        },
+        "image_parameters_path": {
+          "type": "string"
+        },
+        "pilots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "drone": {
+          "type": "object",
+          "properties": {
+            "drone_id": {
+              "type": "string"
+            },
+            "drone_name": {
+              "type": "string"
+            }
+          }
+        },
+        "flight_path": {
+          "type": "object",
+          "properties": {
+            "arm": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "disarm": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "takeoff": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "start_time": {
+              "type": "string"
+            },
+            "end_time": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
 }

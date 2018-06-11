@@ -71,6 +71,25 @@
 <script src="./swagger-ui-standalone-preset.js"> </script>
 <script>
 
+function loadJSON(path, success, error)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
+    {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+                    success(JSON.parse(xhr.responseText));
+            } else {
+                if (error)
+                    error(xhr);
+            }
+        }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+}
+
 const DisableTryItOutPlugin = function() {
   return {
     statePlugins: {
@@ -84,241 +103,18 @@ const DisableTryItOutPlugin = function() {
 }
 
 window.onload = function() {
-  
-  // Build a system
+
+	loadJSON('api.json',
+			 function(data) {
+			 
+				console.log(data); 
+				// Build a system
   const ui = SwaggerUIBundle({
     url: "",
-	spec: {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "Garuda Plex Airspace API",
-    "description": "Specification for Airspace API for airspace information gathered by Garuda Robotics",
-    "version": "0.0.2-DRAFT"
-  },
-  "servers": [
-    {
-      "url": "https://localhost:3000/api/v1",
-      "description": "Development Server"
-    }
-  ],
-  "paths": {
-    "/airspace/{country}": {
-      "post": {
-        "tags": [
-          "Airspace"
-        ],
-        "summary": "Get latest airspace data",
-        "description": "Get latest airspace data",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/country"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Airspace Data in GeoJSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AirspaceCollection"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "parameters": {
-      "country": {
-        "name": "country",
-        "in": "path",
-        "required": true,
-        "description": "Country code in ISO 3166-1 alpha-3 code",
-        "example": "SGP",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    "schemas": {
-      "AirspaceCollection": {
-        "type": "object",
-		"description" : "Valid GeoJSON RFC7946 FeatureCollection object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "FeatureCollection"
-            ],
-            "description": "Feature Collection type"
-          },
-          "features": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Airspace"
-            }
-          }
-        }
-      },
-      "Airspace": {
-        "type": "object",
-		"description": "Valid GeoJSON RFC7946 Feature object with extended foreign members (lastUpdatedDate)",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Airspace ID"
-          },
-          "lastUpdatedDate": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Airspace last updated date"
-          },
-          "type": {
-            "type": "string",
-            "description": "GeoJSON RFC7946 Feature object type",
-            "enum": [
-              "Feature"
-            ]
-          },
-          "geometry": {
-            "type": "object",
-            "description": "Valid GeoJSON geometry object follow RFC7946 GeoJSON section 3.1 specification"
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of location / airspace or event",
-                "example": "National Day 2017"
-              },
-			  "type": {
-				"type": "string",
-				"description": "Category for airspace",
-				"example": "military_property"
-			  },
-              "description": {
-                "type": "string",
-                "description": "Additional note about location / airspace or event",
-                "example": "National Day 2017 temporary restricted area"
-              },
-              "rules": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Rule"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Rule": {
-        "type": "object",
-        "required": [
-          "id",
-          "owner"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Rule unique ID"
-          },
-          "description": {
-            "type": "string",
-            "description": "Additional note about rule"
-          },
-          "type": {
-            "type": "string",
-            "description": "Rule type",
-            "enum": [
-              "restricted",
-              "danger",
-              "protected",
-              "prohibited",
-              "national-park",
-              "aerodrome"
-            ]
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about entity that own the rules",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Entity name"
-              },
-              "type": {
-                "type": "string",
-                "description": "Entity type",
-                "enum": [
-                  "government ministry",
-                  "statutory board",
-                  "company"
-                ]
-              }
-            }
-          },
-          "source": {
-            "type": "object",
-            "description": "Information on where specified rule is published",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of entity that published specified rule, if not provided, it will be the same as owner"
-              },
-              "type": {
-                "type": "string",
-                "description": "Type of publication",
-                "enum": [
-                  "official website",
-                  "official blog",
-                  "local newspaper",
-                  "national newspaper",
-                  "email"
-                ]
-              },
-              "url": {
-                "type": "string",
-                "description": "Link to page that contain rule"
-              }
-            }
-          },
-          "validity": {
-            "type": "array",
-            "description": "If validity properties is not given, its assumed that the rule is permanent",
-            "items": {
-              "type": "object",
-              "properties": {
-                "start": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Rule effective start date"
-                },
-                "end": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Rule effective end date"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "tags": [
-    {
-      "name": "Airspace",
-      "description": "Airspace Data"
-    }
-  ]
-},
-dom_id: '#swagger-ui',
+	spec: data,
+	dom_id: '#swagger-ui',
     deepLinking: true,
-	presets: [
+    presets: [
       SwaggerUIBundle.presets.apis,
       SwaggerUIStandalonePreset,
 	  DisableTryItOutPlugin
@@ -330,6 +126,12 @@ dom_id: '#swagger-ui',
   })
 
   window.ui = ui
+			 
+			 },
+			 function(xhr) { console.error(xhr); }
+	);
+  
+  
 }
 </script>
 </body>

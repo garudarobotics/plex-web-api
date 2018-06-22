@@ -1065,7 +1065,96 @@
 			]
 		  }
 		}
-	  },
+		},
+		"CollectionPermission": {
+			"type": "object",
+			"description": "Designates user's permission of a collection",
+			"properties": {
+				"_id": {
+					"type": "string",
+					"example": "034611ca922f665baa9444059f437d67"
+				},
+				"collection_id": {
+					"type": "string",
+					"example": "034611ca922f665baa9444059f411fc4"
+				},
+				"created_on": {
+					"type": "string",
+					"example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
+				},
+				"created_by": {
+					"type": "string",
+					"example": "934bdfb3d6c0d5dc47b909960b917786" 
+				},
+				"modified_on": {
+					"type": "string",
+					"example": "Tue Jun 13 2018 12:26:01 GMT+0800 (+08)"
+				},
+				"modified_by": {
+					"type": "string",
+					"example": "934bdfb3d6c0d5dc47b909960b917786"
+				},
+				"admins": {
+					"type": "array",
+						"items": {
+							"type": "string",
+							"example": [
+								"30dd879c-ee2f-11db-8314-0800200c9a66"
+							]
+						}
+				},
+				"owners": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"example": [
+							"30dd879c-ee2f-11db-8314-0800200c9a67"
+						]
+					}
+				},
+				"read_collection": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"example": [
+						"30dd879c-ee2f-11db-8314-0800200c9a66",
+						"d5d3a274-5a15-4f0f-92e3-376c0eef3135",
+						"47d467fa-5664-47f1-9e5b-860a0c86e21c"
+						]
+					}
+				},
+				"update_collection": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"example": [
+						"30dd879c-ee2f-11db-8314-0800200c9a66",
+						"d5d3a274-5a15-4f0f-92e3-376c0eef3135"
+						]
+					}
+				},
+				"delete_collection": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"example": [
+						"30dd879c-ee2f-11db-8314-0800200c9a66",
+						"d5d3a274-5a15-4f0f-92e3-376c0eef3135"
+						]
+					}
+				},
+				"post_media": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"example": [
+						"30dd879c-ee2f-11db-8314-0800200c9a66",
+						"d5d3a274-5a15-4f0f-92e3-376c0eef3135"
+						]
+					}
+				}
+			}
+		},
 	  "MediaPermission": {
 		"type": "object",
 		"description": "Designates user permissions of a media",
@@ -1118,7 +1207,7 @@
 			}
 		  }
 		}
-	  },
+		},
 	  "Location": {
 		"type": "object",
 		"description": "These values are obtained through the Google Reverse Geocoding API (https://developers.google.com/maps/documentation/geocoding/intro#GeocodingResponses) THIS WILL NOT BE A MODEL IN THE DB",

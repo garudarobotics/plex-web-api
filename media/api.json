@@ -837,7 +837,7 @@
 		  "tags": [
 			"Media Permisision API"
 		  ],
-		  "summary": "Manage read and write permissions of a media",
+		  "summary": "Manage read and update permissions of a media",
 		  "consumes": [
 			"application/json"
 		  ],
@@ -861,7 +861,11 @@
 				  "user_id": {
 					"type": "string",
 					"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-				  },
+					},
+					"superadmin": {
+						"type": "string",
+						"example": true
+						},
 				  "admin": {
 					"type": "string",
 					"example": true
@@ -870,7 +874,7 @@
 					"type": "boolean",
 					"example": true
 				  },
-				  "write": {
+				  "update": {
 					"type": "boolean",
 					"example": true
 				  }
@@ -898,7 +902,11 @@
 					  "user_id": {
 						"type": "string",
 						"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-					  },
+						},
+						"superadmin": {
+							"type": "boolean",
+							"example": true
+						},
 					  "admin": {
 						"type": "boolean",
 						"example": true
@@ -907,7 +915,7 @@
 						"type": "boolean",
 						"example": true
 					  },
-					  "write": {
+					  "update": {
 						"type": "boolean",
 						"example": true
 					  }
@@ -1069,7 +1077,16 @@
 		  "media_id": {
 			"type": "string",
 			"example": "034611ca922f665baa9444059f411fc4"
-		  },
+			},
+			"superadmins": {
+				"type": "array",
+				"items": {
+					"type": "string",
+					"example": [
+					"30dd879c-ee2f-11db-8314-0800200c9a66"
+					]
+				}
+			},
 		  "admins": {
 			"type": "array",
 			"items": {
@@ -1090,7 +1107,7 @@
 			  ]
 			}
 		  },
-		  "write": {
+		  "update": {
 			"type": "array",
 			"items": {
 			  "type": "string",

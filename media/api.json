@@ -256,8 +256,7 @@
                       "example": "Project Test Update"
                     }
                   }
-                },
-                
+                }
               }
             }
           }
@@ -506,7 +505,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     },
     
     "/collections": {
@@ -684,8 +683,7 @@
                     "media": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        
+                        "type": "object"
                       },
                       "example": []
                     },
@@ -1044,7 +1042,7 @@
                         "type": "object"
                       },
                       "example": []
-                    },
+                    }
                   }
                 }
               }
@@ -1056,7 +1054,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     },
     "/collection/{collection_id}/permissions": {
       "put": {
@@ -1172,7 +1170,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     },
     "/collection/{collection_id}/media": {
       "get": {
@@ -1255,7 +1253,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     },
     "/media": {
       "post": {
@@ -1602,7 +1600,7 @@
                             "log",
                             "file"
                           ]
-                        },
+                        }
                       }
                     },
                     "upload_path": {
@@ -1751,7 +1749,7 @@
                         "type": "object"
                       },
                       "example": []
-                    },
+                    }
                   }
                 }
               }
@@ -1763,7 +1761,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     },
     "/media/{media_id}/permissions": {
       "put": {
@@ -1867,7 +1865,7 @@
             "JWT": []
           }
         ]
-      },
+      }
     }
   },
   "securityDefinitions": {
@@ -2214,7 +2212,7 @@
             "type": "object"
           },
           "example": []
-        },
+        }
       }
     },
     "Location": {

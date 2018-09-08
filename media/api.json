@@ -16,9 +16,10 @@
         "tags": [
           "Company API"  
         ],
+        "summary": "Get a list of all companies. Only available for GR Admin",
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "array",
               "items": {
@@ -101,12 +102,145 @@
         }
       }
     },
+    "/company": {
+      "post": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Register a company",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Required body fields are country, email, name",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "example": "Singapore"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@company.io"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Test Company"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "5b640bbaf67bf314868d40ae"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "Singapore"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "Fri Aug 03 2018 16:00:58 GMT+0800 (+08)"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Test Company"
+                    },
+                    "email": {
+                      "type":"string",
+                      "example": "test@company.io"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "verified"
+                    },
+                    "collections": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "admins": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      }
+                    },
+                    "members": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "update_company": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "delete_company": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "create_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/company/{company_id}": {
       "get": {
         "tags": [
           "Company API"
         ],
-        "summary": "Returns data of a collection designated by its collection_id",
+        "summary": "Get company information and permissions",
         "operationId": "getCollectionById",
         "produces": [
           "application/json"
@@ -115,14 +249,14 @@
           {
             "name": "company_id",
             "in": "path",
-            "description": "_id  of the company to return",
+            "description": "Company's unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Success",
             "schema": {
                 "type": "object",
                 "properties": {
@@ -210,7 +344,7 @@
         "tags": [
           "Company API"
         ],
-        "summary": "Updates a collection's data",
+        "summary": "Update company's meta data",
         "consumes": [
           "application/json"
         ],
@@ -221,13 +355,13 @@
           {
             "name": "company_id",
             "in": "path",
+            "description": "Company's unique _id",
             "required": true,
             "type": "string"
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Document object given by the client to the server",
             "required": true,
             "schema": {
               "type": "object",
@@ -263,7 +397,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -369,7 +503,8 @@
         "tags": [
           "Company API"
         ],
-        "summary": "Deletes a collection and all its media",
+        "summary": "Deletes a company",
+        "description": "Sets a company's deleted_on to the date and the deleted_by with the JWT IDP ID",
         "operationId": "deleteCollection",
         "produces": [
           "application/json"
@@ -378,13 +513,14 @@
           {
             "name": "company_id",
             "in": "path",
+            "description": "Company's unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted collection",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -408,7 +544,8 @@
         "tags": [
           "Company Permission API"
         ],
-        "summary": "Manage read and write permissions of a media",
+        "summary": "Add company members and manage company permissions",
+        "description": "Admins can add and remove other admins and members. An IDP ID has to be in the member list to be added to the update_company, delete_company, and create_collection. Setting member to false deletes the IDP ID from the company and removes all other permissions",
         "consumes": [
           "application/json"
         ],
@@ -417,9 +554,9 @@
         ],
         "parameters": [
           {
-            "name": "company",
+            "name": "company_id",
             "in": "path",
-            "description": "_id of the company",
+            "description": "Company's unique _id",
             "required": true,
             "type": "string"
           },
@@ -459,7 +596,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated media perimission",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -507,7 +644,6 @@
         ]
       }
     },
-    
     "/collections": {
       "get": {
         "tags": [
@@ -548,7 +684,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -625,7 +761,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Document object given by the client to the server",
+            "description": "Required body fields are name and company_id",
             "required": true,
             "schema": {
               "type": "object",
@@ -653,7 +789,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -722,7 +858,7 @@
         "tags": [
           "Collection API"
         ],
-        "summary": "Returns data of a collection designated by its collection_id",
+        "summary": "Get collection data",
         "produces": [
           "application/json"
         ],
@@ -730,14 +866,14 @@
           {
             "name": "collection_id",
             "in": "path",
-            "description": "collection_id of the collection to return",
+            "description": "Collection's unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -806,7 +942,7 @@
         "tags": [
           "Collection API"
         ],
-        "summary": "Updates a collection's data",
+        "summary": "Update collection data",
         "consumes": [
           "application/json"
         ],
@@ -817,7 +953,7 @@
           {
             "name": "collection_id",
             "in": "path",
-            "description": "collection_id of the collection to edit",
+            "description": "Collection's unique _id",
             "required": true,
             "type": "string"
           },
@@ -848,7 +984,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -917,7 +1053,7 @@
         "tags": [
           "Collection API"
         ],
-        "summary": "Deletes a collection and all its media",
+        "summary": "Delete a collection and all its media",
         "produces": [
           "application/json"
         ],
@@ -925,14 +1061,14 @@
           {
             "name": "collection_id",
             "in": "path",
-            "description": "collection_id of the collection to delete",
+            "description": "Collection's unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted collection",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -956,7 +1092,7 @@
         "tags": [
           "Collection Permission API"
         ],
-        "summary": "Manage read and write permissions of a media",
+        "summary": "See permissions of the collection",
         "consumes": [
           "application/json"
         ],
@@ -967,14 +1103,14 @@
           {
             "name": "collection_id",
             "in": "path",
-            "description": "collection_id of the collection",
+            "description": "Collection's unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated media perimission",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1061,7 +1197,8 @@
         "tags": [
           "Collection Permission API"
         ],
-        "summary": "Manage read and write permissions of a media",
+        "summary": "Chage a company member's collection permissions",
+        "description": "Admins can add and remove other admins and owners on top of having all other permissions. Owners can add and remove company members to have read_collection, update_collection, delete_collection, and post_media permissions. Owners can not add or remove admins or other owners",
         "consumes": [
           "application/json"
         ],
@@ -1072,7 +1209,7 @@
           {
             "name": "collection_id",
             "in": "path",
-            "description": "collection_id of the collection",
+            "description": "Collection's unique _id",
             "required": true,
             "type": "string"
           },
@@ -1116,7 +1253,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated media perimission",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1177,14 +1314,14 @@
         "tags": [
           "Media API"
         ],
-        "summary": "Get a list of media",
+        "summary": "Get media in the collection",
         "parameters": [
           {
             "name": "collection_id",
             "in": "path",
             "type": "string",
             "required": true,
-            "description": "Get all media in a certain collection"
+            "description": "Collection’s unique _id"
           },
           {
             "name": "created_by",
@@ -1231,7 +1368,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1271,7 +1408,7 @@
           {
             "name": "body",
             "in": "body",
-            "description": "array of an object that contains file name, location, and type",
+            "description": "Array of an object that contains file name, location, and type",
             "schema": {
               "type": "object",
               "properties": {
@@ -1327,7 +1464,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1361,46 +1498,6 @@
                 }
               }
             }
-          },
-          "201": {
-            "description": "Successfully operation but some files are not signed and saved. Note: this will be 200 in the actual API, Swagger doesn't allow me to specify this as 200",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "collection_id": {
-                  "type": "string",
-                  "example": "16093c440370bb24ee65a12b6c00ff0a"
-                },
-                "created_by": {
-                  "type": "string",
-                  "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "file_name": {
-                        "type": "string",
-                        "example": "file_name1.jpg"
-                      },
-                      "error": {
-                        "type": "string",
-                        "example": "Duplicate file name in the collection"
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1415,7 +1512,7 @@
         "tags": [
           "Media API"
         ],
-        "summary": "Returns data of a media designated by its _id",
+        "summary": "Get media data",
         "operationId": "getMediaById",
         "produces": [
           "application/json"
@@ -1424,14 +1521,14 @@
           {
             "name": "media_id",
             "in": "path",
-            "description": "_id of the media to return",
+            "description": "Media’s unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1456,8 +1553,8 @@
         "tags": [
           "Media API"
         ],
-        "summary": "Updates data of a media designated by its _id",
-        "operationId": "putMedia",
+        "summary": "Update media data",
+        "description": "This endpoint can be used to reupload or change a media file by setting reupload in the body to true",
         "consumes": [
           "application/json"
         ],
@@ -1468,7 +1565,7 @@
           {
             "name": "media_id",
             "in": "path",
-            "description": "_id of the media to return",
+            "description": "Media’s unique _id",
             "required": true,
             "type": "string"
           },
@@ -1522,7 +1619,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted file",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1623,7 +1720,7 @@
         "tags": [
           "Media API"
         ],
-        "summary": "Deletes a media",
+        "summary": "Delete media",
         "operationId": "deletMedia",
         "produces": [
           "application/json"
@@ -1632,14 +1729,14 @@
           {
             "name": "media_id",
             "in": "path",
-            "description": "_id of the media to delete",
+            "description": "Media’s unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted file",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1663,7 +1760,7 @@
         "tags": [
           "Media Permission API"
         ],
-        "summary": "Manage read and write permissions of a media",
+        "summary": "See permissions of the media",
         "consumes": [
           "application/json"
         ],
@@ -1674,14 +1771,14 @@
           {
             "name": "media_id",
             "in": "path",
-            "description": "collection_id of the collection",
+            "description": "Media’s unique _id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated media perimission",
+            "description": "Success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1768,7 +1865,8 @@
         "tags": [
           "Media Permission API"
         ],
-        "summary": "Manage read and write permissions of a media",
+        "summary": "Change a company member's media permissions",
+        "description": "Admins can add and remove other admins and owners on top of having all other permissions. Owners can add and remove company members to have read, update,  and delete permissions. Owners can not add or remove admins or other owners",
         "consumes": [
           "application/json"
         ],
@@ -1779,7 +1877,7 @@
           {
             "name": "media_id",
             "in": "path",
-            "description": "collection_id of the collection",
+            "description": "Media’s unique _id",
             "required": true,
             "type": "string"
           },
@@ -1819,7 +1917,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated media perimission",
+            "description": "Success",
               "schema": {
                 "type": "object",
                 "properties": {

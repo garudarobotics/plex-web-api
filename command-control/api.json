@@ -560,6 +560,14 @@
 						"type": "string",
 						"format": "metres",
 						"description": "Altitude of Home point in metres above mean sea level measures up to nearest centimetres"
+					},
+					"rssi" : {
+						"type": "string",
+						"description": "Received signal strength indicator on connected network"
+					},
+					"network_id" : {
+						"type" : "string",
+						"description" : "ID of network that UAS is currently connected to"
 					}
 				}
 			},

@@ -1,1362 +1,2556 @@
 {
-	"swagger": "2.0",
-	"info": {
-	  "description": "GR Media Microservice API Documentation",
-	  "version": "1.0.0",
-	  "title": "GR Media Microservice"
-	},
-	"host": "one.garuda.io",
-	"basePath": "/api",
-	"schemes": [
-	  "http"
-	],
-	"paths": {
-	  "/collections": {
-		"get": {
-		  "tags": [
-			"Collection API"
-		  ],
-		  "summary": "Get a list of collections",
-		  "parameters": [
-			{
-			  "name": "company_id",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all collections of a certain company"
-			},
-			{
-			  "name": "created_by",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all collections made by a certain user"
-			},
-			{
-			  "name": "created_on",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all collections made on a certain day"
-			},
-			{
-			  "name": "name",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get a collection by its name"
-			},
-			{
-			  "name": "project_id",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all collections in a project"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"items": {
-					  "$ref": "#/definitions/Collection"
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  },
-	  "/collection": {
-		"post": {
-		  "tags": [
-			"Collection API"
-		  ],
-		  "summary": "Add a new collection to the database",
-		  "operationId": "addCollection",
-		  "consumes": [
-			"application/json"
-		  ],
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "in": "body",
-			  "name": "body",
-			  "description": "Document object given by the client to the server",
-			  "required": true,
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "name": {
-					"type": "string",
-					"example": "Album 1"
-				  },
-				  "properties": {
-					"type": "object",
-					"properties": {
-					  "company_id": {
-						"type": "string",
-						"example": "16093c440370bb24ee65a12b6c00ff0a"
-					  },
-					  "project_id": {
-						"type": "string",
-						"example": "Project 1"
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"type": "object",
-					"properties": {
-					  "collection_id": {
-						"type": "string",
-						"example": "16093c440370bb24ee65a12b6c00ff0a"
-					  },
-					  "created_by": {
-						"type": "string",
-						"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-					  },
-					  "created_on": {
-						"type": "string",
-						"example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
-					  },
-					  "media": {
-						"type": "array",
-						"items": {
-						  "type": "string"
-						}
-					  },
-					  "name": {
-						"type": "string",
-						"example": "Album 1"
-					  },
-					  "path": {
-						"type": "string",
-						"example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
-					  },
-					  "properties": {
-						"type": "object",
-						"properties": {
-						  "company_id": {
-							"type": "string",
-							"example": "16093c440370bb24ee65a12b6c00ff0a"
-						  },
-						  "project_id": {
-							"type": "string",
-							"example": "Project 1"
-						  }
-						}
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  },
-	  "/collection/{collection_id}": {
-		"get": {
-		  "tags": [
-			"Collection API"
-		  ],
-		  "summary": "Returns data of a collection designated by its collection_id",
-		  "operationId": "getCollectionById",
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "collection_id",
-			  "in": "path",
-			  "description": "collection_id of the collection to return",
-			  "required": true,
-			  "type": "string"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"$ref": "#/definitions/Collection"
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		},
-		"put": {
-		  "tags": [
-			"Collection API"
-		  ],
-		  "summary": "Updates a collection's data",
-		  "consumes": [
-			"application/json"
-		  ],
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "collection_id",
-			  "in": "path",
-			  "description": "collection_id of the collection to edit",
-			  "required": true,
-			  "type": "string"
-			},
-			{
-			  "in": "body",
-			  "name": "body",
-			  "description": "Document object given by the client to the server",
-			  "required": true,
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "name": {
-					"type": "string",
-					"example": "Album 1"
-				  },
-				  "properties": {
-					"type": "object",
-					"properties": {
-					  "company_id": {
-						"type": "string",
-						"example": "16093c440370bb24ee65a12b6c00ff0a"
-					  },
-					  "project_id": {
-						"type": "string",
-						"example": "Project 1"
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"$ref": "#/definitions/Collection"
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		},
-		"delete": {
-		  "tags": [
-			"Collection API"
-		  ],
-		  "summary": "Deletes a collection and all its media",
-		  "operationId": "deleteCollection",
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "collection_id",
-			  "in": "path",
-			  "description": "collection_id of the collection to delete",
-			  "required": true,
-			  "type": "string"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successfully deleted collection",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  },
-	  "/media": {
-		"get": {
-		  "tags": [
-			"Media API"
-		  ],
-		  "summary": "Get a list of media",
-		  "parameters": [
-			{
-			  "name": "collection_id",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media in a certain collection"
-			},
-			{
-			  "name": "company_id",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media of a certain company"
-			},
-			{
-			  "name": "created_by",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media added by a certain user"
-			},
-			{
-			  "name": "created_on",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media made on a certain day"
-			},
-			{
-			  "name": "extension",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media of a certain extension"
-			},
-			{
-			  "name": "file_name",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get a media by its file name"
-			},
-			{
-			  "name": "location",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Query by object's location values ie.?location.name=Ministop&location.city=Quezon%20City"
-			},
-			{
-			  "name": "project_id",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media in a project"
-			},
-			{
-			  "name": "type",
-			  "in": "query",
-			  "type": "string",
-			  "description": "Get all media of a certain type"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"items": {
-					  "$ref": "#/definitions/Media"
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		},
-		"post": {
-		  "tags": [
-			"Media API"
-		  ],
-		  "summary": "Add media to a collection",
-		  "consumes": [
-			"application/json"
-		  ],
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "body",
-			  "in": "body",
-			  "description": "array of an object that contains file name, location, and type",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "collection_id": {
-					"type": "string",
-					"example": "16093c440370bb24ee65a12b6c00ff0a"
-				  },
-				  "files": {
-					"type": "array",
-					"items": {
-					  "type": "object",
-					  "properties": {
-						"file_name": {
-						  "type": "string",
-						  "example": "file_name1.jpg"
-						},
-						"location": {
-						  "type": "object",
-						  "properties": {
-							"lat": {
-							  "type": "number",
-							  "example": "14.64652,"
-							},
-							"lng": {
-							  "type": "number",
-							  "example": 121.059199
-							}
-						  }
-						},
-						"properties": {
-						  "type": "object",
-						  "properties": {
-							"company_id": {
-							  "type": "string",
-							  "example": "16093c440370bb24ee65a12b6c00ff0a"
-							},
-							"project_id": {
-							  "type": "string",
-							  "example": "Project 1"
-							}
-						  }
-						},
-						"type": {
-						  "type": "string",
-						  "example": "image"
-						}
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successfully operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "collection_id": {
-					"type": "string",
-					"example": "16093c440370bb24ee65a12b6c00ff0a"
-				  },
-				  "created_by": {
-					"type": "string",
-					"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-				  },
-				  "data": {
-					"type": "array",
-					"items": {
-					  "type": "object",
-					  "properties": {
-						"success": {
-						  "type": "boolean",
-						  "example": true
-						},
-						"file_name": {
-						  "type": "string",
-						  "example": "file_name1.jpg"
-						},
-						"file_id": {
-						  "type": "string",
-						  "example": "5b17c7da0497a749bc300d70"
-						},
-						"upload_path": {
-						  "type": "string",
-						  "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/collections/16093c440370bb24ee65a12b6c00ff0a/5b17c7da0497a749bc300d70/file_name1.jpg?AWSAccessKeyId=[access-key-omitted]&Expires=1470666057&Signature=[signature-omitted]"
-						}
-					  }
-					}
-				  }
-				}
-			  }
-			},
-			"201": {
-			  "description": "Successfully operation but some files are not signed and saved. Note: this will be 200 in the actual API, Swagger doesn't allow me to specify this as 200",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "collection_id": {
-					"type": "string",
-					"example": "16093c440370bb24ee65a12b6c00ff0a"
-				  },
-				  "created_by": {
-					"type": "string",
-					"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-				  },
-				  "data": {
-					"type": "array",
-					"items": {
-					  "type": "object",
-					  "properties": {
-						"success": {
-						  "type": "boolean",
-						  "example": true
-						},
-						"file_name": {
-						  "type": "string",
-						  "example": "file_name1.jpg"
-						},
-						"error": {
-						  "type": "string",
-						  "example": "Duplicate file name in the collection"
-						}
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  },
-	  "/media/{media_id}": {
-		"get": {
-		  "tags": [
-			"Media API"
-		  ],
-		  "summary": "Returns data of a media designated by its _id",
-		  "operationId": "getMediaById",
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "media_id",
-			  "in": "path",
-			  "description": "_id of the media to return",
-			  "required": true,
-			  "type": "string"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "successful operation",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"$ref": "#/definitions/Media"
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		},
-		"put": {
-		  "tags": [
-			"Media API"
-		  ],
-		  "summary": "Updates data of a media designated by its _id",
-		  "operationId": "putMedia",
-		  "consumes": [
-			"application/json"
-		  ],
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "media_id",
-			  "in": "path",
-			  "description": "_id of the media to return",
-			  "required": true,
-			  "type": "string"
-			},
-			{
-			  "name": "body",
-			  "in": "body",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "file_name": {
-					"type": "string",
-					"example": "file_name1.jpg"
-				  },
-				  "location": {
-					"type": "object",
-					"properties": {
-					  "lat": {
-						"type": "number",
-						"example": "14.64652,"
-					  },
-					  "lng": {
-						"type": "number",
-						"example": 121.059199
-					  }
-					}
-				  },
-				  "properties": {
-					"type": "object",
-					"properties": {
-					  "company_id": {
-						"type": "string",
-						"example": "16093c440370bb24ee65a12b6c00ff0a"
-					  },
-					  "project_id": {
-						"type": "string",
-						"example": "Project 1"
-					  }
-					}
-				  },
-				  "reupload": {
-					"type": "boolean",
-					"example": "true"
-				  },
-				  "type": {
-					"type": "string",
-					"example": "image"
-				  }
-				}
-			  }
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successfully deleted file",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"type": "object",
-					"properties": {
-					  "media": {
-						"type": "object",
-						"properties": {
-						  "_id": {
-							"type": "string",
-							"example": "034611ca922f665baa9444059f411fc4"
-						  },
-						  "collection_id": {
-							"type": "string",
-							"example": "16093c440370bb24ee65a12b6c00ff0a"
-						  },
-						  "created_by": {
-							"type": "string",
-							"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-						  },
-						  "created_on": {
-							"type": "string",
-							"example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
-						  },
-						  "extension": {
-							"type": "string",
-							"example": "png"
-						  },
-						  "file_name": {
-							"type": "string",
-							"example": "picture1.png"
-						  },
-						  "location": {
-							"$ref": "#/definitions/Location"
-						  },
-						  "modified_by": {
-							"type": "string",
-							"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-						  },
-						  "modified_on": {
-							"type": "string",
-							"example": "2018-06-01T10:40:52Z"
-						  },
-						  "path": {
-							"type": "string",
-							"example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a/034611ca922f665baa9444059f411fc4/picture1.png"
-						  },
-						  "properties": {
-							"type": "object",
-							"properties": {
-							  "company_id": {
-								"type": "string",
-								"example": "16093c440370bb24ee65a12b6c00ff0a"
-							  },
-							  "project_id": {
-								"type": "string",
-								"example": "Project 1"
-							  }
-							}
-						  },
-						  "type": {
-							"type": "string",
-							"enum": [
-							  "image",
-							  "video",
-							  "audio",
-							  "document",
-							  "orthomosaic",
-							  "3dmodel",
-							  "log",
-							  "file"
-							]
-						  }
-						}
-					  },
-					  "upload_path": {
-						"type": "string",
-						"example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/collections/16093c440370bb24ee65a12b6c00ff0a/5b17c7da0497a749bc300d70/file_name1.jpg?AWSAccessKeyId=[access-key-omitted]&Expires=1470666057&Signature=[signature-omitted]"
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		},
-		"delete": {
-		  "tags": [
-			"Media API"
-		  ],
-		  "summary": "Deletes a media",
-		  "operationId": "deletMedia",
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "media_id",
-			  "in": "path",
-			  "description": "_id of the media to delete",
-			  "required": true,
-			  "type": "string"
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successfully deleted file",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  },
-	  "/media/{media_id}/permissions": {
-		"put": {
-		  "tags": [
-			"Media Permisision API"
-		  ],
-		  "summary": "Manage read and update permissions of a media",
-		  "consumes": [
-			"application/json"
-		  ],
-		  "produces": [
-			"application/json"
-		  ],
-		  "parameters": [
-			{
-			  "name": "media_id",
-			  "in": "path",
-			  "description": "_id of the media to return",
-			  "required": true,
-			  "type": "string"
-			},
-			{
-			  "name": "body",
-			  "in": "body",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "user_id": {
-					"type": "string",
-					"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-					},
-					"superadmin": {
-						"type": "string",
-						"example": true
-						},
-				  "admin": {
-					"type": "string",
-					"example": true
-				  },
-				  "read": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "update": {
-					"type": "boolean",
-					"example": true
-				  }
-				}
-			  }
-			}
-		  ],
-		  "responses": {
-			"200": {
-			  "description": "Successfully updated media perimission",
-			  "schema": {
-				"type": "object",
-				"properties": {
-				  "success": {
-					"type": "boolean",
-					"example": true
-				  },
-				  "data": {
-					"type": "object",
-					"properties": {
-					  "media_id": {
-						"type": "string",
-						"example": "5b17c7da0497a749bc300d70"
-					  },
-					  "user_id": {
-						"type": "string",
-						"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-						},
-						"superadmin": {
-							"type": "boolean",
-							"example": true
-						},
-					  "admin": {
-						"type": "boolean",
-						"example": true
-					  },
-					  "read": {
-						"type": "boolean",
-						"example": true
-					  },
-					  "update": {
-						"type": "boolean",
-						"example": true
-					  }
-					}
-				  }
-				}
-			  }
-			}
-		  },
-		  "security": [
-			{
-			  "JWT": []
-			}
-		  ]
-		}
-	  }
-	},
-	"securityDefinitions": {
-	  "JWT": {
-		"type": "apiKey",
-		"name": "Authorization",
-		"in": "header"
-	  }
-	},
-	"definitions": {
-	  "Collection": {
-		"type": "object",
-		"properties": {
-		  "_id": {
-			"type": "string",
-			"example": "16093c440370bb24ee65a12b6c00ff0a"
-		  },
-		  "created_by": {
-			"type": "string",
-			"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-		  },
-		  "created_on": {
-			"type": "string",
-			"example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
-		  },
-		  "media": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "example": [
-				"034611ca922f665baa9444059f41317d",
-				"034611ca922f665baa9444059f4117bc",
-				"034611ca922f665baa9444059f411fc4"
-			  ]
-			}
-		  },
-		  "name": {
-			"type": "string",
-			"example": "Album 1"
-		  },
-		  "path": {
-			"type": "string",
-			"example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
-		  },
-		  "properties": {
-			"type": "object",
-			"properties": {
-			  "company_id": {
-				"type": "string",
-				"example": "16093c440370bb24ee65a12b6c00ff0a"
-			  },
-			  "project_id": {
-				"type": "string",
-				"example": "Project 1"
-			  },
-			  "total_items": {
-				"type": "integer"
-			  },
-			  "total_size": {
-				"type": "number"
-			  }
-			}
-		  }
-		}
-	  },
-	  "Media": {
-		"type": "object",
-		"properties": {
-		  "_id": {
-			"type": "string",
-			"example": "034611ca922f665baa9444059f411fc4"
-		  },
-		  "collection_id": {
-			"type": "string",
-			"example": "16093c440370bb24ee65a12b6c00ff0a"
-		  },
-		  "created_by": {
-			"type": "string",
-			"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-		  },
-		  "created_on": {
-			"type": "string",
-			"example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
-		  },
-		  "extension": {
-			"type": "string",
-			"example": "png"
-		  },
-		  "file_name": {
-			"type": "string",
-			"example": "picture1.png"
-		  },
-		  "location": {
-			"$ref": "#/definitions/Location"
-		  },
-		  "modified_by": {
-			"type": "string",
-			"example": "30dd879c-ee2f-11db-8314-0800200c9a66"
-		  },
-		  "modified_on": {
-			"type": "string",
-			"example": "2018-06-01T10:40:52Z"
-		  },
-		  "path": {
-			"type": "string",
-			"example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a/034611ca922f665baa9444059f411fc4/picture1.png"
-		  },
-		  "properties": {
-			"type": "object",
-			"properties": {
-			  "company_id": {
-				"type": "string",
-				"example": "16093c440370bb24ee65a12b6c00ff0a"
-			  },
-			  "project_id": {
-				"type": "string",
-				"example": "Project 1"
-			  }
-			}
-		  },
-		  "type": {
-			"type": "string",
-			"enum": [
-			  "image",
-			  "video",
-			  "audio",
-			  "document",
-			  "orthomosaic",
-			  "3dmodel",
-			  "log",
-			  "file"
-			]
-		  }
-		}
-	  },
-	  "MediaPermission": {
-		"type": "object",
-		"description": "Designates user permissions of a media",
-		"properties": {
-		  "_id": {
-			"type": "string",
-			"example": "034611ca922f665baa9444059f437d67"
-		  },
-		  "media_id": {
-			"type": "string",
-			"example": "034611ca922f665baa9444059f411fc4"
-			},
-			"superadmins": {
-				"type": "array",
-				"items": {
-					"type": "string",
-					"example": [
-					"30dd879c-ee2f-11db-8314-0800200c9a66"
-					]
-				}
-			},
-		  "admins": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "example": [
-				"30dd879c-ee2f-11db-8314-0800200c9a66"
-			  ]
-			}
-		  },
-		  "read": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "example": [
-				"30dd879c-ee2f-11db-8314-0800200c9a66",
-				"d5d3a274-5a15-4f0f-92e3-376c0eef3135",
-				"47d467fa-5664-47f1-9e5b-860a0c86e21c"
-			  ]
-			}
-		  },
-		  "update": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "example": [
-				"30dd879c-ee2f-11db-8314-0800200c9a66",
-				"d5d3a274-5a15-4f0f-92e3-376c0eef3135"
-			  ]
-			}
-		  }
-		}
-	  },
-	  "Location": {
-		"type": "object",
-		"description": "These values are obtained through the Google Reverse Geocoding API (https://developers.google.com/maps/documentation/geocoding/intro#GeocodingResponses) THIS WILL NOT BE A MODEL IN THE DB",
-		"properties": {
-		  "street_number": {
-			"type": "string"
-		  },
-		  "route": {
-			"type": "string"
-		  },
-		  "intersection": {
-			"type": "string"
-		  },
-		  "political": {
-			"type": "string"
-		  },
-		  "country": {
-			"type": "string"
-		  },
-		  "administrative_area_level_1": {
-			"type": "string"
-		  },
-		  "administrative_area_level_2": {
-			"type": "string"
-		  },
-		  "administrative_area_level_3": {
-			"type": "string"
-		  },
-		  "administrative_area_level_4": {
-			"type": "string"
-		  },
-		  "administrative_area_level_5": {
-			"type": "string"
-		  },
-		  "colloquial_area": {
-			"type": "string"
-		  },
-		  "locality": {
-			"type": "string"
-		  },
-		  "ward": {
-			"type": "string"
-		  },
-		  "premise": {
-			"type": "string"
-		  },
-		  "subpremise": {
-			"type": "string"
-		  },
-		  "postal_code": {
-			"type": "string"
-		  },
-		  "natural_feature": {
-			"type": "string"
-		  },
-		  "airport": {
-			"type": "string"
-		  },
-		  "park": {
-			"type": "string"
-		  },
-		  "point_of_interest": {
-			"type": "string"
-		  },
-		  "formatted_address": {
-			"type": "string"
-		  },
-		  "lat": {
-			"type": "number",
-			"example": 14.64652
-		  },
-		  "lng": {
-			"type": "number",
-			"example": 121.059199
-		  }
-		}
-	  },
-	  "All Possible Media Properties": {
-		"type": "object",
-		"description": "THIS WILL NOT BE A MODEL IN THE DB",
-		"properties": {
-		  "thumb_path": {
-			"type": "string"
-		  },
-		  "preview_path": {
-			"type": "string"
-		  },
-		  "company_id": {
-			"type": "string"
-		  },
-		  "project_id": {
-			"type": "string"
-		  },
-		  "size": {
-			"type": "number"
-		  },
-		  "camera_make": {
-			"type": "string"
-		  },
-		  "camera_model": {
-			"type": "string"
-		  },
-		  "focal_length": {
-			"type": "number"
-		  },
-		  "focal_length_35mm": {
-			"type": "number"
-		  },
-		  "aperture": {
-			"type": "number"
-		  },
-		  "fov": {
-			"type": "number"
-		  },
-		  "image_size": {
-			"type": "string"
-		  },
-		  "megapixels": {
-			"type": "string"
-		  },
-		  "shutter_speed": {
-			"type": "string"
-		  },
-		  "iso": {
-			"type": "number"
-		  },
-		  "flash": {
-			"type": "number"
-		  },
-		  "min_zoom": {
-			"type": "number"
-		  },
-		  "max_zoom": {
-			"type": "number"
-		  },
-		  "bounds": {
-			"type": "array",
-			"items": {
-			  "type": "array",
-			  "items": {
-				"type": "number"
-			  }
-			}
-		  },
-		  "tile_path": {
-			"type": "string"
-		  },
-		  "model_type": {
-			"type": "string"
-		  },
-		  "texture_path": {
-			"type": "string"
-		  },
-		  "mesh_path": {
-			"type": "string"
-		  },
-		  "image_parameters_path": {
-			"type": "string"
-		  },
-		  "pilots": {
-			"type": "array",
-			"items": {
-			  "type": "object",
-			  "properties": {
-				"user_id": {
-				  "type": "string"
-				},
-				"name": {
-				  "type": "string"
-				}
-			  }
-			}
-		  },
-		  "drone": {
-			"type": "object",
-			"properties": {
-			  "drone_id": {
-				"type": "string"
-			  },
-			  "drone_name": {
-				"type": "string"
-			  }
-			}
-		  },
-		  "flight_path": {
-			"type": "object",
-			"properties": {
-			  "arm": {
-				"type": "object",
-				"properties": {
-				  "lat": {
-					"type": "number"
-				  },
-				  "lng": {
-					"type": "number"
-				  },
-				  "t": {
-					"type": "number"
-				  }
-				}
-			  },
-			  "disarm": {
-				"type": "object",
-				"properties": {
-				  "lat": {
-					"type": "number"
-				  },
-				  "lng": {
-					"type": "number"
-				  },
-				  "t": {
-					"type": "number"
-				  }
-				}
-			  },
-			  "takeoff": {
-				"type": "object",
-				"properties": {
-				  "lat": {
-					"type": "number"
-				  },
-				  "lng": {
-					"type": "number"
-				  },
-				  "t": {
-					"type": "number"
-				  }
-				}
-			  },
-			  "start_time": {
-				"type": "string"
-			  },
-			  "end_time": {
-				"type": "string"
-			  }
-			}
-		  }
-		}
-	  }
-	}
+  "swagger": "2.0",
+  "info": {
+    "description": "GR Media Microservice API Documentation",
+    "version": "1.0.0",
+    "title": "GR Media Microservice"
+  },
+  "host": "https://int.api.garuda.io/media-service",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/companies": {
+      "get": {
+        "tags": [
+          "Company API"  
+        ],
+        "summary": "Get a list of all companies. Only available for GR Admin",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "5b640bbaf67bf314868d40ae"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "Singapore"
+                  },
+                  "created_by": {
+                    "type": "string",
+                    "example": "934bdfb3d6c0d5dc47b909960b917786"
+                  },
+                  "created_on": {
+                    "type": "string",
+                    "example": "Fri Aug 03 2018 16:00:58 GMT+0800 (+08)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Garuda Robotics Test"
+                  },
+                  "email": {
+                    "type":"string",
+                    "example": "hello@garudatest.io"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "verified"
+                  },
+                  "collections": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "5b640c1df67bf314868d40b0"
+                    }
+                  },
+                  "admins": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    }
+                  },
+                  "members": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    }
+                  },
+                  "update_company": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  },
+                  "delete_company": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  },
+                  "create_collection": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/company": {
+      "post": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Register a company",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Required body fields are country, email, name",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "example": "Singapore"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@company.io"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Test Company"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "5b640bbaf67bf314868d40ae"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "Singapore"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "Fri Aug 03 2018 16:00:58 GMT+0800 (+08)"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Test Company"
+                    },
+                    "email": {
+                      "type":"string",
+                      "example": "test@company.io"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "verified"
+                    },
+                    "collections": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "admins": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      }
+                    },
+                    "members": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "update_company": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "delete_company": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    },
+                    "create_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/company/{company_id}": {
+      "get": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Get company information and permissions",
+        "operationId": "getCollectionById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "description": "Company's unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "5b640bbaf67bf314868d40ae"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "Singapore"
+                  },
+                  "created_by": {
+                    "type": "string",
+                    "example": "934bdfb3d6c0d5dc47b909960b917786"
+                  },
+                  "created_on": {
+                    "type": "string",
+                    "example": "Fri Aug 03 2018 16:00:58 GMT+0800 (+08)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Garuda Robotics Test"
+                  },
+                  "email": {
+                    "type":"string",
+                    "example": "hello@garudatest.io"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "verified"
+                  },
+                  "collections": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "5b640c1df67bf314868d40b0"
+                    }
+                  },
+                  "admins": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    }
+                  },
+                  "members": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    }
+                  },
+                  "update_company": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  },
+                  "delete_company": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  },
+                  "create_collection": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "Bruce Wayne"
+                    }
+                  }
+                }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Update company's meta data",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "description": "Company's unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "example": "Indonesia"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "updated company"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "updated_email@company.com"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "verified"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project Test Update"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "5b640c1df67bf314868d40b0"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "example": "5b640bbaf67bf314868d40ae"
+                      },
+                      "created_by": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Collection Test Update"
+                      },
+                      "created_on": {
+                        "type": "string",
+                        "example": "Fri Aug 03 2018 16:02:37 GMT+0800 (+08)"
+                      },
+                      "collections": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "5b7bf747e930997ba00c2edd"
+                        }
+                      },
+                      "properties": {
+                        "type": "object",
+                        "properties": {
+                          "project_id": {
+                            "type": "string",
+                            "example": "Project Test Update"
+                          }
+                        }
+                      },
+                      "admins": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "934bdfb3d6c0d5dc47b909960b917786"
+                        }
+                      },
+                      "members": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "934bdfb3d6c0d5dc47b909960b917786"
+                        }
+                      },
+                      "update_company": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "Bruce Wayne"
+                        }
+                      },
+                      "delete_company": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "Bruce Wayne"
+                        }
+                      },
+                      "create_collection": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "Bruce Wayne"
+                        }
+                      },
+                      "modified_by": {
+                        "type": "string",
+                        "example": "GarudaRoboticsAdmin"
+                      },
+                      "modified_on": {
+                        "type": "string",
+                        "example": "Sat Sep 08 2018 01:10:02 GMT+0800 (+08)"
+                      }
+                    }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Deletes a company",
+        "description": "Sets a company's deleted_on to the date and the deleted_by with the JWT IDP ID",
+        "operationId": "deleteCollection",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "description": "Company's unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/company/{company_id}/permissions": {
+      "put": {
+        "tags": [
+          "Company Permission API"
+        ],
+        "summary": "Add company members and manage company permissions",
+        "description": "Admins can add and remove other admins and members. An IDP ID has to be in the member list to be added to the update_company, delete_company, and create_collection. Setting member to false deletes the IDP ID from the company and removes all other permissions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "description": "Company's unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "Gabe"
+                },
+                "admin": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "member": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "update_company": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "delete_company": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "create_collection": {
+                  "type": "boolean",
+                  "example": "false"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "example": "Gabe"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "member": {
+                      "type": "boolean",
+                      "example": "true"
+                    },
+                    "update_company": {
+                      "type": "boolean",
+                      "example": "true"
+                    },
+                    "delete_company": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "create_collection": {
+                      "type": "boolean",
+                      "example": "false"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collections": {
+      "get": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Get a list of collections",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections of a certain company"
+          },
+          {
+            "name": "created_by",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections made by a certain user"
+          },
+          {
+            "name": "created_on",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections made on a certain day"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string",
+            "description": "Get a collection by its name"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all collections in a project"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "5b640c1df67bf314868d40b0"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "example": "5b640bbaf67bf314868d40ae"
+                      },
+                      "created_by": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Test Collection 1"
+                      },
+                      "created_on": {
+                        "type": "string",
+                        "example": "Fri Aug 03 2018 16:02:37 GMT+0800 (+08)"
+                      },
+                      "media": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "5b641585f67bf314868d40b4"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "https://s3-ap-southeast-1.amazonaws.com/gr-media-bucket/5b640c1df67bf314868d40b0/5b641585f67bf314868d40b4/bg.png"
+                          }  
+                        }
+                      } 
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collection": {
+      "post": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Add a new collection to the company",
+        "operationId": "addCollection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Required body fields are name and company_id",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Album 1"
+                },
+                "company_id": {
+                  "type": "string",
+                  "example": "5b7bf5bee930997ba00c2eda"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "company_id": {
+                      "type": "string",
+                      "example": "5b640bbaf67bf314868d40ae"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
+                    },
+                    "media": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "FDSA"
+                    },
+                    "path": {
+                      "type": "string",
+                      "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "properties": {
+                      "type": "object",
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "example": "Project 1"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collection/{collection_id}": {
+      "get": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Get collection data",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "Collection's unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "5b640c1df67bf314868d40b0"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "example": "5b640bbaf67bf314868d40ae"
+                      },
+                      "created_by": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Test Collection 1"
+                      },
+                      "created_on": {
+                        "type": "string",
+                        "example": "Fri Aug 03 2018 16:02:37 GMT+0800 (+08)"
+                      },
+                      "media": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "5b641585f67bf314868d40b4"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "https://s3-ap-southeast-1.amazonaws.com/gr-media-bucket/5b640c1df67bf314868d40b0/5b641585f67bf314868d40b4/bg.png"
+                          }  
+                        }
+                      },
+                      "properties": {
+                        "type": "object",
+                        "properties": {
+                          "project_id": {
+                            "type": "string",
+                            "example": "Project 1"
+                          }
+                        }
+                      }
+                    }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Update collection data",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "Collection's unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Document object given by the client to the server",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Collection Test Update"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project Test Update"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "5b640c1df67bf314868d40b0"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "example": "5b640bbaf67bf314868d40ae"
+                      },
+                      "created_by": {
+                        "type": "string",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Collection Test Update"
+                      },
+                      "created_on": {
+                        "type": "string",
+                        "example": "Fri Aug 03 2018 16:02:37 GMT+0800 (+08)"
+                      },
+                      "media": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "5b641585f67bf314868d40b4"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "https://s3-ap-southeast-1.amazonaws.com/gr-media-bucket/5b640c1df67bf314868d40b0/5b641585f67bf314868d40b4/bg.png"
+                          }  
+                        }
+                      },
+                      "properties": {
+                        "type": "object",
+                        "properties": {
+                          "project_id": {
+                            "type": "string",
+                            "example": "Project Test Update"
+                          }
+                        }
+                      }
+                    }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Collection API"
+        ],
+        "summary": "Delete a collection and all its media",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "Collection's unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collection/{collection_id}/all_permissions": {
+      "get": {
+        "tags": [
+          "Collection Permission API"
+        ],
+        "summary": "See permissions of the collection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "Collection's unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "5b640c2af67bf314868d40b3"
+                    },
+                    "collection_id": {
+                      "type": "string",
+                      "example": "5b640c2af67bf314868d40b2"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "Fri Aug 03 2018 16:00:19 GMT+0800 (+08)"
+                    },
+                    "admins": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "owners": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      }
+                    },
+                    "read_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "update_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "delete_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "post_media": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collection/{collection_id}/permissions": {
+      "put": {
+        "tags": [
+          "Collection Permission API"
+        ],
+        "summary": "Chage a company member's collection permissions",
+        "description": "Admins can add and remove other admins and owners on top of having all other permissions. Owners can add and remove company members to have read_collection, update_collection, delete_collection, and post_media permissions. Owners can not add or remove admins or other owners",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "description": "Collection's unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "Gabe"
+                },
+                "admin": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "owner": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "read_collection": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "update_collection": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "delete_collection": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "post_media": {
+                  "type": "boolean",
+                  "example": "true"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "collection_id": {
+                      "type": "string",
+                      "example": "5b4efaa755990cae78c0ab15"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "example": "Gabe"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "owner": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "read_collection": {
+                      "type": "boolean",
+                      "example": "true"
+                    },
+                    "update_collection": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "delete_collection": {
+                      "type": "boolean",
+                      "example": "false"
+                    },
+                    "post_media": {
+                      "type": "boolean",
+                      "example": "true"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/collection/{collection_id}/media": {
+      "get": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Get media in the collection",
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Collection’s unique _id"
+          },
+          {
+            "name": "created_by",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media added by a certain user"
+          },
+          {
+            "name": "created_on",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media made on a certain day"
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media of a certain extension"
+          },
+          {
+            "name": "file_name",
+            "in": "query",
+            "type": "string",
+            "description": "Get a media by its file name"
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "type": "string",
+            "description": "Query by object's location values ie.?location.name=Ministop&location.city=Quezon%20City"
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media in a project"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string",
+            "description": "Get all media of a certain type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/Media"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/media": {
+      "post": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Add media to a collection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Array of an object that contains file name, location, and type",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection_id": {
+                  "type": "string",
+                  "example": "16093c440370bb24ee65a12b6c00ff0a"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "file_name": {
+                        "type": "string",
+                        "example": "file_name1.jpg"
+                      },
+                      "location": {
+                        "type": "object",
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "example": "14.64652,"
+                          },
+                          "lng": {
+                            "type": "number",
+                            "example": 121.059199
+                          }
+                        }
+                      },
+                      "properties": {
+                        "type": "object",
+                        "properties": {
+                          "company_id": {
+                            "type": "string",
+                            "example": "16093c440370bb24ee65a12b6c00ff0a"
+                          },
+                          "project_id": {
+                            "type": "string",
+                            "example": "Project 1"
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "image"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "file_name": {
+                        "type": "string",
+                        "example": "file_name1.jpg"
+                      },
+                      "file_id": {
+                        "type": "string",
+                        "example": "5b17c7da0497a749bc300d70"
+                      },
+                      "upload_path": {
+                        "type": "string",
+                        "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/collections/16093c440370bb24ee65a12b6c00ff0a/5b17c7da0497a749bc300d70/file_name1.jpg?AWSAccessKeyId=[access-key-omitted]&Expires=1470666057&Signature=[signature-omitted]"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/media/{media_id}": {
+      "get": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Get media data",
+        "operationId": "getMediaById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "Media’s unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/Media"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Update media data",
+        "description": "This endpoint can be used to reupload or change a media file by setting reupload in the body to true",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "Media’s unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file_name": {
+                  "type": "string",
+                  "example": "file_name1.jpg"
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "lat": {
+                      "type": "number",
+                      "example": "14.64652,"
+                    },
+                    "lng": {
+                      "type": "number",
+                      "example": 121.059199
+                    }
+                  }
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "company_id": {
+                      "type": "string",
+                      "example": "16093c440370bb24ee65a12b6c00ff0a"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "example": "Project 1"
+                    }
+                  }
+                },
+                "reupload": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "image"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "media": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "034611ca922f665baa9444059f411fc4"
+                        },
+                        "collection_id": {
+                          "type": "string",
+                          "example": "16093c440370bb24ee65a12b6c00ff0a"
+                        },
+                        "created_by": {
+                          "type": "string",
+                          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                        },
+                        "created_on": {
+                          "type": "string",
+                          "example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
+                        },
+                        "extension": {
+                          "type": "string",
+                          "example": "png"
+                        },
+                        "file_name": {
+                          "type": "string",
+                          "example": "picture1.png"
+                        },
+                        "location": {
+                          "$ref": "#/definitions/Location"
+                        },
+                        "modified_by": {
+                          "type": "string",
+                          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+                        },
+                        "modified_on": {
+                          "type": "string",
+                          "example": "2018-06-01T10:40:52Z"
+                        },
+                        "path": {
+                          "type": "string",
+                          "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a/034611ca922f665baa9444059f411fc4/picture1.png"
+                        },
+                        "properties": {
+                          "type": "object",
+                          "properties": {
+                            "company_id": {
+                              "type": "string",
+                              "example": "16093c440370bb24ee65a12b6c00ff0a"
+                            },
+                            "project_id": {
+                              "type": "string",
+                              "example": "Project 1"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "image",
+                            "video",
+                            "audio",
+                            "document",
+                            "orthomosaic",
+                            "3dmodel",
+                            "log",
+                            "file"
+                          ]
+                        }
+                      }
+                    },
+                    "upload_path": {
+                      "type": "string",
+                      "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/collections/16093c440370bb24ee65a12b6c00ff0a/5b17c7da0497a749bc300d70/file_name1.jpg?AWSAccessKeyId=[access-key-omitted]&Expires=1470666057&Signature=[signature-omitted]"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Media API"
+        ],
+        "summary": "Delete media",
+        "operationId": "deletMedia",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "Media’s unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/media/{media_id}/all_permissions": {
+      "get": {
+        "tags": [
+          "Media Permission API"
+        ],
+        "summary": "See permissions of the media",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "Media’s unique _id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "5b640c2af67bf314868d40b3"
+                    },
+                    "collection_id": {
+                      "type": "string",
+                      "example": "5b640c2af67bf314868d40b2"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "934bdfb3d6c0d5dc47b909960b917786"
+                    },
+                    "created_on": {
+                      "type": "string",
+                      "example": "Fri Aug 03 2018 16:00:19 GMT+0800 (+08)"
+                    },
+                    "admins": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "owners": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "example": "934bdfb3d6c0d5dc47b909960b917786"
+                      }
+                    },
+                    "read_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "update_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "delete_collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    },
+                    "post_media": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "example": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/media/{media_id}/permissions": {
+      "put": {
+        "tags": [
+          "Media Permission API"
+        ],
+        "summary": "Change a company member's media permissions",
+        "description": "Admins can add and remove other admins and owners on top of having all other permissions. Owners can add and remove company members to have read, update,  and delete permissions. Owners can not add or remove admins or other owners",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "media_id",
+            "in": "path",
+            "description": "Media’s unique _id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "Gabe"
+                },
+                "admin": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "owner": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "read": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "update": {
+                  "type": "boolean",
+                  "example": "true"
+                },
+                "delete": {
+                  "type": "boolean",
+                  "example": "true"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "user_id": {
+                    "type": "string",
+                    "example": "Gabe"
+                  },
+                  "admin": {
+                    "type": "boolean",
+                    "example": "false"
+                  },
+                  "owner": {
+                    "type": "boolean",
+                    "example": "false"
+                  },
+                  "read": {
+                    "type": "boolean",
+                    "example": "true"
+                  },
+                  "update": {
+                    "type": "boolean",
+                    "example": "true"
+                  },
+                  "delete": {
+                    "type": "boolean",
+                    "example": "true"
+                  }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Company": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b640bbaf67bf314868d40ae"
+        },
+        "country": {
+          "type": "string",
+          "example": "Singapore"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "934bdfb3d6c0d5dc47b909960b917786"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "Fri Aug 03 2018 16:00:58 GMT+0800 (+08)"
+        },
+        "name": {
+          "type": "string",
+          "example": "Garuda Robotics Test"
+        },
+        "email": {
+          "type":"string",
+          "example": "hello@garudatest.io"
+        },
+        "status": {
+          "type": "string",
+          "example": "verified"
+        },
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "5b640c1df67bf314868d40b0"
+          }
+        },
+        "admins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "934bdfb3d6c0d5dc47b909960b917786"
+          }
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "934bdfb3d6c0d5dc47b909960b917786"
+          }
+        },
+        "update_company": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Bruce Wayne"
+          }
+        },
+        "delete_company": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Bruce Wayne"
+          }
+        },
+        "create_collection": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Bruce Wayne"
+          }
+        }
+      }
+    },
+    "Collection": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "5b641585f67bf314868d40b4"
+              },
+              "path": {
+                "type": "string",
+                "example": "https://s3-ap-southeast-1.amazonaws.com/gr-media-bucket/5b640c1df67bf314868d40b0/5b641585f67bf314868d40b4/bg.png"
+              }  
+            }
+          }
+        },
+        "name": {
+          "type": "string",
+          "example": "Album 1"
+        },
+        "path": {
+          "type": "string",
+          "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "type": "string",
+              "example": "16093c440370bb24ee65a12b6c00ff0a"
+            },
+            "project_id": {
+              "type": "string",
+              "example": "Project 1"
+            },
+            "total_items": {
+              "type": "integer"
+            },
+            "total_size": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "Media": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "034611ca922f665baa9444059f411fc4"
+        },
+        "collection_id": {
+          "type": "string",
+          "example": "16093c440370bb24ee65a12b6c00ff0a"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "Tue Jun 12 2018 12:26:01 GMT+0800 (+08)"
+        },
+        "extension": {
+          "type": "string",
+          "example": "png"
+        },
+        "file_name": {
+          "type": "string",
+          "example": "picture1.png"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "modified_by": {
+          "type": "string",
+          "example": "30dd879c-ee2f-11db-8314-0800200c9a66"
+        },
+        "modified_on": {
+          "type": "string",
+          "example": "2018-06-01T10:40:52Z"
+        },
+        "path": {
+          "type": "string",
+          "example": "https://s3-ap-southeast-1.amazonaws.com/garuda-collections/16093c440370bb24ee65a12b6c00ff0a/034611ca922f665baa9444059f411fc4/picture1.png"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "type": "string",
+              "example": "16093c440370bb24ee65a12b6c00ff0a"
+            },
+            "project_id": {
+              "type": "string",
+              "example": "Project 1"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "image",
+            "video",
+            "audio",
+            "document",
+            "orthomosaic",
+            "3dmodel",
+            "log",
+            "file"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "uploading"
+          ]
+        }
+      }
+    },
+    "CollectionPermission": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b640c2af67bf314868d40b3"
+        },
+        "collection_id": {
+          "type": "string",
+          "example": "5b640c2af67bf314868d40b2"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "934bdfb3d6c0d5dc47b909960b917786"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "Fri Aug 03 2018 16:00:19 GMT+0800 (+08)"
+        },
+        "admins": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "example": "934bdfb3d6c0d5dc47b909960b917786"
+          }
+        },
+        "read_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "update_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "delete_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "post_media": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        }
+      }
+    },
+    "MediaPermission": {
+      "type": "object",
+      "description": "Designates user permissions of a media",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b640c2af67bf314868d40b3"
+        },
+        "collection_id": {
+          "type": "string",
+          "example": "5b640c2af67bf314868d40b2"
+        },
+        "created_by": {
+          "type": "string",
+          "example": "934bdfb3d6c0d5dc47b909960b917786"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "Fri Aug 03 2018 16:00:19 GMT+0800 (+08)"
+        },
+        "admins": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "example": "934bdfb3d6c0d5dc47b909960b917786"
+          }
+        },
+        "read_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "update_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "delete_collection": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        },
+        "post_media": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "example": []
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "description": "These values are obtained through the Google Reverse Geocoding API (https://developers.google.com/maps/documentation/geocoding/intro#GeocodingResponses) THIS WILL NOT BE A MODEL IN THE DB",
+      "properties": {
+        "street_number": {
+          "type": "string"
+        },
+        "route": {
+          "type": "string"
+        },
+        "intersection": {
+          "type": "string"
+        },
+        "political": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "administrative_area_level_1": {
+          "type": "string"
+        },
+        "administrative_area_level_2": {
+          "type": "string"
+        },
+        "administrative_area_level_3": {
+          "type": "string"
+        },
+        "administrative_area_level_4": {
+          "type": "string"
+        },
+        "administrative_area_level_5": {
+          "type": "string"
+        },
+        "colloquial_area": {
+          "type": "string"
+        },
+        "locality": {
+          "type": "string"
+        },
+        "ward": {
+          "type": "string"
+        },
+        "premise": {
+          "type": "string"
+        },
+        "subpremise": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "natural_feature": {
+          "type": "string"
+        },
+        "airport": {
+          "type": "string"
+        },
+        "park": {
+          "type": "string"
+        },
+        "point_of_interest": {
+          "type": "string"
+        },
+        "formatted_address": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "number",
+          "example": 14.64652
+        },
+        "lng": {
+          "type": "number",
+          "example": 121.059199
+        }
+      }
+    },
+    "All Possible Media Properties": {
+      "type": "object",
+      "description": "THIS WILL NOT BE A MODEL IN THE DB",
+      "properties": {
+        "thumb_path": {
+          "type": "string"
+        },
+        "preview_path": {
+          "type": "string"
+        },
+        "company_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        },
+        "camera_make": {
+          "type": "string"
+        },
+        "camera_model": {
+          "type": "string"
+        },
+        "focal_length": {
+          "type": "number"
+        },
+        "focal_length_35mm": {
+          "type": "number"
+        },
+        "aperture": {
+          "type": "number"
+        },
+        "fov": {
+          "type": "number"
+        },
+        "image_size": {
+          "type": "string"
+        },
+        "megapixels": {
+          "type": "string"
+        },
+        "shutter_speed": {
+          "type": "string"
+        },
+        "iso": {
+          "type": "number"
+        },
+        "flash": {
+          "type": "number"
+        },
+        "min_zoom": {
+          "type": "number"
+        },
+        "max_zoom": {
+          "type": "number"
+        },
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "tile_path": {
+          "type": "string"
+        },
+        "model_type": {
+          "type": "string"
+        },
+        "texture_path": {
+          "type": "string"
+        },
+        "mesh_path": {
+          "type": "string"
+        },
+        "image_parameters_path": {
+          "type": "string"
+        },
+        "pilots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "drone": {
+          "type": "object",
+          "properties": {
+            "drone_id": {
+              "type": "string"
+            },
+            "drone_name": {
+              "type": "string"
+            }
+          }
+        },
+        "flight_path": {
+          "type": "object",
+          "properties": {
+            "arm": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "disarm": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "takeoff": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                },
+                "t": {
+                  "type": "number"
+                }
+              }
+            },
+            "start_time": {
+              "type": "string"
+            },
+            "end_time": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
   }
+}

@@ -1,659 +1,1013 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Garuda Plex Drone Fleet API",
-    "description": "Specification for Drone Fleet API",
+    "title": "Fleet API",
+    "description": "Fleet APIs to manage companies, users, drones and equipment",
     "version": "0.0.1-DRAFT"
   },
   "servers": [
     {
-      "url": "https://int.api.garuda.io/fleet/",
+      "url": "https://localhost:3000/api/v1",
       "description": "Development Server"
     }
   ],
   "paths": {
-    "/drone/": {
-      "post": {
-        "tags": [
-          "Drone Management"
-        ],
-        "summary": "Create a new drone",
-        "description": "Create New Drone",
-        "requestBody": {
-          "description": "Drone specification",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Drone"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Airspace Data in GeoJSON",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Drone"
-                }
-              }
-            }
-          }
-        }
-      }
+    "/fleet/drones": {
+      "$ref": "#/components/routes/drones"
     },
-    "/battery_provider/": {
-      "post": {
-        "tags": [
-          "Inventory Management"
-        ],
-        "summary": "Create new battery provider",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ProviderRequest"
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/BatteryProviderResponse"
-          }
-        }
-      }
+    "/fleet/drones/{drone_id}": {
+      "$ref": "#/components/routes/drones-{drone_id}"
     },
-    "/battery_provider/{id}": {
-      "parameters": [
-        {
-          "in": "path",
-          "required": true,
-          "name": "id",
-          "schema": {
-            "type": "string"
-          },
-          "description": "Battery Provider ID"
-        }
-      ],
-      "put": {
-        "tags": [
-          "Inventory Management"
-        ],
-        "summary": "Update battery provider information",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ProviderRequest"
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/BatteryProviderResponse"
-          }
-        }
-      }
+    "/fleet/drone-providers": {
+      "$ref": "#/components/routes/drone-providers"
     },
-    "/drone_provider/": {
-      "post": {
-        "tags": [
-          "Drone Management"
-        ],
-        "summary": "Create new drone provider",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ProviderRequest"
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/BatteryProviderResponse"
-          }
-        }
-      }
+    "/fleet/drone-providers/{drone_provider_id}": {
+      "$ref": "#/components/routes/drone-providers-{drone_provider_id}"
     },
-    "/drone_providers/": {
-      "get": {
-        "tags": [
-          "Drone Management"
-        ],
-        "summary": "Get a list of drone providers",
-        "responses": {
-          "200": {
-            "description": "List of Drone Providers",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DroneProvider"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    "/fleet/drone-providers/{drone_provider_id}/drone-models": {
+      "$ref": "#/components/routes/drone-providers-{drone_provider_id}-drone-models"
     },
-    "/drone_models/": {
-      "get": {
-        "tags": [
-          "Drone Management"
-        ],
-        "summary": "Get a list of drone models",
-        "responses": {
-          "200": {
-            "description": "List of Drone Models",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DroneModel"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drone_provider/{id}": {
-      "parameters": [
-        {
-          "in": "path",
-          "required": true,
-          "name": "id",
-          "schema": {
-            "type": "string"
-          },
-          "description": "Battery Provider ID"
-        }
-      ],
-      "put": {
-        "tags": [
-          "Drone Management"
-        ],
-        "summary": "Update drone provider information",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ProviderRequest"
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/BatteryProviderResponse"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "requestBodies": {
-      "ProviderRequest": {
-        "description": "Provider specification",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Provider"
-            }
-          }
-        }
-      }
-    },
-    "responses": {
-      "BatteryProviderResponse": {
-        "description": "Battery Provider Response Body",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/BatteryProvider"
-            }
-          }
-        }
-      },
-      "DroneProviderResponse": {
-        "description": "Drone Provider Response Body",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/DroneProvider"
-            }
-          }
-        }
-      }
-    },
-    "schemas": {
-      "Provider": {
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "brand": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "brand"
-        ]
-      },
-      "Battery": {
-        "type": "object",
-        "properties": {
-          "model": {
-            "$ref": "#/components/schemas/BatteryModel"
-          }
-        }
-      },
-      "ExistingBatteryModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id"
-        ]
-      },
-      "BatteryModel": {
-        "type": "object",
-        "properties": {
-          "provider": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Provider"
-              },
-              {
-                "$ref": "#/components/schemas/BatteryProvider"
-              }
-            ]
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "chemistry": {
-            "type": "string"
-          },
-          "series": {
-            "type": "string"
-          },
-          "parallel": {
-            "type": "string"
-          },
-          "discharge_rate": {
-            "type": "string"
-          },
-          "capacity": {
-            "type": "string"
-          },
-          "avatar": {
-            "type": "string"
-          },
-          "weight_kg": {
-            "type": "string"
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "dimensions": {
-                "type": "object",
-                "properties": {
-                  "width": {
-                    "type": "string"
-                  },
-                  "length": {
-                    "type": "string"
-                  },
-                  "height": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "name",
-          "provider",
-          "chemistry",
-          "series",
-          "parallel",
-          "capacity",
-          "avatar",
-          "weight_kg"
-        ]
-      },
-      "BatteryProvider": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Provider"
-          },
-          {
-            "type": "object",
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      },
-      "CameraProvider": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Provider"
-          },
-          {
-            "type": "object",
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      },
-      "CameraModel": {
-        "type": "object",
-        "description": "Camera Model Schema",
-        "properties": {
-          "provider": {
-            "type": "object",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CameraProvider"
-              },
-              {
-                "$ref": "#/components/schemas/Provider"
-              }
-            ]
-          },
-          "name": {
-            "type": "string"
-          },
-          "avatar": {
-            "type": "string"
-          },
-          "weight_kg": {
-            "type": "string"
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "sensor_size": {
-                "type": "string"
-              },
-              "image_modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "video_modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "maximum_clip_length": {
-                "type": "string"
-              },
-              "image_file_formats": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "video_file_formats": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "lens_focal_length": {
-                "type": "string"
-              },
-              "lens_focal_length_35mm_equiv": {
-                "type": "string"
-              },
-              "optical_zoom": {
-                "type": "string"
-              },
-              "digital_zoom": {
-                "type": "string"
-              },
-              "aperture": {
-                "type": "string"
-              },
-              "image_stabilization": {
-                "type": "string"
-              },
-              "auto_focus": {
-                "type": "string"
-              },
-              "manual_focus": {
-                "type": "string"
-              },
-              "af_modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "af_lock": {
-                "type": "boolean"
-              },
-              "af_assist_lamp": {
-                "type": "boolean"
-              },
-              "focus_distance": {
-                "type": "string"
-              },
-              "metering": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "max_iso": {
-                "type": "object",
-                "properties": {
-                  "photo": {
-                    "type": "string"
-                  },
-                  "video": {
-                    "type": "string"
-                  }
-                }
-              },
-              "shutter_speed": {
-                "type": "string"
-              },
-              "modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "white_balance": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "continuous_shooting": {
-                "type": "string"
-              },
-              "connectivity": {
-                "type": "string"
-              },
-              "storage": {
-                "type": "string"
-              },
-              "power": {
-                "type": "string"
-              },
-              "dimensions": {
-                "type": "object",
-                "properties": {
-                  "length": {
-                    "type": "string"
-                  },
-                  "width": {
-                    "type": "string"
-                  },
-                  "height": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Drone": {
-        "type": "object",
-        "description": "Drone schema",
-        "properties": {
-          "type": {
-            "type": "string"
-          },
-          "purchased_date": {
-            "type": "string",
-            "description": "Date of purchase"
-          },
-          "model": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/DroneModel"
-              },
-              {
-                "$ref": "#/components/schemas/ExistingDroneModel"
-              }
-            ]
-          }
-        }
-      },
-      "DroneProvider": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Provider"
-          },
-          {
-            "type": "object",
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      },
-      "ExistingDroneModel": {
-        "type": "object",
-        "description": "Existing Drone Model",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id"
-        ]
-      },
-      "DroneModel": {
-        "type": "object",
-        "description": "New Drone Model",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "category": {
-            "type": "string",
-            "enum": [
-              "Quadcopter",
-              "Hexacopter",
-              "Octocopter",
-              "Fixedwing-plane",
-              "Heli",
-              "Boat"
-            ]
-          },
-          "avatar": {
-            "type": "string"
-          },
-          "compatibility": {
-            "type": "object",
-            "properties": {
-              "battery_models": {
-                "type": "array",
-                "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ExistingBatteryModel"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BatteryModel"
-                    }
-                  ]
-                },
-                "minItems": 0
-              },
-              "camera_models": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "minItems": 0
-              }
-            }
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "weight": {
-                "type": "string",
-                "description": "Weight in Kg"
-              },
-              "max_flight_time": {
-                "type": "string"
-              }
-            }
-          },
-          "provider": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/DroneProvider"
-              },
-              {
-                "$ref": "#/components/schemas/Provider"
-              }
-            ]
-          }
-        }
-      }
+    "/fleet/drone-providers/{drone_provider_id}/drone-models/{drone_model_id}": {
+      "$ref": "#/components/routes/drone-providers-{drone_provider_id}-drone-models-{drone_model_id}"
     }
   },
   "tags": [
     {
-      "name": "Drone Management",
-      "description": "Drone Fleet Management"
+      "name": "Drones",
+      "description": "Drone Management"
     }
-  ]
+  ],
+  "components": {
+    "routes": {
+      "drones": {
+        "get": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Get all drones",
+          "description": "Get all drones belonging to the company of the user.",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of drones",
+                        "items": {
+                          "$ref": "#/components/schemas/drone_data"
+                        },
+                        "example": [
+                          {
+                            "name": "DRONE-001",
+                            "drone_id": "7e7ed56fed0be0f555f8374e980056cd",
+                            "model": {
+                              "name": "M400 UAV",
+                              "model_id": "7e7ed56fed0be0f555f8374e980056cd"
+                            },
+                            "notes": "Purpose: Security Surveillance",
+                            "acquired_on": 1554090304172,
+                            "serviceable": true,
+                            "shared": false
+                          },
+                          {
+                            "name": "DRONE-002",
+                            "drone_id": "7e7ed56fed0be0f555f8374e980056cd",
+                            "model": {
+                              "name": "M408 UAV",
+                              "model_id": "7e7ed56fed0be0f555f8374e980056cd"
+                            },
+                            "notes": "Purpose: Plantation",
+                            "acquired_on": 1554090304172,
+                            "serviceable": true,
+                            "shared": false
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Create new drone",
+          "description": "Create a new drone belonging to the company of the user.",
+          "requestBody": {
+            "description": " **Required values:** `name`, `model_id`<br><br> **Optional values:** `notes`, `acquired_on`, `serviceable`, `shared` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "drones-{drone_id}": {
+        "get": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Get a drone",
+          "description": "Get a specific drone belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Update a drone",
+          "description": "Update a specific drone belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_id"
+            }
+          ],
+          "requestBody": {
+            "description": " **Optional values:** `name`, `model_id`, `notes`, `acquired_on`, `serviceable`, `shared` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Delete a drone",
+          "description": "Delete a specific drone belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "drone-providers": {
+        "get": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Get all drone providers",
+          "description": "Get all drones providers belonging to the company of the user.",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of drone providers",
+                        "items": {
+                          "$ref": "#/components/schemas/drone_provider_data"
+                        },
+                        "example": [
+                          {
+                            "name": "Garuda Robotics Pte. Ltd.",
+                            "drone_provider_id": "0c5c21b6a42fadb018a5d1863c34b35d",
+                            "brand": "Garuda",
+                            "country": "Singapore"
+                          },
+                          {
+                            "name": "Rugada Robotics Pte. Ltd.",
+                            "drone_provider_id": "0c5c21b6a42fadb018a5d1863c34b35d",
+                            "brand": "Rugada",
+                            "country": "Malaysia"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Create new drone provider",
+          "description": "Create a new drone provider belonging to the company of the user.",
+          "requestBody": {
+            "description": " **Required values:** `name`, `brand`, `country` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "drone-providers-{drone_provider_id}": {
+        "get": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Get a drone provider",
+          "description": "Get a specific drone provider belonging the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Update a drone provider",
+          "description": "Update a specific drone provider belonging the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            }
+          ],
+          "requestBody": {
+            "description": " **Optional values:** `name`, `brand`, `country` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Delete a drone provider",
+          "description": "Delete a specific drone provider belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "drone-providers-{drone_provider_id}-drone-models": {
+        "get": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Get all drone models",
+          "description": "Get all drones models of a specific drone provider belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of drone models",
+                        "items": {
+                          "$ref": "#/components/schemas/drone_model_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Create new drone model",
+          "description": "Create a new drone model for a specific provider belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            }
+          ],
+          "requestBody": {
+            "description": " **Required values:** `name`, `provider_id`, `category`, `weight`, `properties`<br><br> **Optional values:** `compatibility` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "drone-providers-{drone_provider_id}-drone-models-{drone_model_id}": {
+        "patch": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Update a drone model",
+          "description": "Update a specific drone model of a specific drone provider belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/drone_model_id"
+            }
+          ],
+          "requestBody": {
+            "description": " **Optional values:** `name`, `provider_id`, `category`, `weight`, `properties`, `compatibility` ",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drone_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Drones"
+          ],
+          "summary": "Delete a drone model",
+          "description": "Delete a specific drone model of a specific drone provider belonging to the company of the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/drone_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/drone_model_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/drone_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "drone_id": {
+        "name": "drone_id",
+        "in": "path",
+        "required": true,
+        "description": "Drone ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "drone_provider_id": {
+        "name": "drone_provider_id",
+        "in": "path",
+        "required": true,
+        "description": "Drone provider ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "drone_model_id": {
+        "name": "drone_model_id",
+        "in": "path",
+        "required": true,
+        "description": "Drone model ID",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "drone": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "DRONE-001"
+          },
+          "model_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd",
+            "description": "Drone model ID"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Primary purpose of drone: surveillance"
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172,
+            "description": "Date time acquired in milliseconds"
+          },
+          "serviceable": {
+            "type": "boolean",
+            "example": true
+          },
+          "shared": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "drone_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "DRONE-001"
+          },
+          "drone_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd"
+          },
+          "model": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "model_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "M400 UAV",
+              "model_id": "7e7ed56fed0be0f555f8374e980056cd"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Primary purpose of drone: surveillance"
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172,
+            "description": "Date time acquired in milliseconds"
+          },
+          "serviceable": {
+            "type": "boolean",
+            "example": true
+          },
+          "shared": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "drone_provider": {
+        "type": "object",
+        "required": [
+          "name",
+          "brand"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Garuda Robotics Pte. Ltd."
+          },
+          "brand": {
+            "type": "string",
+            "example": "Garuda"
+          },
+          "country": {
+            "type": "string",
+            "example": "Singapore"
+          }
+        }
+      },
+      "drone_provider_data": {
+        "type": "object",
+        "required": [
+          "name",
+          "brand"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Garuda Robotics Pte. Ltd."
+          },
+          "drone_provider_id": {
+            "type": "string",
+            "example": "0c5c21b6a42fadb018a5d1863c34b35d"
+          },
+          "brand": {
+            "type": "string",
+            "example": "Garuda"
+          },
+          "country": {
+            "type": "string",
+            "example": "Singapore"
+          }
+        }
+      },
+      "drone_model": {
+        "type": "object",
+        "required": [
+          "name",
+          "category",
+          "weight",
+          "properties"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "M06A"
+          },
+          "provider_id": {
+            "type": "string",
+            "example": "0c5c21b6a42fadb018a5d1863c37bb31",
+            "description": "A valid drone provider ID"
+          },
+          "category": {
+            "type": "string",
+            "example": "Hexacopter"
+          },
+          "compatibility": {
+            "type": "object",
+            "properties": {
+              "batteries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "0c5c21b6a42fadb018a5d1863c37bb31",
+                  "0c5c21b6a42fadb018a5d1863c36abd6",
+                  "0c5c21b6a42fadb018a5d1863c36c446",
+                  "0c5c21b6a42fadb018a5d1863c373f80",
+                  "0c5c21b6a42fadb018a5d1863c37565e"
+                ]
+              },
+              "cameras": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "0c5c21b6a42fadb018a5d1863c35fea4",
+                  "0c5c21b6a42fadb018a5d1863c360865"
+                ]
+              }
+            }
+          },
+          "weight": {
+            "type": "number",
+            "example": 2.6
+          },
+          "properties": {
+            "type": "object",
+            "required": [
+              "dimensions",
+              "max_flight_time",
+              "rc_frequency"
+            ],
+            "properties": {
+              "dimensions": {
+                "type": "object",
+                "required": [
+                  "width",
+                  "length",
+                  "height"
+                ],
+                "properties": {
+                  "width": {
+                    "type": "string",
+                    "example": "1.30"
+                  },
+                  "length": {
+                    "type": "string",
+                    "example": "1.30"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.30"
+                  }
+                }
+              },
+              "max_flight_time": {
+                "type": "string",
+                "example": "1.7 hours"
+              },
+              "rc_frequency": {
+                "type": "string",
+                "example": "2.400 - 2.483GHz"
+              }
+            }
+          }
+        }
+      },
+      "drone_model_data": {
+        "type": "object",
+        "required": [
+          "name",
+          "category",
+          "weight",
+          "properties"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "M06A"
+          },
+          "model_id": {
+            "type": "string",
+            "example": "0c5c21b6a42fadb018a5d1863c37bb31"
+          },
+          "provider": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "provider_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "Garuda Robotics",
+              "provider_id": "0c5c21b6a42fadb018a5d1863c37bb31"
+            }
+          },
+          "category": {
+            "type": "string",
+            "example": "Hexacopter"
+          },
+          "compatibility": {
+            "type": "object",
+            "properties": {
+              "batteries": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "battery_model_name": {
+                      "type": "string"
+                    },
+                    "battery_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "cameras": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "camera_model_name": {
+                      "type": "string"
+                    },
+                    "camera_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "batteries": [
+                {
+                  "name": "BATT-001",
+                  "battery_model_name": "Multistar 6S 6600",
+                  "battery_id": "0c5c21b6a42fadb018a5d1863c37bb31"
+                }
+              ],
+              "cameras": [
+                {
+                  "name": "CAM-001",
+                  "camera_model_name": "Git2",
+                  "camera_id": "0c5c21b6a42fadb018a5d1863c37bb31"
+                }
+              ]
+            }
+          },
+          "weight": {
+            "type": "number",
+            "example": 2.6,
+            "description": "Weight of drone in kg"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "type": "object",
+                "properties": {
+                  "width": {
+                    "type": "string",
+                    "example": "1.30"
+                  },
+                  "length": {
+                    "type": "string",
+                    "example": "1.30"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.30"
+                  }
+                }
+              },
+              "max_flight_time": {
+                "type": "string",
+                "example": "1.7 hours"
+              },
+              "rc_frequency": {
+                "type": "string",
+                "example": "2.400 - 2.483GHz"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

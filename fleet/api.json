@@ -45,6 +45,24 @@
     },
     "/fleet/camera-providers/{camera_provider_id}/camera-models/{camera_model_id}": {
       "$ref": "#/components/routes/camera-providers-{camera_provider_id}-camera-models-{camera_model_id}"
+    },
+    "/fleet/batteries": {
+      "$ref": "#/components/routes/batteries"
+    },
+    "/fleet/batteries/{battery_id}": {
+      "$ref": "#/components/routes/batteries-{battery_id}"
+    },
+    "/fleet/battery-providers": {
+      "$ref": "#/components/routes/battery-providers"
+    },
+    "/fleet/battery-providers/{battery_provider_id}": {
+      "$ref": "#/components/routes/battery-providers-{battery_provider_id}"
+    },
+    "/fleet/battery-providers/{battery_provider_id}/battery-models": {
+      "$ref": "#/components/routes/battery-providers-{battery_provider_id}-battery-models"
+    },
+    "/fleet/battery-providers/{battery_provider_id}/battery-models/{battery_model_id}": {
+      "$ref": "#/components/routes/battery-providers-{battery_provider_id}-battery-models-{battery_model_id}"
     }
   },
   "tags": [{
@@ -1158,6 +1176,540 @@
             }
           }
         }
+      },
+      "batteries": {
+        "get": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Get all batteries",
+          "description": "Get all batteries belonging to the company of the user",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of batteries",
+                        "items": {
+                          "$ref": "#/components/schemas/battery_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Create new battery",
+          "description": "Create a new battery belonging to the company of the user",
+          "requestBody": {
+            "description": " **Required values:** `name`, `model_id`<br><br> **Optional values:** `notes`, `acquired_on`, `shared`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "batteries-{battery_id}": {
+        "get": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Get a battery",
+          "description": "Get a specific battery belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Update a battery",
+          "description": "Update a specific battery belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_id"
+          }],
+          "requestBody": {
+            "description": " **Optional values:** `name`, `model_id`, `notes`, `acquired_on`, `shared`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Delete a battery",
+          "description": "Delete a specific battery belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery-providers": {
+        "get": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Get all battery providers",
+          "description": "Get all battery providers belonging to the company of the user.",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of battery providers",
+                        "items": {
+                          "$ref": "#/components/schemas/battery_provider_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Create new battery provider",
+          "description": "Create a new battery provider belonging to the company of the user.",
+          "requestBody": {
+            "description": "**Required values:** `name`, `brand`, `country`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery-providers-{battery_provider_id}": {
+        "get": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Get a battery provider",
+          "description": "Get a specific battery provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Update a battery provider",
+          "description": "Update a specific battery provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_provider_id"
+          }],
+          "requestBody": {
+            "description": "**Optional values:** `name`, `brand`, `country`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Delete a battery provider",
+          "description": "Delete a specific battery provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery-providers-{battery_provider_id}-battery-models": {
+        "get": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Get all battery models",
+          "description": "Get all battery models of a specific battery provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "successs": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of battery models",
+                        "items": {
+                          "$ref": "#/components/schemas/battery_model_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Create new battery model",
+          "description": "Create a new battery model for a specific provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/battery_provider_id"
+          }],
+          "requestBody": {
+            "description": "**Required values:** `name`, `provider_id`, `chemistry`, `series`, `parallel`, `capacity`, `weight`, `discharge_rate`<br><br> **Optional values:** `properties`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery-providers-{battery_provider_id}-battery-models-{battery_model_id}": {
+        "patch": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Update a battery model",
+          "description": "Update a specific battery model of a provider belonging to the company of the user.",
+          "parameters": [{
+              "$ref": "#/components/parameters/battery_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/battery_model_id"
+            }
+          ],
+          "requestBody": {
+            "description": "**Optional values:** `name`, `provider_id`, `chemistry`, `series`, `parallel`, `capacity`, `weight`, `discharge_rate`, `properties`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/battery_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Battery"
+          ],
+          "summary": "Delete a battery model",
+          "description": "Delete a specific battery model of a provider belonging to the company of the user.",
+          "parameters": [{
+              "$ref": "#/components/parameters/battery_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/battery_model_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/battery_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -1211,6 +1763,33 @@
         "in": "path",
         "required": true,
         "description": "Camera model ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "battery_id": {
+        "name": "battery_id",
+        "in": "path",
+        "required": true,
+        "description": "Battery ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "battery_provider_id": {
+        "name": "battery_provider_id",
+        "in": "path",
+        "required": true,
+        "description": "Battery provider ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "battery_model_id": {
+        "name": "battery_model_id",
+        "in": "path",
+        "required": true,
+        "description": "Battery model ID",
         "schema": {
           "type": "string"
         }
@@ -2068,6 +2647,251 @@
                   "height": {
                     "type": "string",
                     "example": "0.041"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "BATT-001"
+          },
+          "model_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd",
+            "description": "Battery model ID"
+          },
+          "notes": {
+            "type": "string",
+            "example": "This battery is meant for small drones only."
+          },
+          "shared": {
+            "type": "boolean",
+            "example": false
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172
+          }
+        }
+      },
+      "battery_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "BATT-001"
+          },
+          "model": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "model_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "Multistar 6S 6600",
+              "model_id": "7e7ed56fed0be0f555f8374e980056cd"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "This battery is meant for small drones only."
+          },
+          "shared": {
+            "type": "boolean",
+            "example": false
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172
+          }
+        }
+      },
+      "battery_provider": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Da-Jiang Innovations Science and Technology Co., Ltd"
+          },
+          "brand": {
+            "type": "string",
+            "example": "DJI"
+          },
+          "country": {
+            "type": "string",
+            "example": "China"
+          }
+        }
+      },
+      "battery_provider_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Da-Jiang Innovations Science and Technology Co., Ltd"
+          },
+          "provider_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd"
+          },
+          "brand": {
+            "type": "string",
+            "example": "DJI"
+          },
+          "country": {
+            "type": "string",
+            "example": "China"
+          }
+        }
+      },
+      "battery_model": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Multistar 6S 6600",
+            "description": "Name of battery model"
+          },
+          "provider_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd",
+            "description": "Battery provider ID"
+          },
+          "chemistry": {
+            "type": "string",
+            "example": "LiPo"
+          },
+          "series": {
+            "type": "string",
+            "example": "6"
+          },
+          "parallel": {
+            "type": "string",
+            "example": "1"
+          },
+          "capacity": {
+            "type": "string",
+            "example": "6600"
+          },
+          "weight": {
+            "type": "number",
+            "example": 0.794,
+            "description": "Weight of battery in kg"
+          },
+          "discharge_rate": {
+            "type": "string",
+            "example": ""
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "type": "object",
+                "required": [
+                  "width",
+                  "length",
+                  "height"
+                ],
+                "properties": {
+                  "width": {
+                    "type": "string",
+                    "example": "0.056"
+                  },
+                  "length": {
+                    "type": "string",
+                    "example": "0.0145"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.052"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "battery_model_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Multistar 6S 6600",
+            "description": "Name of battery model"
+          },
+          "provider": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "provider_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "Da-Jiang Innovations Science and Technology Co., Ltd",
+              "provider_id": "7e7ed56fed0be0f555f8374e980056cd"
+            },
+            "description": "Battery provider ID"
+          },
+          "chemistry": {
+            "type": "string",
+            "example": "LiPo"
+          },
+          "series": {
+            "type": "string",
+            "example": "6"
+          },
+          "parallel": {
+            "type": "string",
+            "example": "1"
+          },
+          "capacity": {
+            "type": "string",
+            "example": "6600"
+          },
+          "weight": {
+            "type": "number",
+            "example": 0.794,
+            "description": "Weight of battery in kg"
+          },
+          "discharge_rate": {
+            "type": "string",
+            "example": ""
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "type": "object",
+                "required": [
+                  "width",
+                  "length",
+                  "height"
+                ],
+                "properties": {
+                  "width": {
+                    "type": "string",
+                    "example": "0.056"
+                  },
+                  "length": {
+                    "type": "string",
+                    "example": "0.0145"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.052"
                   }
                 }
               }

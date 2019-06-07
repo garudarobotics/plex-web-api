@@ -5,12 +5,10 @@
     "description": "Fleet APIs to manage companies, users, drones and equipment",
     "version": "0.0.1-DRAFT"
   },
-  "servers": [
-    {
-      "url": "https://localhost:3000/api/v1",
-      "description": "Development Server"
-    }
-  ],
+  "servers": [{
+    "url": "https://localhost:8080/",
+    "description": "Development Server"
+  }],
   "paths": {
     "/fleet/drones": {
       "$ref": "#/components/routes/drones"
@@ -29,14 +27,30 @@
     },
     "/fleet/drone-providers/{drone_provider_id}/drone-models/{drone_model_id}": {
       "$ref": "#/components/routes/drone-providers-{drone_provider_id}-drone-models-{drone_model_id}"
+    },
+    "/fleet/cameras": {
+      "$ref": "#/components/routes/cameras"
+    },
+    "/fleet/cameras/{camera_id}": {
+      "$ref": "#/components/routes/cameras-{camera_id}"
+    },
+    "/fleet/camera-providers": {
+      "$ref": "#/components/routes/camera-providers"
+    },
+    "/fleet/camera-providers/{camera_provider_id}": {
+      "$ref": "#/components/routes/camera-providers-{camera_provider_id}"
+    },
+    "/fleet/camera-providers/{camera_provider_id}/camera-models": {
+      "$ref": "#/components/routes/camera-providers-{camera_provider_id}-camera-models"
+    },
+    "/fleet/camera-providers/{camera_provider_id}/camera-models/{camera_model_id}": {
+      "$ref": "#/components/routes/camera-providers-{camera_provider_id}-camera-models-{camera_model_id}"
     }
   },
-  "tags": [
-    {
-      "name": "Drones",
-      "description": "Drone Management"
-    }
-  ],
+  "tags": [{
+    "name": "Drones",
+    "description": "Drone Management"
+  }],
   "components": {
     "routes": {
       "drones": {
@@ -65,8 +79,7 @@
                         "items": {
                           "$ref": "#/components/schemas/drone_data"
                         },
-                        "example": [
-                          {
+                        "example": [{
                             "name": "DRONE-001",
                             "drone_id": "7e7ed56fed0be0f555f8374e980056cd",
                             "model": {
@@ -147,11 +160,9 @@
           ],
           "summary": "Get a drone",
           "description": "Get a specific drone belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_id"
+          }],
           "responses": {
             "200": {
               "description": "A successful request",
@@ -181,11 +192,9 @@
           ],
           "summary": "Update a drone",
           "description": "Update a specific drone belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_id"
+          }],
           "requestBody": {
             "description": " **Optional values:** `name`, `model_id`, `notes`, `acquired_on`, `serviceable`, `shared` ",
             "required": true,
@@ -226,11 +235,9 @@
           ],
           "summary": "Delete a drone",
           "description": "Delete a specific drone belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_id"
+          }],
           "responses": {
             "200": {
               "description": "A successful request",
@@ -281,8 +288,7 @@
                         "items": {
                           "$ref": "#/components/schemas/drone_provider_data"
                         },
-                        "example": [
-                          {
+                        "example": [{
                             "name": "Garuda Robotics Pte. Ltd.",
                             "drone_provider_id": "0c5c21b6a42fadb018a5d1863c34b35d",
                             "brand": "Garuda",
@@ -351,11 +357,9 @@
           ],
           "summary": "Get a drone provider",
           "description": "Get a specific drone provider belonging the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_provider_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_provider_id"
+          }],
           "responses": {
             "200": {
               "description": "A successful request",
@@ -385,11 +389,9 @@
           ],
           "summary": "Update a drone provider",
           "description": "Update a specific drone provider belonging the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_provider_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_provider_id"
+          }],
           "requestBody": {
             "description": " **Optional values:** `name`, `brand`, `country` ",
             "required": true,
@@ -430,11 +432,9 @@
           ],
           "summary": "Delete a drone provider",
           "description": "Delete a specific drone provider belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_provider_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_provider_id"
+          }],
           "responses": {
             "200": {
               "description": "A successful request",
@@ -466,11 +466,9 @@
           ],
           "summary": "Get all drone models",
           "description": "Get all drones models of a specific drone provider belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_provider_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_provider_id"
+          }],
           "responses": {
             "200": {
               "description": "A successful request",
@@ -504,11 +502,9 @@
           ],
           "summary": "Create new drone model",
           "description": "Create a new drone model for a specific provider belonging to the company of the user.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/drone_provider_id"
-            }
-          ],
+          "parameters": [{
+            "$ref": "#/components/parameters/drone_provider_id"
+          }],
           "requestBody": {
             "description": " **Required values:** `name`, `provider_id`, `category`, `weight`, `properties`<br><br> **Optional values:** `compatibility` ",
             "required": true,
@@ -551,8 +547,7 @@
           ],
           "summary": "Update a drone model",
           "description": "Update a specific drone model of a specific drone provider belonging to the company of the user.",
-          "parameters": [
-            {
+          "parameters": [{
               "$ref": "#/components/parameters/drone_provider_id"
             },
             {
@@ -599,8 +594,7 @@
           ],
           "summary": "Delete a drone model",
           "description": "Delete a specific drone model of a specific drone provider belonging to the company of the user.",
-          "parameters": [
-            {
+          "parameters": [{
               "$ref": "#/components/parameters/drone_provider_id"
             },
             {
@@ -622,6 +616,540 @@
                       },
                       "data": {
                         "$ref": "#/components/schemas/drone_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "cameras": {
+        "get": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Get all cameras",
+          "description": "Get all cameras belonging to the company of the user",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of cameras",
+                        "items": {
+                          "$ref": "#/components/schemas/camera_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Create new camera",
+          "description": "Create a new camera belonging to the company of the user",
+          "requestBody": {
+            "description": " **Required values:** `name`, `model_id`<br><br> **Optional values:** `notes`, `acquired_on`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "cameras-{camera_id}": {
+        "get": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Get a camera",
+          "description": "Get a specific camera belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Update a camera",
+          "description": "Update a specific camera belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_id"
+          }],
+          "requestBody": {
+            "description": " **Optional values:** `name`, `model_id`, `notes`, `acquired_on`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Delete a camera",
+          "description": "Delete a specific camera belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "camera-providers": {
+        "get": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Get all camera providers",
+          "description": "Get all camera providers belonging to the company of the user.",
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of camera providers",
+                        "items": {
+                          "$ref": "#/components/schemas/camera_provider_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Create new camera provider",
+          "description": "Create a new camera provider belonging to the company of the user.",
+          "requestBody": {
+            "description": "**Required values:** `name`, `brand`, `country`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "camera-providers-{camera_provider_id}": {
+        "get": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Get a camera provider",
+          "description": "Get a specific camera provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Update a camera provider",
+          "description": "Update a specific camera provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_provider_id"
+          }],
+          "requestBody": {
+            "description": "**Optional values:** `name`, `brand`, `country`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera_provider"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Delete a camera provider",
+          "description": "Delete a specific camera provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_provider_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "camera-providers-{camera_provider_id}-camera-models": {
+        "get": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Get all camera models",
+          "description": "Get all camera models of a specific camera provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_provider_id"
+          }],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "successs": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "type": "array",
+                        "description": "Array of camera models",
+                        "items": {
+                          "$ref": "#/components/schemas/camera_model_data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Create new camera model",
+          "description": "Create a new camera model for a specific provider belonging to the company of the user.",
+          "parameters": [{
+            "$ref": "#/components/parameters/camera_provider_id"
+          }],
+          "requestBody": {
+            "description": "**Required values:** `name`, `provider_id`, `weight`, `type`<br><br> **Optional values:** `properties`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "camera-providers-{camera_provider_id}-camera-models-{camera_model_id}": {
+        "patch": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Update a camera model",
+          "description": "Update a specific camera model of a provider belonging to the company of the user.",
+          "parameters": [{
+              "$ref": "#/components/parameters/camera_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/camera_model_id"
+            }
+          ],
+          "requestBody": {
+            "description": "**Optional values:** `name`, `provider_id`, `weight`, `type`, `properties`",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/camera_model"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_model_data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Camera"
+          ],
+          "summary": "Delete a camera model",
+          "description": "Delete a specific camera model of a provider belonging to the company of the user.",
+          "parameters": [{
+              "$ref": "#/components/parameters/camera_provider_id"
+            },
+            {
+              "$ref": "#/components/parameters/camera_model_id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A successful request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Status of the response"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/camera_model_data"
                       }
                     }
                   }
@@ -656,6 +1184,33 @@
         "in": "path",
         "required": true,
         "description": "Drone model ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "camera_id": {
+        "name": "camera_id",
+        "in": "path",
+        "required": true,
+        "description": "Camera ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "camera_provider_id": {
+        "name": "camera_provider_id",
+        "in": "path",
+        "required": true,
+        "description": "Camera provider ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "camera_model_id": {
+        "name": "camera_model_id",
+        "in": "path",
+        "required": true,
+        "description": "Camera model ID",
         "schema": {
           "type": "string"
         }
@@ -955,20 +1510,16 @@
               }
             },
             "example": {
-              "batteries": [
-                {
-                  "name": "BATT-001",
-                  "battery_model_name": "Multistar 6S 6600",
-                  "battery_id": "0c5c21b6a42fadb018a5d1863c37bb31"
-                }
-              ],
-              "cameras": [
-                {
-                  "name": "CAM-001",
-                  "camera_model_name": "Git2",
-                  "camera_id": "0c5c21b6a42fadb018a5d1863c37bb31"
-                }
-              ]
+              "batteries": [{
+                "name": "BATT-001",
+                "battery_model_name": "Multistar 6S 6600",
+                "battery_id": "0c5c21b6a42fadb018a5d1863c37bb31"
+              }],
+              "cameras": [{
+                "name": "CAM-001",
+                "camera_model_name": "Git2",
+                "camera_id": "0c5c21b6a42fadb018a5d1863c37bb31"
+              }]
             }
           },
           "weight": {
@@ -1003,6 +1554,522 @@
               "rc_frequency": {
                 "type": "string",
                 "example": "2.400 - 2.483GHz"
+              }
+            }
+          }
+        }
+      },
+      "camera": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "CAM-001"
+          },
+          "model_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd",
+            "description": "Camera model ID"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Camera is to be used for surveillance purposes."
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172,
+            "description": "Date-time in milliseconds of acquired date."
+          }
+        }
+      },
+      "camera_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "CAM-001"
+          },
+          "camera_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd"
+          },
+          "model": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "model_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "Git2",
+              "model_id": "7e7ed56fed0be0f555f8374e980056cd"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Camera is to be used for surveillance purposes."
+          },
+          "acquired_on": {
+            "type": "number",
+            "example": 1554090304172,
+            "description": "Date-time in milliseconds of acquired date."
+          }
+        }
+      },
+      "camera_provider": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "GoPro, Inc."
+          },
+          "brand": {
+            "type": "string",
+            "example": "GoPro"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "camera_provider_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "GoPro, Inc."
+          },
+          "provider_id": {
+            "type": "string",
+            "example": "7e7ed56fed0be0f555f8374e980056cd"
+          },
+          "brand": {
+            "type": "string",
+            "example": "GoPro"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "camera_model": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Git2"
+          },
+          "provider_id": {
+            "type": "string",
+            "example": "16093c440370bb24ee65a12b6c00ff0a",
+            "description": "A valid camera provider ID"
+          },
+          "weight": {
+            "type": "number",
+            "example": 0.064,
+            "description": "Weight of camera in kg"
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "RGB",
+              "NDIV"
+            ]
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "sensor_size": {
+                "type": "string",
+                "example": ""
+              },
+              "image_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "16MP(4608*3456)",
+                  "12MP (4032*3024)",
+                  "8MP (3264*2448)",
+                  "5MP (2592*1944)",
+                  "3MP (2048*1536)"
+                ]
+              },
+              "video_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "2160P HD video: 2880 x 2160; 24fps",
+                  "1440P HD video: 2560 x 1440; 30fps",
+                  "1440P 4:3 HD video: 1920 x 1440; 30fps",
+                  "1296P HD video: 2304 x 1296; 30fps",
+                  "1080P HD video: 1920 x 1080; 60fps",
+                  "1080P 4:3 HD video: 1440 x 1080; 60fps",
+                  "1080P HD video: 1920 x 1080; 30fps",
+                  "720P HD video: 1280 x 720; 120fps",
+                  "720P HD video: 1280 x 720; 60fps",
+                  "720P HD video: 1280 x 720; 30fps",
+                  "WVGA video: 848 x 480; 30fps",
+                  "VGA: 648 x 480; 240fps"
+                ]
+              },
+              "maximum_clip_length": {
+                "type": "string",
+                "example": ""
+              },
+              "image_file_formats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "video_file_formats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "H.264",
+                  "mp4"
+                ]
+              },
+              "lens_focal_length": {
+                "type": "string"
+              },
+              "lens_focal_length_35mm_equiv": {
+                "type": "string"
+              },
+              "optical_zoom": {
+                "type": "string"
+              },
+              "digital_zoom": {
+                "type": "string"
+              },
+              "aperture": {
+                "type": "string"
+              },
+              "image_stabilization": {
+                "type": "string"
+              },
+              "auto_focus": {
+                "type": "string"
+              },
+              "manual_focus": {
+                "type": "boolean"
+              },
+              "af_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "af_lock": {
+                "type": "boolean"
+              },
+              "af_assist_lamp": {
+                "type": "boolean"
+              },
+              "focus_distance": {
+                "type": "string"
+              },
+              "metering": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "max_iso": {
+                "type": "string"
+              },
+              "shutter_speed": {
+                "type": "string",
+                "example": "60 - 1/30 sec"
+              },
+              "modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "white_balance": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "continuous_shooting": {
+                "type": "string"
+              },
+              "connectivity": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Mini USB",
+                  "Micro HDMI"
+                ]
+              },
+              "storage": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "MicroSD"
+                ]
+              },
+              "power": {
+                "type": "string",
+                "example": "950mAh Lithium-Ion rechargeable battery"
+              },
+              "dimensions": {
+                "type": "object",
+                "required": [
+                  "length",
+                  "width",
+                  "height"
+                ],
+                "properties": {
+                  "length": {
+                    "type": "string",
+                    "example": "0.059"
+                  },
+                  "width": {
+                    "type": "string",
+                    "example": "0.030"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.041"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "camera_model_data": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Git2"
+          },
+          "model_id": {
+            "type": "string",
+            "example": "16093c440370bb24ee65a12b6c00ff0a"
+          },
+          "provider": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "provider_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+              "name": "GoPro Inc.",
+              "provider_id": "16093c440370bb24ee65a12b6c00ff0a"
+            }
+          },
+          "weight": {
+            "type": "number",
+            "example": 0.064,
+            "description": "Weight of camera in kg"
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "RGB",
+              "NDIV"
+            ]
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "sensor_size": {
+                "type": "string",
+                "example": ""
+              },
+              "image_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "16MP(4608*3456)",
+                  "12MP (4032*3024)",
+                  "8MP (3264*2448)",
+                  "5MP (2592*1944)",
+                  "3MP (2048*1536)"
+                ]
+              },
+              "video_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "2160P HD video: 2880 x 2160; 24fps",
+                  "1440P HD video: 2560 x 1440; 30fps",
+                  "1440P 4:3 HD video: 1920 x 1440; 30fps",
+                  "1296P HD video: 2304 x 1296; 30fps",
+                  "1080P HD video: 1920 x 1080; 60fps",
+                  "1080P 4:3 HD video: 1440 x 1080; 60fps",
+                  "1080P HD video: 1920 x 1080; 30fps",
+                  "720P HD video: 1280 x 720; 120fps",
+                  "720P HD video: 1280 x 720; 60fps",
+                  "720P HD video: 1280 x 720; 30fps",
+                  "WVGA video: 848 x 480; 30fps",
+                  "VGA: 648 x 480; 240fps"
+                ]
+              },
+              "maximum_clip_length": {
+                "type": "string",
+                "example": ""
+              },
+              "image_file_formats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "video_file_formats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "H.264",
+                  "mp4"
+                ]
+              },
+              "lens_focal_length": {
+                "type": "string"
+              },
+              "lens_focal_length_35mm_equiv": {
+                "type": "string"
+              },
+              "optical_zoom": {
+                "type": "string"
+              },
+              "digital_zoom": {
+                "type": "string"
+              },
+              "aperture": {
+                "type": "string"
+              },
+              "image_stabilization": {
+                "type": "string"
+              },
+              "auto_focus": {
+                "type": "string"
+              },
+              "manual_focus": {
+                "type": "boolean"
+              },
+              "af_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "af_lock": {
+                "type": "boolean"
+              },
+              "af_assist_lamp": {
+                "type": "boolean"
+              },
+              "focus_distance": {
+                "type": "string"
+              },
+              "metering": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "max_iso": {
+                "type": "string"
+              },
+              "shutter_speed": {
+                "type": "string",
+                "example": "60 - 1/30 sec"
+              },
+              "modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "white_balance": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "continuous_shooting": {
+                "type": "string"
+              },
+              "connectivity": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Mini USB",
+                  "Micro HDMI"
+                ]
+              },
+              "storage": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "MicroSD"
+                ]
+              },
+              "power": {
+                "type": "string",
+                "example": "950mAh Lithium-Ion rechargeable battery"
+              },
+              "dimensions": {
+                "type": "object",
+                "required": [
+                  "length",
+                  "width",
+                  "height"
+                ],
+                "properties": {
+                  "length": {
+                    "type": "string",
+                    "example": "0.059"
+                  },
+                  "width": {
+                    "type": "string",
+                    "example": "0.030"
+                  },
+                  "height": {
+                    "type": "string",
+                    "example": "0.041"
+                  }
+                }
               }
             }
           }

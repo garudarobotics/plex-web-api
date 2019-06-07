@@ -1,0 +1,1138 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Flight API",
+		"description": "Flight APIs to manage deployments, flight plans and flight sessions",
+		"version": "0.0.1-DRAFT"
+	},
+	"servers": [{
+		"url": "https://localhost:8080/",
+		"description": "Development Server"
+	}],
+	"paths": {
+		"/flight/deployments": {
+			"$ref": "#/components/routes/deployments"
+		},
+		"/flight/deployments/{deployment_id}": {
+			"$ref": "#/components/routes/deployments-{deployment_id}"
+		},
+		"/flight/deployments/{deployment_id}/plans": {
+			"$ref": "#/components/routes/deployments-{deployment_id}-plans"
+		},
+		"/flight/deployments/{deployment_id}/plans/{flight_plan_id}": {
+			"$ref": "#/components/routes/deployments-{deployment_id}-plans-{flight_plan_id}"
+		},
+		"/flight/deployments/{deployment_id}/sessions": {
+			"$ref": "#/components/routes/deployments-{deployment_id}-sessions"
+		},
+		"/flight/deployments/{deployment_id}/sessions/{flight_session_id}": {
+			"$ref": "#/components/routes/deployments-{deployment_id}-sessions-{flight_session_id}"
+		}
+	},
+	"tags": [{
+			"name": "Deployments",
+			"description": "Deployment Management"
+		},
+		{
+			"name": "Flight Plans",
+			"description": "Flight Plan Management"
+		},
+		{
+			"name": "Flight Sessions",
+			"description": "Flight Session Management"
+		}
+	],
+	"components": {
+		"routes": {
+			"deployments": {
+				"get": {
+					"tags": [
+						"Deployments"
+					],
+					"summary": "Get all deployments",
+					"description": "Get all deployments belonging to the company of the user.",
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"type": "array",
+												"description": "Array of deployments",
+												"items": {
+													"$ref": "#/components/schemas/deployment_data"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"post": {
+					"tags": [
+						"Deployments"
+					],
+					"summary": "Create new deployment",
+					"description": "Create a new deployment belonging to the company of the user.",
+					"requestBody": {
+						"description": " **Required values:** `name`, `drones`, `lead`, `start_date`, `end_date`, `geo_json`<br><br> **Optional values:** `batteries`, `cameras`, `personnel`, `purpose`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/deployment"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/deployment_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"deployments-{deployment_id}": {
+				"get": {
+					"tags": [
+						"Deployments"
+					],
+					"summary": "Get a deployment",
+					"description": "Get a specific deployment belonging to the company of the user",
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"type": "array",
+												"description": "Array of deployments",
+												"items": {
+													"$ref": "#/components/schemas/deployment_data"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"patch": {
+					"tags": [
+						"Deployments"
+					],
+					"summary": "Update a deployment",
+					"description": "Update a specific deployment belonging to the company of the user.",
+					"requestBody": {
+						"description": " **Optional values:** `name`, `drones`, `lead`, `batteries`, `cameras`, `personnel`, `purpose`, `start_date`, `end_date`, `geo_json`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/deployment"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/deployment_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"delete": {
+					"tags": [
+						"Deployments"
+					],
+					"summary": "Delete a deployment",
+					"description": "Delete a specific deployment belonging to the company of the user.",
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/deployment_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"deployments-{deployment_id}-plans": {
+				"get": {
+					"tags": [
+						"Flight Plans"
+					],
+					"summary": "Get all deployment flight plans",
+					"description": "Get all flight plans of a specific deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/deployment_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"type": "array",
+												"description": "Array of flight plans",
+												"items": {
+													"$ref": "#/components/schemas/flight_plan_data"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"post": {
+					"tags": [
+						"Flight Plans"
+					],
+					"summary": "Create new flight plan",
+					"description": "Create a new flight plan for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/deployment_id"
+					}],
+					"requestBody": {
+						"description": "**Required values:** `plan_type`, `description`, `plan`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/flight_plan"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_plan_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"deployments-{deployment_id}-plans-{flight_plan_id}": {
+				"get": {
+					"tags": [
+						"Flight Plans"
+					],
+					"summary": "Get a flight plan",
+					"description": "Get a specific flight plan for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_plan_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_plan_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"patch": {
+					"tags": [
+						"Flight Plans"
+					],
+					"summary": "Update a flight plan",
+					"description": "Update a specific flight plan for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_plan_id"
+					}],
+					"requestBody": {
+						"description": "**Optional values:** `plan_type`, `description`, `plan`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/flight_plan"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_plan_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"delete": {
+					"tags": [
+						"Flight Plans"
+					],
+					"summary": "Delete a flight plan",
+					"description": "Delete a specific flight plan for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_plan_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_plan_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"deployments-{deployment_id}-sessions": {
+				"get": {
+					"tags": [
+						"Flight Sessions"
+					],
+					"summary": "Get all deployment flight sessions",
+					"description": "Get all flight sessions of a specific deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/deployment_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"type": "array",
+												"description": "Array of flight sessions",
+												"items": {
+													"$ref": "#/components/schemas/flight_session_data"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"post": {
+					"tags": [
+						"Flight Sessions"
+					],
+					"summary": "Create new flight session",
+					"description": "Create a new flight session for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/deployment_id"
+					}],
+					"requestBody": {
+						"description": "**Required values:** `flight_plan_id`, `start_date_time`, `end_date_time`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/flight_session"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_session_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"deployments-{deployment_id}-sessions-{flight_session_id}": {
+				"get": {
+					"tags": [
+						"Flight Sessions"
+					],
+					"summary": "Get a flight session",
+					"description": "Get a specific flight session for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_session_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_session_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"patch": {
+					"tags": [
+						"Flight Sessions"
+					],
+					"summary": "Update a flight session",
+					"description": "Update a specific flight session for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_session_id"
+					}],
+					"requestBody": {
+						"description": "**Optional values:** `flight_plan_id`, `start_date_time`, `end_date_time`",
+						"required": true,
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/flight_session"
+								}
+							}
+						}
+					},
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_session_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"delete": {
+					"tags": [
+						"Flight Sessions"
+					],
+					"summary": "Delete a flight session",
+					"description": "Delete a specific flight session for a deployment belonging to the company of the user.",
+					"parameters": [{
+						"$ref": "#/components/parameters/flight_session_id"
+					}],
+					"responses": {
+						"200": {
+							"description": "A successful request",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"success": {
+												"type": "boolean",
+												"example": true,
+												"description": "Status of the response"
+											},
+											"data": {
+												"$ref": "#/components/schemas/flight_session_data"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"parameters": {
+			"deployment_id": {
+				"name": "deployment_id",
+				"in": "path",
+				"required": true,
+				"description": "Deployment ID",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"flight_plan_id": {
+				"name": "flight_plan_id",
+				"in": "path",
+				"required": true,
+				"description": "Flight Plan ID",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"flight_session_id": {
+				"name": "flight_session_id",
+				"in": "path",
+				"required": true,
+				"description": "Flight Session ID",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"company_id": {
+				"name": "company_id",
+				"in": "path",
+				"required": true,
+				"description": "Company ID",
+				"schema": {
+					"type": "string"
+				}
+			}
+		},
+		"schemas": {
+			"deployment": {
+				"type": "object",
+				"required": [
+					"name"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Zhao Shi Chong's Deployment on 2018-05-22",
+						"description": "Name of deployment"
+					},
+					"drones": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "Drone ID"
+						},
+						"example": [
+							"0c5c21b6a42fadb018a5d1863c312345",
+							"0c5c21b6a42fadb018a5d1863c312345"
+						]
+					},
+					"batteries": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "Battery ID"
+						},
+						"example": [
+							"0c5c21b6a42fadb018a5d1863c312345",
+							"0c5c21b6a42fadb018a5d1863c312345"
+						]
+					},
+					"cameras": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "Camera ID"
+						},
+						"example": [
+							"0c5c21b6a42fadb018a5d1863c312345",
+							"0c5c21b6a42fadb018a5d1863c312345"
+						]
+					},
+					"personnel": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "User ID"
+						},
+						"example": [
+							"0c5c21b6a42fadb018a5d1863c312345",
+							"0c5c21b6a42fadb018a5d1863c312345"
+						]
+					},
+					"lead": {
+						"type": "string",
+						"example": "0c5c21b6a42fadb018a5d1863c312345"
+					},
+					"purpose": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "Description of purpose"
+						},
+						"example": [
+							"Photography",
+							"Analytics",
+							"Security checks"
+						]
+					},
+					"start_date": {
+						"type": "string",
+						"example": "1559571926000",
+						"description": "Start date in milliseconds"
+					},
+					"end_date": {
+						"type": "string",
+						"example": "1559572026000",
+						"description": "End date in milliseconds"
+					},
+					"geo_json": {
+						"type": "string",
+						"example": "{ \"type\": \"Polygon\", \"coordinates\": [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }",
+						"description": "GeoJSON Polygon of deployment area"
+					}
+				}
+			},
+			"deployment_data": {
+				"type": "object",
+				"required": [
+					"name"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Zhao Shi Chong's Deployment on 2018-05-22",
+						"description": "Name of deployment"
+					},
+					"deployment_id": {
+						"type": "string",
+						"example": "0c5c21b6a42fadb018a5d1863c312345",
+						"description": "Deployment ID"
+					},
+					"drones": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"drone_id": {
+									"type": "string"
+								},
+								"model_name": {
+									"type": "string"
+								},
+								"model_id": {
+									"type": "string"
+								}
+							}
+						},
+						"example": [{
+								"name": "DEV-001",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "M400 UAV",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							},
+							{
+								"name": "DEV-002",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "M408 UAV",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							}
+						]
+					},
+					"batteries": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"battery_id": {
+									"type": "string"
+								},
+								"model_name": {
+									"type": "string"
+								},
+								"model_id": {
+									"type": "string"
+								}
+							}
+						},
+						"example": [{
+								"name": "BATTERY-001",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "Multistar 6S 6600",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							},
+							{
+								"name": "BATTERY-002",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "Multistar 6S 8000",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							}
+						]
+					},
+					"cameras": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"camera_id": {
+									"type": "string"
+								},
+								"model_name": {
+									"type": "string"
+								},
+								"model_id": {
+									"type": "string"
+								}
+							}
+						},
+						"example": [{
+								"name": "CAMERA-001",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "Huawei P30 Pro",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							},
+							{
+								"name": "CAMERA-002",
+								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"model_name": "Huawei P30 Pro X50",
+								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
+							}
+						]
+					},
+					"personnel": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"user_id": {
+									"type": "string"
+								}
+							}
+						},
+						"example": [{
+								"name": "Jayson Beltran",
+								"user_id": "0c5c21b6a42fadb018a5d1863c312345"
+							},
+							{
+								"name": "Ahmed Major",
+								"user_id": "0c5c21b6a42fadb018a5d1863c312345"
+							}
+						]
+					},
+					"lead": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"user_id": {
+								"type": "string"
+							}
+						},
+						"example": {
+							"name": "Asher Solomon",
+							"user_id": "0c5c21b6a42fadb018a5d1863c312345"
+						}
+					},
+					"purpose": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"description": "Description of purpose"
+						},
+						"example": [
+							"Photography",
+							"Analytics",
+							"Security checks"
+						]
+					},
+					"start_date": {
+						"type": "string",
+						"example": "1559571926000",
+						"description": "Start date in milliseconds"
+					},
+					"end_date": {
+						"type": "string",
+						"example": "1559572026000",
+						"description": "End date in milliseconds"
+					},
+					"geo_json": {
+						"type": "string",
+						"example": "{ \"type\": \"Polygon\", \"coordinates\": [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }",
+						"description": "GeoJSON Polygon of deployment area"
+					}
+				}
+			},
+			"flight_plan": {
+				"type": "object",
+				"properties": {
+					"plan_type": {
+						"type": "string",
+						"example": "ardupilot",
+						"description": "Type of plan"
+					},
+					"description": {
+						"type": "string",
+						"example": "Best flight plan ever",
+						"description": "Description of flight plan"
+					},
+					"plan": {
+						"type": "object",
+						"properties": {
+							"requirements": {
+								"type": "object"
+							},
+							"commands": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"example": "22",
+											"description": "Command ID"
+										},
+										"param1": {
+											"type": "string",
+											"example": "15",
+											"description": "Command parameter 1"
+										},
+										"param2": {
+											"type": "string",
+											"example": "16",
+											"description": "Command parameter 2"
+										},
+										"param3": {
+											"type": "string",
+											"example": "17",
+											"description": "Command parameter 3"
+										},
+										"param4": {
+											"type": "string",
+											"example": "18",
+											"description": "Command parameter 4"
+										},
+										"param5": {
+											"type": "string",
+											"example": "19",
+											"description": "Command parameter 5"
+										},
+										"param6": {
+											"type": "string",
+											"example": "20",
+											"description": "Command parameter 6"
+										},
+										"param7": {
+											"type": "string",
+											"example": "21",
+											"description": "Command parameter 7"
+										},
+										"description": {
+											"type": "string",
+											"example": "Take off (location TBD)",
+											"description": "Description of command"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"flight_plan_data": {
+				"type": "object",
+				"properties": {
+					"flight_plan_id": {
+						"type": "string",
+						"example": "0c5c21b6a42fadb018a5d1863c312345",
+						"description": "Flight Plan ID"
+					},
+					"deployment_id": {
+						"type": "string",
+						"example": "0c5c21b6a42fadb018a5d1863c312345",
+						"description": "Deployment ID"
+					},
+					"plan_type": {
+						"type": "string",
+						"example": "ardupilot",
+						"description": "Type of plan"
+					},
+					"description": {
+						"type": "string",
+						"example": "Best flight plan ever",
+						"description": "Description of flight plan"
+					},
+					"last_modified_date": {
+						"type": "string",
+						"description": "Datetime in milliseconds of the last modification"
+					},
+					"last_modified_by": {
+						"type": "string",
+						"description": "User ID of the last user that modified this flight plan"
+					},
+					"plan": {
+						"type": "object",
+						"properties": {
+							"requirements": {
+								"type": "object"
+							},
+							"commands": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"example": "22",
+											"description": "Command ID"
+										},
+										"param1": {
+											"type": "string",
+											"example": "15",
+											"description": "Command parameter 1 (Camera)"
+										},
+										"param2": {
+											"type": "string",
+											"example": "16",
+											"description": "Command parameter 2 (Target)"
+										},
+										"param3": {
+											"type": "string",
+											"example": "17",
+											"description": "Command parameter 3 (Return Location)"
+										},
+										"param4": {
+											"type": "string",
+											"example": "18",
+											"description": "Command parameter 4 (Navigate)"
+										},
+										"param5": {
+											"type": "string",
+											"example": "19",
+											"description": "Command parameter 5 (Move)"
+										},
+										"param6": {
+											"type": "string",
+											"example": "20",
+											"description": "Command parameter 6 (Yaw)"
+										},
+										"param7": {
+											"type": "string",
+											"example": "21",
+											"description": "Command parameter 7 (Take Off)"
+										},
+										"description": {
+											"type": "string",
+											"example": "Take off (location TBD)",
+											"description": "Description of command"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"flight_session": {
+				"type": "object",
+				"properties": {
+					"flight_plan_id": {
+						"type": "string",
+						"example": "034611ca922f665baa9444059fad251c",
+						"description": "Flight plan ID of the flight session"
+					},
+					"start_date_time": {
+						"type": "number",
+						"example": 1527469200000,
+						"description": "Timestamp of start date in milliseconds"
+					},
+					"end_date_time": {
+						"type": "number",
+						"example": 1527479200000,
+						"description": "Timestamp of end date in milliseconds"
+					}
+				}
+			},
+			"flight_session_data": {
+				"type": "object",
+				"properties": {
+					"flight_session_id": {
+						"type": "string",
+						"example": "034611ca922f665baa9444059fad251c",
+						"description": "Flight session ID"
+					},
+					"flight_plan_id": {
+						"type": "string",
+						"example": "034611ca922f665baa9444059fad251c",
+						"description": "Flight plan ID of the flight session"
+					},
+					"deployment_id": {
+						"type": "string",
+						"example": "034611ca922f665baa9444059fad251c",
+						"description": "Deployment ID of the flight session"
+					},
+					"start_date_time": {
+						"type": "number",
+						"example": 1527469200000,
+						"description": "Timestamp of start date in milliseconds"
+					},
+					"end_date_time": {
+						"type": "number",
+						"example": 1527479200000,
+						"description": "Timestamp of end date in milliseconds"
+					}
+				}
+			}
+		}
+	}
+}

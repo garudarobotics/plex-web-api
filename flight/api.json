@@ -85,7 +85,7 @@
 					"summary": "Create new deployment",
 					"description": "Create a new deployment belonging to the company of the user.",
 					"requestBody": {
-						"description": " **Required values:** `name`, `drones`, `lead`, `start_date`, `end_date`, `geo_json`<br><br> **Optional values:** `batteries`, `cameras`, `personnel`, `purpose`",
+						"description": "**Required values:** `name`, `drones`, `lead`, `start_date`, `end_date`, `geo_json`<br><br> **Optional values:** `batteries`, `cameras`, `personnel`, `purpose`",
 						"required": true,
 						"content": {
 							"application/json": {

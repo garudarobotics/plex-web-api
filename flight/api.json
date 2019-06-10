@@ -5,10 +5,12 @@
 		"description": "Flight APIs to manage deployments, flight plans and flight sessions",
 		"version": "0.0.1-DRAFT"
 	},
-	"servers": [{
-		"url": "https://localhost:8080/",
-		"description": "Development Server"
-	}],
+	"servers": [
+		{
+			"url": "https://localhost:8080/",
+			"description": "Development Server"
+		}
+	],
 	"paths": {
 		"/flight/deployments": {
 			"$ref": "#/components/routes/deployments"
@@ -29,7 +31,8 @@
 			"$ref": "#/components/routes/deployments-{deployment_id}-sessions-{flight_session_id}"
 		}
 	},
-	"tags": [{
+	"tags": [
+		{
 			"name": "Deployments",
 			"description": "Deployment Management"
 		},
@@ -126,6 +129,11 @@
 					],
 					"summary": "Get a deployment",
 					"description": "Get a specific deployment belonging to the company of the user",
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -159,6 +167,11 @@
 					],
 					"summary": "Update a deployment",
 					"description": "Update a specific deployment belonging to the company of the user.",
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"requestBody": {
 						"description": " **Optional values:** `name`, `drones`, `lead`, `batteries`, `cameras`, `personnel`, `purpose`, `start_date`, `end_date`, `geo_json`",
 						"required": true,
@@ -199,6 +212,11 @@
 					],
 					"summary": "Delete a deployment",
 					"description": "Delete a specific deployment belonging to the company of the user.",
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -230,9 +248,11 @@
 					],
 					"summary": "Get all deployment flight plans",
 					"description": "Get all flight plans of a specific deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/deployment_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -266,9 +286,11 @@
 					],
 					"summary": "Create new flight plan",
 					"description": "Create a new flight plan for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/deployment_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"requestBody": {
 						"description": "**Required values:** `plan_type`, `description`, `plan`",
 						"required": true,
@@ -311,9 +333,14 @@
 					],
 					"summary": "Get a flight plan",
 					"description": "Get a specific flight plan for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_plan_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_plan_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -343,9 +370,14 @@
 					],
 					"summary": "Update a flight plan",
 					"description": "Update a specific flight plan for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_plan_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_plan_id"
+						}
+					],
 					"requestBody": {
 						"description": "**Optional values:** `plan_type`, `description`, `plan`",
 						"required": true,
@@ -386,9 +418,14 @@
 					],
 					"summary": "Delete a flight plan",
 					"description": "Delete a specific flight plan for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_plan_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_plan_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -420,9 +457,11 @@
 					],
 					"summary": "Get all deployment flight sessions",
 					"description": "Get all flight sessions of a specific deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/deployment_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -456,9 +495,11 @@
 					],
 					"summary": "Create new flight session",
 					"description": "Create a new flight session for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/deployment_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						}
+					],
 					"requestBody": {
 						"description": "**Required values:** `flight_plan_id`, `start_date_time`, `end_date_time`",
 						"required": true,
@@ -501,9 +542,14 @@
 					],
 					"summary": "Get a flight session",
 					"description": "Get a specific flight session for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_session_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_session_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -533,9 +579,14 @@
 					],
 					"summary": "Update a flight session",
 					"description": "Update a specific flight session for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_session_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_session_id"
+						}
+					],
 					"requestBody": {
 						"description": "**Optional values:** `flight_plan_id`, `start_date_time`, `end_date_time`",
 						"required": true,
@@ -576,9 +627,14 @@
 					],
 					"summary": "Delete a flight session",
 					"description": "Delete a specific flight session for a deployment belonging to the company of the user.",
-					"parameters": [{
-						"$ref": "#/components/parameters/flight_session_id"
-					}],
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/deployment_id"
+						},
+						{
+							"$ref": "#/components/parameters/flight_session_id"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -766,7 +822,8 @@
 								}
 							}
 						},
-						"example": [{
+						"example": [
+							{
 								"name": "DEV-001",
 								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "M400 UAV",
@@ -799,7 +856,8 @@
 								}
 							}
 						},
-						"example": [{
+						"example": [
+							{
 								"name": "BATTERY-001",
 								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Multistar 6S 6600",
@@ -832,7 +890,8 @@
 								}
 							}
 						},
-						"example": [{
+						"example": [
+							{
 								"name": "CAMERA-001",
 								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Huawei P30 Pro",
@@ -859,7 +918,8 @@
 								}
 							}
 						},
-						"example": [{
+						"example": [
+							{
 								"name": "Jayson Beltran",
 								"user_id": "0c5c21b6a42fadb018a5d1863c312345"
 							},

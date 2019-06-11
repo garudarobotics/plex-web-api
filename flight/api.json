@@ -34,15 +34,15 @@
 	"tags": [
 		{
 			"name": "Deployments",
-			"description": "Deployment Management"
+			"description": "<p>Every time pilots are activated to fly drones, it is known as a <code>deployment</code>. A <code>deployment</code> is part of larger <code>project</code>, typically spans at least 1 flight session (or maybe a few minutes to a few hours), or multiple flight sessions. For each <code>deployment</code>, a leader, known as the <code>deployment lead</code> will plan the deployment for success, enlisting <code>pilots</code>, <code>drones</code>, and other equipment necessary. Proper <code>risk management</code> is required for every deployment, as are <code>permits</code> by the relevant authority (such as an Activity Permit by CAAS). Insurance coverage might also be purchased on a <code>deployment</code> basis instead of annual basis.</p> <p>To start working with deployments, we first have to create a deployment. Call the <code>/flights/deployments</code> endpoint with the <code>POST</code> method to create a new deployment. At minimum, you should pass in the following details in the request body:</p> <table> <thead> <tr> <th>Item</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>name</code></td> <td>String</td> <td>Name of the deployment</td> </tr> <tr> <td><code>drones</code></td> <td>Array</td> <td>Array of drone IDs to be used for the deployment</td> </tr> <tr> <td><code>deployment_lead_id</code></td> <td>String</td> <td>User ID of the deployment lead</td> </tr> <tr> <td><code>start_date</code></td> <td>String</td> <td>Start date of deployment in epoch (Unix timestamp), converted to milliseconds (ms)</td> </tr> <tr> <td><code>end_date</code></td> <td>String</td> <td>End date of deployment in epoch (Unix timestamp), converted to milliseconds (ms)</td> </tr> <tr> <td><code>deployment_area</code></td> <td>String</td> <td>GeoJSON string representation of the deployment area</td> </tr> </tbody> </table> <p>There are some additional details that you can add to the request body to flesh out your deployment details even further:</p> <table> <thead> <tr> <th>Item</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>batteries</code></td> <td>Array</td> <td>Array of battery IDs to be used for the deployment</td> </tr> <tr> <td><code>cameras</code></td> <td>Array</td> <td>Array of camera IDs to be used for the deployment</td> </tr> <tr> <td><code>personnel</code></td> <td>Array</td> <td>Array of user IDs of the personnel involved in the deployment</td> </tr> <tr> <td><code>purpose</code></td> <td>String</td> <td>Description of the purpose of deployment</td> </tr> </tbody> </table> <p>A deployment that has been successfully created will return a response with a <code>\"success\": true</code> body and a <code>200 OK</code> status. For more detailed response format, refer to the endpoint <code>POST /flight/deployments</code>.</p><p>Once you have successfully created your deployment, you are ready to draw up a flight plan.</p>"
 		},
 		{
 			"name": "Flight Plans",
-			"description": "Flight Plan Management"
+			"description": "<p>Every flight requires a valid and approved <code>flight plan</code> before your drone can safely take off. There are many factors that need to be taken into account when creating a <code>flight plan</code>, including the <code>plan type</code>, <code>requirements</code>, <code>commands</code>, and more. Every <code>flight plan</code> must be tagged to an existing <code>deployment</code>, and each <code>flight plan</code> can be reused as required for multiple <code>flight sessions</code>. </p> <p>To start, you can create a new flight plan by calling the <code>/flight/deployments/{deployment_id}/plans</code> endpoint with the <code>POST</code> method. Note that the <code>deployment_id</code> parameter in the request URL has to be a valid <code>deployment_id</code> belonging to your company. </p> <p>You should pass in at minimum the following details in the request body:</p> <table> <thead> <tr> <th>Item</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>plan_type</code></td> <td>String</td> <td>The type of the flight plan</td> </tr> <tr> <td><code>description</code></td> <td>String</td> <td>Description of the flight plan</td> </tr> <tr> <td><code>plan</code></td> <td>Object</td> <td>Object representing the actual flight plan</td> </tr> </tbody> </table> <p>The <code>plan</code> object has the following properties:</p> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>requirements</code></td> <td>Object</td> <td>Requirements of the flight plan</td> </tr> <tr> <td><code>commands</code></td> <td>Array of Objects</td> <td>Array of command objects that describe the commands to be executed during the flight</td> </tr> </tbody> </table> <p>A flight plan that is successfully created will return a response with a <code>\"success\": true</code> body and a <code>200 OK</code> status. For more detailed response format, refer to the endpoint <code>POST /flight/deployments/{deployment_id}/plans</code>.</p><p>Once your flight plan has been created and approved, you are ready to begin your first flight session!</p>"
 		},
 		{
 			"name": "Flight Sessions",
-			"description": "Flight Session Management"
+			"description": "<p>Once you have your flight plan approved, you are ready to fly!</p> <p>Each drone flight is represented by a flight session. Each <strong><code>flight session</code></strong> must be tagged to a valid and approved <strong><code>flight plan</code></strong> and an existing <strong><code>deployment</code></strong>. This set of endpoints allow you to manage and log the flight history of your deployments easily.</p> <p>To create a new <code>flight session</code>, use the <code>/flight/deployments/{deployment_id}/sessions</code> endpoint with the <code>POST</code> method. Note that the <code>deployment_id</code> parameter in the request URL has to be a valid <code>deployment_id</code> belonging to your company.</p> <p>You should pass in at minimum the following details in the request body:</p> <table> <thead> <tr> <th>Item</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>flight_plan_id</code></td> <td>String</td> <td>A valid and approved flight plan ID</td> </tr> <tr> <td><code>start_date_time</code></td> <td>String</td> <td>Start time of flight session in epoch (Unix timestamp), converted to milliseconds (ms)</td> </tr> <tr> <td><code>end_date_time</code></td> <td>String</td> <td>End time of flight session in epoch (Unix timestamp), converted to milliseconds (ms)</td> </tr> </tbody> </table> <p>A flight session that is successfully logged to your deployment will return the following response:</p> <pre><code>{ <br>  \"success\": true, <br>  \"data\": {<br>    \"flight_session_id\": \"FLIGHT_SESSION_ID\", <br>    \"flight_plan_id\": \"FLIGHT_PLAN_ID\", <br>    \"deployment_id\": \"DEPLOYMENT_ID\", <br>    \"start_date_time\": START_TIME, <br>    \"end_date_time\": END_TIME <br>  } <br>} </code></pre>"
 		}
 	],
 	"components": {
@@ -54,6 +54,11 @@
 					],
 					"summary": "Get all deployments",
 					"description": "Get all deployments belonging to the company of the user.",
+					"parameters": [
+						{
+							"$ref": "#/components/parameters/options"
+						}
+					],
 					"responses": {
 						"200": {
 							"description": "A successful request",
@@ -661,6 +666,19 @@
 			}
 		},
 		"parameters": {
+			"options": {
+				"name": "options",
+				"in": "query",
+				"required": false,
+				"description": "Deep/shallow fetch option (Default: Shallow)",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"deep",
+						"shallow"
+					]
+				}
+			},
 			"deployment_id": {
 				"name": "deployment_id",
 				"in": "path",
@@ -859,13 +877,13 @@
 						"example": [
 							{
 								"name": "BATTERY-001",
-								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"battery_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Multistar 6S 6600",
 								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
 							},
 							{
 								"name": "BATTERY-002",
-								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"battery_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Multistar 6S 8000",
 								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
 							}
@@ -893,13 +911,13 @@
 						"example": [
 							{
 								"name": "CAMERA-001",
-								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"camera_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Huawei P30 Pro",
 								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
 							},
 							{
 								"name": "CAMERA-002",
-								"drone_id": "0c5c21b6a42fadb018a5d1863c312345",
+								"camera_id": "0c5c21b6a42fadb018a5d1863c312345",
 								"model_name": "Huawei P30 Pro X50",
 								"model_id": "0c5c21b6a42fadb018a5d1863c312345"
 							}

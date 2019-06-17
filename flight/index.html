@@ -483,6 +483,60 @@
 <h2 id='deployments'>Deployments</h2>
 <p>Every time pilots are activated to fly drones, it is known as a <code>deployment</code>. A <code>deployment</code> is part of larger <code>project</code>, typically spans at least 1 flight session (or maybe a few minutes to a few hours), or multiple flight sessions. For each <code>deployment</code>, a leader, known as the <code>deployment lead</code> will plan the deployment for success, enlisting <code>pilots</code>, <code>drones</code>, and other equipment necessary. Proper <code>risk management</code> is required for every deployment, as are <code>permits</code> by the relevant authority (such as an Activity Permit by CAAS). Insurance coverage might also be purchased on a <code>deployment</code> basis instead of annual basis.</p>
 
+<blockquote>
+<p>A full <code>deployment</code> object, including all optional properties</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEPLOYMENT-001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b6d1671011c488c6583f07824fbf2c1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Delivery, Discharge"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"batteries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BATTERY-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"battery_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Multistar 6S 6600"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4b38b7383fdb23fbff8c3a6a694e4533"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAMERA-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"camera_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Powershot S100"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0e51493cd1ae85c097547de808642659"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"payloads"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Small Box"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"personnel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-002"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"deployment_lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"deployment_area"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559571926000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559572026000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>Each <code>deployment</code> object will have the following properties:</p>
 
 <table><thead>
@@ -503,19 +557,39 @@
 <td>Unique deployment ID</td>
 </tr>
 <tr>
+<td><code>company_id</code></td>
+<td>String</td>
+<td>Unique company ID</td>
+</tr>
+<tr>
+<td><code>project_id</code></td>
+<td>String</td>
+<td>Unique project ID</td>
+</tr>
+<tr>
+<td><code>purpose</code></td>
+<td>Array</td>
+<td>Array of enumerated strings describing the purpose of the deployment. Refer to the table below for the valid enums</td>
+</tr>
+<tr>
 <td><code>drones</code></td>
 <td>Array</td>
-<td>Array of <a href="#">drone objects</a> tagged to the deployment</td>
+<td>Array of <a href="#drones">drone objects</a> tagged to the deployment</td>
 </tr>
 <tr>
 <td><code>batteries</code></td>
 <td>Array</td>
-<td>Array of <a href="#">battery objects</a> tagged to the deployment</td>
+<td>Array of <a href="#batteries">battery objects</a> tagged to the deployment</td>
 </tr>
 <tr>
 <td><code>cameras</code></td>
 <td>Array</td>
-<td>Array of <a href="#">camera objects</a> tagged to the deployment</td>
+<td>Array of <a href="#cameras">camera objects</a> tagged to the deployment</td>
+</tr>
+<tr>
+<td><code>payloads</code></td>
+<td>Array</td>
+<td>Array of strings, each describing a payload tagged to the deployment</td>
 </tr>
 <tr>
 <td><code>personnel</code></td>
@@ -528,9 +602,9 @@
 <td><a href="#">User object</a> representing the deployment lead</td>
 </tr>
 <tr>
-<td><code>purpose</code></td>
-<td>Array</td>
-<td>Array of enumerated strings describing the purpose of the deployment. Refer to the table below for the valid enums</td>
+<td><code>deployment_area</code></td>
+<td>String</td>
+<td><a href="https://geojson.org">GeoJSON</a> string representation of the deployment area</td>
 </tr>
 <tr>
 <td><code>start_date</code></td>
@@ -543,9 +617,9 @@
 <td>End date of deployment in epoch (Unix timestamp), converted to milliseconds (ms)</td>
 </tr>
 <tr>
-<td><code>deployment_area</code></td>
+<td><code>status</code></td>
 <td>String</td>
-<td><a href="https://geojson.org">GeoJSON</a> string representation of the deployment area</td>
+<td>Enumerated string describing the status of the deployment. See below for the list of enums.</td>
 </tr>
 </tbody></table>
 
@@ -560,6 +634,22 @@
 <td><code>Aerial Photography</code>, <code>Demonstration</code>, <code>Inspection (Building, Facility)</code>, <code>Surveillance (Security)</code>, <code>First Response</code>, <code>Recreational, Internal Training</code>, <code>Research &amp; Development</code>, <code>Aerial Videography</code>, <code>Training (Academy)</code>, <code>Survey (Land, Plantation)</code>, <code>Delivery, Discharge</code></td>
 </tr>
 </tbody></table>
+
+<p>The property <code>status</code> represents the status of deployment, and can be one of the following 4 enums:</p>
+
+<table><thead>
+<tr>
+<th>Status</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>new</code>, <code>draft</code>, <code>pending</code>, <code>ready to fly</code>, <code>cancelled</code></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><em>Currently the <code>deployment_area</code> is represented by a GeoJSON string. Should be updated to change to an actual GeoJSON object.</em></p>
+</blockquote>
 <h3 id='get-all-deployments'>Get all deployments</h3>
 <blockquote>
 <p>Code samples</p>
@@ -619,28 +709,27 @@
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEPLOYMENT-001"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b6d1671011c488c6583f07824fbf2c1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Aerial Photography"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
           </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"batteries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BATTERY-001"</span><span class="p">,</span><span class="w">
           </span><span class="s2">"battery_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Multistar 6S 6600"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4b38b7383fdb23fbff8c3a6a694e4533"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAMERA-001"</span><span class="p">,</span><span class="w">
           </span><span class="s2">"camera_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Powershot S100"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0e51493cd1ae85c097547de808642659"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"personnel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -649,43 +738,43 @@
           </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"deployment_lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-001"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"Aerial Photography"</span><span class="w">
-      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"deployment_area"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559571926000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559572026000"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"geo_json"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ready to fly"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><code>GET /flight/deployments</code></p>
 
+<p><code>GET /flight/deployments?project_id=&lt;PROJECT_ID&gt;</code></p>
+
 <p>Get all deployments belonging to the company of the user. Calling this endpoint will return you an array of JSON objects representing each deployment created under the company.</p>
 
-<p>You can specify the extent of which to fetch the data via query strings:</p>
+<p>You can retrieve all deployments belonging to your company via this endpoint. This endpoint also allows you to specify if you would like to filter by <code>project</code> via query strings. </p>
+
+<p>You can also specify the extent of which to fetch the data via query strings:</p>
 
 <table><thead>
 <tr>
 <th>Query</th>
-<th>Default</th>
 <th>Values</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>options</code></td>
-<td><code>shallow</code></td>
 <td><code>shallow</code>, <code>deep</code></td>
 <td>Specify if data retrieved should be a deep or shallow fetch</td>
 </tr>
 </tbody></table>
 
-<p>For a <code>shallow</code> fetch (which is the default behaviour), the <code>drones</code>, <code>batteries</code>, <code>cameras</code> and <code>personnel</code> will be retrieved with only their <code>name</code>, <code>id</code>, <code>model_name</code> and <code>model_id</code> (see sample response on the left for how this will look like). A <code>deep</code> fetch will retrieve more information for each of the objects -- to see the exact properties that will be retrieved with a <code>deep</code> fetch, refer to the <a href="#">Fleet API</a>.</p>
+<p>For a <code>shallow</code> fetch (which is the default behaviour), the <code>drones</code>, <code>batteries</code>, <code>cameras</code> and <code>personnel</code> will be retrieved with only their <code>name</code> and <code>id</code> (see sample response on the left for how this will look like). A <code>deep</code> fetch will retrieve more information for each of the objects -- to see the exact properties that will be retrieved with a <code>deep</code> fetch, refer to the <a href="#fleet-api">Fleet API</a>.</p>
 
 <div></div>
 <h3 id='create-new-deployment'>Create new deployment</h3>
@@ -789,52 +878,49 @@
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEPLOYMENT-001"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b6d1671011c488c6583f07824fbf2c1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"Aerial Photography"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"batteries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BATTERY-001"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"battery_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Multistar 6S 6600"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4b38b7383fdb23fbff8c3a6a694e4533"</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAMERA-001"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"camera_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Powershot S100"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0e51493cd1ae85c097547de808642659"</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"personnel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-002"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"deployment_lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-001"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"Aerial Photography"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"deployment_area"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559571926000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559572026000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"geo_json"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ready to fly"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><code>POST /flight/deployments</code></p>
 
-<p>Create a new deployment belonging to the company of the user. At minimum, you should pass in the following details in the request body:</p>
+<p>Create a new <code>deployment</code> belonging to the company of the user. At minimum, you should pass in the following details in the request body:</p>
 
 <table><thead>
 <tr>
@@ -847,6 +933,11 @@
 <td><code>name</code></td>
 <td>String</td>
 <td>Name of the deployment</td>
+</tr>
+<tr>
+<td><code>project_id</code></td>
+<td>String</td>
+<td>Project that this deployment belongs to</td>
 </tr>
 <tr>
 <td><code>drones</code></td>
@@ -875,7 +966,7 @@
 </tr>
 </tbody></table>
 
-<p>Note that the drone IDs and user IDs have to be valid. Refer to the <a href="#">Fleet API</a> for information on how you can create users and drones for your company.</p>
+<p>Note that the project ID, drone IDs and user IDs have to be valid. Refer to the <a href="#">Fleet API</a> for information on how you can create projects, users or drones for your company.</p>
 
 <p>There are some additional details that you can add to the request body to flesh out your deployment details even further:</p>
 
@@ -887,6 +978,11 @@
 </tr>
 </thead><tbody>
 <tr>
+<td><code>purpose</code></td>
+<td>Array</td>
+<td>Array of <a href="#deployments">enumerated strings of purposes</a> of deployment.</td>
+</tr>
+<tr>
 <td><code>batteries</code></td>
 <td>Array</td>
 <td>Array of battery IDs to be used for the deployment</td>
@@ -897,14 +993,14 @@
 <td>Array of camera IDs to be used for the deployment</td>
 </tr>
 <tr>
+<td><code>payloads</code></td>
+<td>Array</td>
+<td>Array of strings, each describing a payload used for the deployment</td>
+</tr>
+<tr>
 <td><code>personnel</code></td>
 <td>Array</td>
 <td>Array of user IDs of the personnel involved in the deployment</td>
-</tr>
-<tr>
-<td><code>purpose</code></td>
-<td>Array</td>
-<td>Array of <a href="#deployments">enumerated strings of purposes</a> of deployment.</td>
 </tr>
 </tbody></table>
 
@@ -912,7 +1008,7 @@
 <p><em>Instead of only passing in IDs, we can support passing in entire objects as well (i.e. entire drone objects, entire camera objects, etc.). Passing in the entire object will automatically create the drone for the user in the backend in addition to creating the deployment as well. This is NOT supported as of now.</em></p>
 </blockquote>
 
-<p>A deployment that has been successfully created will return a response with a <code>&quot;success&quot;: true</code> body and a <code>200 OK</code> status. </p>
+<p>A <code>deployment</code> that has been successfully created will return a response with a <code>&quot;success&quot;: true</code> body and a <code>200 OK</code> status. The response body will also return the actual <code>deployment</code> object that was created.</p>
 
 <div></div>
 <h3 id='get-a-deployment'>Get a deployment</h3>
@@ -971,59 +1067,54 @@
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEPLOYMENT-001"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"batteries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BATTERY-001"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"battery_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Multistar 6S 6600"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4b38b7383fdb23fbff8c3a6a694e4533"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAMERA-001"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"camera_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Powershot S100"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0e51493cd1ae85c097547de808642659"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"personnel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-002"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-001"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"Aerial Photography"</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559571926000"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559572026000"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"geo_json"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEPLOYMENT-001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b6d1671011c488c6583f07824fbf2c1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"Aerial Photography"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"batteries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BATTERY-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"battery_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f42074ff0948fbb1d11f7a96c07cdcdd"</span><span class="p">,</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAMERA-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"camera_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b53479856488f542a18fef96b84119d"</span><span class="p">,</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"personnel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-002"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53494af9b7e38f5df3447d17fe0b7547"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"deployment_lead"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"deployment_area"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{ </span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Polygon</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">coordinates</span><span class="se">\"</span><span class="s2">: [ [ [ -118.37099075317383, 33.85505651142062 ], [ -118.37305068969727, 33.85502978214579 ], [ -118.37347984313963, 33.854673391015496 ], [ -118.37306141853333, 33.85231226221667 ], [ -118.37193489074707, 33.85174201755203 ], [ -118.36997151374815, 33.85176874785573 ], [ -118.36995005607605, 33.8528112231754 ], [ -118.37099075317383, 33.85505651142062 ] ] ] }"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559571926000"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1559572026000"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ready to fly"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><code>GET /flight/deployments/{deployment_id}</code></p>
 
 <p>Get a specific deployment belonging to the company of the user. A valid <code>deployment_id</code> in the path parameter is required for a successful call.</p>
 
-<p>The <code>deployment</code> object returned will be the complete deployment object (i.e. <code>deep</code> fetch).</p>
+<p>The <code>deployment</code> object returned will be the complete <code>deployment</code> object (i.e. <code>deep</code> fetch).</p>
 
 <div></div>
 <h3 id='update-a-deployment'>Update a deployment</h3>
@@ -1163,6 +1254,11 @@
 <td>Name of the deployment</td>
 </tr>
 <tr>
+<td><code>project_id</code></td>
+<td>String</td>
+<td>Project ID that this deployment is part of</td>
+</tr>
+<tr>
 <td><code>drones</code></td>
 <td>Array</td>
 <td>Array of drone IDs to be used for the deployment</td>
@@ -1174,18 +1270,23 @@
 </tr>
 <tr>
 <td><code>start_date</code></td>
-<td>String</td>
+<td>Number</td>
 <td>Start date of deployment in epoch (Unix timestamp), converted to milliseconds (ms)</td>
 </tr>
 <tr>
 <td><code>end_date</code></td>
-<td>String</td>
+<td>Number</td>
 <td>End date of deployment in epoch (Unix timestamp), converted to milliseconds (ms)</td>
 </tr>
 <tr>
 <td><code>deployment_area</code></td>
 <td>String</td>
 <td>GeoJSON string representation of the deployment area</td>
+</tr>
+<tr>
+<td><code>purpose</code></td>
+<td>String</td>
+<td>Description of the purpose of deployment</td>
 </tr>
 <tr>
 <td><code>batteries</code></td>
@@ -1198,14 +1299,19 @@
 <td>Array of camera IDs to be used for the deployment</td>
 </tr>
 <tr>
+<td><code>payloads</code></td>
+<td>Array</td>
+<td>Array of strings, each describing a payload tagged to the deployment</td>
+</tr>
+<tr>
 <td><code>personnel</code></td>
 <td>Array</td>
 <td>Array of user IDs of the personnel involved in the deployment</td>
 </tr>
 <tr>
-<td><code>purpose</code></td>
+<td><code>status</code></td>
 <td>String</td>
-<td>Description of the purpose of deployment</td>
+<td>Enumerated string describing the status of the deployment.</td>
 </tr>
 </tbody></table>
 

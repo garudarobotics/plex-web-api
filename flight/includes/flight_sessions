@@ -101,6 +101,7 @@
       </span><span class="s2">"flight_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b28db84d57ea15b5c26e5c3ffce67fc"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"flight_plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc5583b754db73cc526a6ffa919d393a"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"start_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527469200000</span><span class="p">,</span><span class="w">
       </span><span class="s2">"end_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527479200000</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -193,6 +194,7 @@
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"flight_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b28db84d57ea15b5c26e5c3ffce67fc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"flight_plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc5583b754db73cc526a6ffa919d393a"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"start_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527469200000</span><span class="p">,</span><span class="w">
     </span><span class="s2">"end_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527479200000</span><span class="w">
@@ -295,6 +297,7 @@
     </span><span class="s2">"flight_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b28db84d57ea15b5c26e5c3ffce67fc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"flight_plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc5583b754db73cc526a6ffa919d393a"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"start_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527469200000</span><span class="p">,</span><span class="w">
     </span><span class="s2">"end_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527479200000</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -371,6 +374,7 @@
     </span><span class="s2">"flight_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b28db84d57ea15b5c26e5c3ffce67fc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"flight_plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc5583b754db73cc526a6ffa919d393a"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"start_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527469200000</span><span class="p">,</span><span class="w">
     </span><span class="s2">"end_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527480200000</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -464,6 +468,7 @@
     </span><span class="s2">"flight_session_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b28db84d57ea15b5c26e5c3ffce67fc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"flight_plan_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc5583b754db73cc526a6ffa919d393a"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"start_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527469200000</span><span class="p">,</span><span class="w">
     </span><span class="s2">"end_date_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1527479200000</span><span class="w">
   </span><span class="p">}</span><span class="w">

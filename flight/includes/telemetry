@@ -1,5 +1,3 @@
-<h1 id='live-flight-api'>Live Flight API</h1>
-<p>Garuda Plex Live Flight APIs allow you to communicate and receive information regarding your drone in live flight.</p>
 <h2 id='telemetry'>Telemetry</h2>
 <p>A drone telemetry consists of simple data and relevant information about your drone flight, including the location (lat, long), altitude, position, speed, power consumption, system and battery information of your drone. Usually recorded and logged either in real-time or post-flight, telemetry of your flight gives you vital information about the condition of your drone, what it is doing, it&#39;s surroundings at each point of the flight, and more.</p>
 

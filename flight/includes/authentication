@@ -1,0 +1,22 @@
+<h1 id='authentication'>Authentication</h1>
+<p>Before you can make calls to Garuda Plex APIs, you have to be an authenticated and authorized Plex user. Garuda Plex uses the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> flow, which can be easily integrated into your own applications.</p>
+
+<p>Garuda Plex highly recommends that you go through some documentation and understand the flow of how OIDC works before integrating this into your own application. Nevertheless, we have provided you with a brief quick start guide that should get you up and running quickly.</p>
+<h2 id='register'>Register</h2>
+<p>In order to register for a free Garuda Plex account, head down to the <a href="https://plex.garuda.io/signup">Garuda Plex sign up page</a> and enter your details accordingly. A confirmation email will be sent to you that will verify your account and prompt you to input your preferred password. After inputting your password, you will have a registered Garuda Plex account.</p>
+<h2 id='login'>Login</h2>
+<blockquote>
+<p><img src="/images/oidc_flow.jpg" alt="oidc_flow" /></p>
+</blockquote>
+
+<p>The diagram on the right shows a brief OIDC authentcation flow and how it generally works. However, we highly recommend that you use a suitable library for your application that will help to make integrating the authentication flow easier.</p>
+
+<ol>
+<li>Your application directs the user to Garuda Plex Identity Login URL with the required query parameters to allow the user to login to Garuda Plex.</li>
+<li>The Login page for Garuda Plex will be opened in a browser and the user will login as per normal with username and password.</li>
+<li> After Gaurda Plex validates the user credentials, the user will be redirected back to your application via the <code>redirect_uri</code>, with the authorization code and state attached in the query string of the URL.</li>
+<li>Your application then requests an access token from the <code>https://identity.stg.garuda.io/token</code> endpoint with the authorization code.</li>
+<li>Once you have retrieved an access token from Garuda Plex Identity, this access token will allow you to be authorized to call Garuda Plex APIs.</li>
+</ol>
+<h2 id='developer-api-key'>Developer API Key</h2>
+<p>In addition to the access token associated with a verified Garuda Plex account, you will also need a Developer Key (or API Key) in order to make calls to Garuda Plex APIs. The Developer Key can be obtained by signing up through our <a href="https://forms.gle/fjg1rdKMdCfkGa7o6">Garuda Plex Developer Portal</a> and registering your application with us. After which, you will receive a Developer Key that you can use to make authorized calls to Garuda Plex APIs.</p>

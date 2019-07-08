@@ -1,6 +1,8 @@
 <h2 id='flight-plans'>Flight Plans</h2>
 <p>Every flight requires a valid and approved <code>flight plan</code> before your drone can safely take off. There are many factors that need to be taken into account when creating a <code>flight plan</code>, including the <code>plan type</code>, <code>requirements</code>, <code>commands</code>, and more. Every <code>flight plan</code> must be tagged to an existing <code>deployment</code>, and each <code>flight plan</code> can be reused as required for multiple <code>flight sessions</code>. </p>
 
+<p>The <code>plan</code> object within the <code>flight_plan</code> contains the main <code>commands</code> that will be executed during the flight. Each <code>command</code> object contains some parameters that will determine the absolute flight path of the drones. This path will also have to be within the <code>deployment_area</code> of the <code>deployment</code>, which should have been earlier specified by a GeoJSON FeatureCollection.</p>
+
 <blockquote>
 <p>A full <code>flight_plan</code> object, including all optional properties</p>
 </blockquote>
@@ -9,6 +11,14 @@
   </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">
@@ -22,14 +32,20 @@
     </span><span class="s2">"commands"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param1"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param3"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param5"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param6"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"param7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Take off (location TBD)"</span><span class="w">
+        </span><span class="s2">"param1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param5"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"param7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Take off (location TBD)"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Optional</span><span class="w"> </span><span class="err">properties</span><span class="w">
+          </span><span class="s2">"conditionYawTarget"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+              </span><span class="s2">"lat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lng"</span><span class="p">:</span><span class="w"> </span><span class="s2">"104.0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"home_location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -80,6 +96,11 @@
 <td><code>description</code></td>
 <td>String</td>
 <td>Description of the flight plan</td>
+</tr>
+<tr>
+<td><code>drones</code></td>
+<td>Array</td>
+<td>Array of drone objects, specifying the drones that this flight plan is allowed fly.</td>
 </tr>
 <tr>
 <td><code>last_modified_date</code></td>
@@ -134,28 +155,43 @@
 </tr>
 </tbody></table>
 
-<p>A <code>command</code> object has the following JSON format:</p>
+<p>A <code>command</code> object has an ID, 7 command parameters and a description. The 7 parameters follow the <a href="http://ardupilot.org/copter/docs/common-mavlink-mission-command-messages-mav_cmd.html">ardupilot MAVLINK command parameters</a>:</p>
 
-<div class="center-column"></div>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param5"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"param7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Take off (location TBD)"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Optional</span><span class="w"> </span><span class="err">properties</span><span class="w">
-    </span><span class="s2">"conditionYawTarget"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
-        </span><span class="s2">"lat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"lng"</span><span class="p">:</span><span class="w"> </span><span class="s2">"104.0"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>The seven parameters are <code>Camera</code>, <code>Target</code>, <code>ReturnLocation</code>, <code>Navigate</code>, <code>Move</code>, <code>Yaw</code>, <code>TakeOff</code>, in that order. </p>
+<table><thead>
+<tr>
+<th>Command Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>param1</code></td>
+<td>Hold time at mission waypoint in decimal seconds - MAX 65535 seconds. (Copter/Rover only)</td>
+</tr>
+<tr>
+<td><code>param2</code></td>
+<td>Acceptance radius in meters (when plain inside the sphere of this radius, the waypoint is considered reached) (Plane only).</td>
+</tr>
+<tr>
+<td><code>param3</code></td>
+<td>0 to pass through the WP, if &gt; 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.</td>
+</tr>
+<tr>
+<td><code>param4</code></td>
+<td>Desired yaw angle at waypoint target.(rotary wing)</td>
+</tr>
+<tr>
+<td><code>param5</code></td>
+<td>Target latitude. If zero, the Copter will hold at the current latitude.</td>
+</tr>
+<tr>
+<td><code>param6</code></td>
+<td>Target longitude. If zero, the Copter will hold at the current longitude.</td>
+</tr>
+<tr>
+<td><code>param7</code></td>
+<td>Target altitude. If zero, the Copter will hold at the current altitude.</td>
+</tr>
+</tbody></table>
 <h3 id='get-all-flight-plans'>Get all flight plans</h3>
 <blockquote>
 <p>Code samples</p>
@@ -216,6 +252,14 @@
       </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">
@@ -289,6 +333,9 @@
      -d <span class="s1">'{
       "description": "FLIGHTPLAN-001",
       "plan_type": "ardupilot",
+      "drones": [
+        "ceaf7e6dc205b365e156bf4f86930408"
+      ],
       "plan": {
         "requirements": {
           "RTL_ALT": 3000,
@@ -315,6 +362,9 @@
 <span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s1">'{
   "description": "FLIGHTPLAN-001",
   "plan_type": "ardupilot",
+  "drones": [
+    "ceaf7e6dc205b365e156bf4f86930408"
+  ],
   "plan": {
     "requirements": {
       "RTL_ALT": 3000,
@@ -366,6 +416,14 @@
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">
@@ -425,6 +483,22 @@
 <td><code>plan</code></td>
 <td>Object</td>
 <td>Object representing the actual flight plan</td>
+</tr>
+</tbody></table>
+
+<p>Optionally, you can pass in more details regarding your flight plan:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>drones</code></td>
+<td>Array</td>
+<td>Array of valid drone IDs to be used during the flight</td>
 </tr>
 </tbody></table>
 
@@ -532,6 +606,14 @@
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">
@@ -632,6 +714,14 @@
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001_rev-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">
@@ -779,6 +869,14 @@
     </span><span class="s2">"deployment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703889c2bb4322025815ed1a0509eba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"company_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca42ab884a633d6a823b45e6ebe9534c"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLIGHTPLAN-001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"drones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DRONE-001"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"drone_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ceaf7e6dc205b365e156bf4f86930408"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M400 UAV"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7bd6798cdb0dcb26ca6d3c0ca9c2ae79"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"last_modified_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1245591926000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_modified_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b20c067ab91da9436ddaea6b83a9536"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ardupilot"</span><span class="p">,</span><span class="w">

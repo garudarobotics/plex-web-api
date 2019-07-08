@@ -65,82 +65,82 @@
 <tr>
 <td><code>lat</code></td>
 <td>Number</td>
-<td>5 decimal place</td>
+<td>Telemetry latitude, to 5 decimal places</td>
 </tr>
 <tr>
 <td><code>long</code></td>
 <td>Number</td>
-<td>5 decimal place</td>
+<td>Telemetry longitude, to 5 decimal places</td>
 </tr>
 <tr>
 <td><code>alt</code></td>
 <td>Number</td>
-<td>Altitude above mean sea level. In meters, 2 decimal place</td>
+<td>Altitude above mean sea level, in meters. (2 decimal places)</td>
 </tr>
 <tr>
 <td><code>agl</code></td>
 <td>String</td>
-<td>Altitude above ground level. In meters, 2 decimal place</td>
+<td>Altitude above ground level, in meters. (2 decimal places)</td>
 </tr>
 <tr>
 <td><code>yaw</code></td>
 <td>String</td>
-<td>-180 deg to 180 deg. reference from North?</td>
+<td>Drone yaw degree (-180 deg to 180 deg)</td>
 </tr>
 <tr>
 <td><code>pitch</code></td>
 <td>String</td>
-<td>-90 deg to 90 deg. reference??</td>
+<td>Drone pitch degree (-90 deg to 90 deg)</td>
 </tr>
 <tr>
 <td><code>roll</code></td>
 <td>String</td>
-<td>-180 deg to 180 deg. reference??</td>
+<td>Drone roll degree (-180 deg to 180 deg)</td>
 </tr>
 <tr>
 <td><code>flightState</code></td>
 <td>String</td>
-<td>Enums, see below</td>
+<td>Enumerated string of flight states of the drone</td>
 </tr>
 <tr>
 <td><code>daaState</code></td>
 <td>Boolean</td>
-<td>true or false to indicate if DAA has been activated. ???</td>
+<td>Boolean to indicate if DAA has been activated</td>
 </tr>
 <tr>
 <td><code>failsafe</code></td>
 <td>String</td>
-<td>???</td>
+<td>Current fail safe status if its activated</td>
 </tr>
 <tr>
 <td><code>flightTime</code></td>
 <td>String</td>
-<td>flight time in milliseconds</td>
+<td>Flight time in milliseconds</td>
 </tr>
 <tr>
 <td><code>velocity_x</code></td>
 <td>Number</td>
-<td>meters per second, using the North-East-Down coordinate system</td>
+<td>Velocity in x-direction in meters per second, using the North-East-Down coordinate system</td>
 </tr>
 <tr>
 <td><code>velocity_y</code></td>
 <td>Number</td>
-<td>meters per second, using the North-East-Down coordinate system</td>
+<td>Velocity in y-direction in meters per second, using the North-East-Down coordinate system</td>
 </tr>
 <tr>
 <td><code>velocity_z</code></td>
 <td>Number</td>
-<td>meters per second, using the North-East-Down coordinate system</td>
+<td>Velocity in z-direction in meters per second, using the North-East-Down coordinate system</td>
 </tr>
 <tr>
 <td><code>battVolt</code></td>
 <td>String</td>
-<td>battery voltage in volts up to 2dp</td>
+<td>Battery voltage, in volts, up to 2 decimal places</td>
 </tr>
 <tr>
 <td><code>battCurr</code></td>
 <td>String</td>
-<td>battery current output in amperes up to 2 dp</td>
+<td>Battery current output, in amperes, up to 2 decimal places</td>
 </tr>
 <tr>
 <td><code>battLife</code></td>
@@ -150,42 +150,42 @@
 <tr>
 <td><code>satCount</code></td>
 <td>String</td>
-<td>number of GPD satellites that drone is connected to</td>
+<td>Number of GPD satellites that drone is connected to</td>
 </tr>
 <tr>
 <td><code>gpsHAcc</code></td>
 <td>String</td>
-<td></td>
+<td>GPS Horizontal accuracy in metres measures up to micrometres</td>
 </tr>
 <tr>
 <td><code>gpsVAcc</code></td>
 <td>String</td>
-<td></td>
+<td>GPS Vertical accuracy in metres measures up to micrometres</td>
 </tr>
 <tr>
 <td><code>homeLat</code></td>
 <td>String</td>
-<td>latitude of home point</td>
+<td>Latitude of home point</td>
 </tr>
 <tr>
 <td><code>homeLong</code></td>
 <td>String</td>
-<td>longittude of home point</td>
+<td>Longitude of home point</td>
 </tr>
 <tr>
 <td><code>homeAlt</code></td>
 <td>String</td>
-<td>altitude of home point in meters above mean sea level</td>
+<td>Altitude of home point, in meters above mean sea level</td>
 </tr>
 <tr>
 <td><code>rssi</code></td>
 <td>String</td>
-<td>received signal strength indicator on connected network (by percentage)</td>
+<td>Received signal strength indicator on connected network (by percentage)</td>
 </tr>
 <tr>
 <td><code>network_name</code></td>
 <td>String</td>
-<td>???</td>
+<td>Name of the connected network</td>
 </tr>
 </tbody></table>
 
@@ -220,14 +220,6 @@
 <tr>
 <td><code>GUIDED</code></td>
 <td>When the drone is in manual navigation, going to specific point, etc.</td>
-</tr>
-<tr>
-<td><code>ABTL</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>SBTL</code></td>
-<td></td>
 </tr>
 <tr>
 <td><code>LAND</code></td>
@@ -278,7 +270,7 @@
 
 <p>Lastly, run the project with <code>node ws-send-telem.js</code> and your client should be connected to the web socket server and sending telemetry defined in <code>mock-telemetry.js</code>. Each time you run the node program, a telemetry message will be sent every 1 second to our servers. Feel free to change the frequency of the telemetry or the total number of telemetry to be sent by editing the source files.</p>
 <h3 id='getting-live-telemetry'>Getting live telemetry</h3>
-<p>After sending the telemetry, you will also be able to listen and retrieve this telemetry with another web socket client.</p>
+<p>After sending the telemetry, you will also be able to listen and retrieve this telemetry with another web socket client. Receiving telemetry is done on a company wide level.</p>
 
 <div class="center-column"></div>
 <pre class="highlight plaintext"><code>wss://&lt;URL&gt;?access_token=&amp;company_id=
@@ -287,7 +279,7 @@
 
 <p>Instructions for the extension is similar to the sender above.</p>
 
-<p>With your <code>access_token</code>, <code>drone_id</code> and <code>company_id</code> entered as query parameters into the URL above, simply paste it into the URL textfield and click on <code>Open</code>. </p>
+<p>With your <code>access_token</code> and <code>company_id</code> entered as query parameters into the URL above, simply paste it into the URL textfield and click on <code>Open</code>. </p>
 
 <p>The <code>STATUS</code> should change to <code>OPENED</code> once the web socket connection has been successfully established, and you should start to receive the telemetry data in raw JSON format in the message log console during your live flight.</p>
 <pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">WebSocketClient</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'websocket'</span><span class="p">).</span><span class="nx">client</span><span class="p">;</span>
@@ -330,7 +322,7 @@
 
 <p>We will use the same npm library, <a href="https://www.npmjs.com/package/websocket"><code>websocket</code></a>, to implement the receiver for the telemetry.</p>
 
-<p>Next, create a file <code>ws-receive-telem.js</code> and paste the provided example code on the right into it. Remeber to replace <code>&lt;ACCESS_TOKEN&gt;</code>, <code>&lt;DRONE_ID&gt;</code> and <code>&lt;COMPANY_ID&gt;</code> with the appropriate values. <strong>NOTE: Select the <code>javascript</code> tab at the top of the code section if you don&#39;t see the example code!</strong></p>
+<p>Next, create a file <code>ws-receive-telem.js</code> and paste the provided example code on the right into it. Remeber to replace <code>&lt;ACCESS_TOKEN&gt;</code> and <code>&lt;COMPANY_ID&gt;</code> with the appropriate values. <strong>NOTE: Select the <code>javascript</code> tab at the top of the code section if you don&#39;t see the example code!</strong></p>
 
 <p>Alternatively, you can download the file directly: <a href="#">ws-receive-telem.js</a></p>
 

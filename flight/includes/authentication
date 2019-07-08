@@ -4,6 +4,14 @@
 <p>Garuda Plex highly recommends that you go through some documentation and understand the flow of how OIDC works before integrating this into your own application. Nevertheless, we have provided you with a brief quick start guide that should get you up and running quickly.</p>
 <h2 id='register'>Register</h2>
 <p>In order to register for a free Garuda Plex account, head down to the <a href="https://plex.garuda.io/signup">Garuda Plex sign up page</a> and enter your details accordingly. A confirmation email will be sent to you that will verify your account and prompt you to input your preferred password. After inputting your password, you will have a registered Garuda Plex account.</p>
+<h3 id='adding-users-to-your-company'>Adding users to your company</h3>
+<p>After registering for a new Plex account, you will automatically be assigned as an admin for your company. You can choose to add more users to your company via Garuda Plex:</p>
+
+<ol>
+<li>Navigate to the homepage, and select &quot;Manage my company&quot; on the left navigation bar.</li>
+<li>Under &quot;Company Users&quot;, select the &quot;New User&quot; button.</li>
+<li>A dialog box should popup that allows you to add a new user to your company.</li>
+</ol>
 <h2 id='login'>Login</h2>
 <blockquote>
 <p><img src="/images/oidc_flow.jpg" alt="oidc_flow" /></p>

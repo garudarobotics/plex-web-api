@@ -288,9 +288,9 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>GET /plans</code></p>
+<p><code>GET /flight_plans</code></p>
 
-<p><code>GET /plans?deployment_id=</code></p>
+<p><code>GET /flight_plans?deployment_id=</code></p>
 
 <p>You can get all flight plans belonging to your company or belonging to a specific deplyoment via this endpoint. If you wish to filter and retrieve flight plans from only a specific deployment, you should specify the <code>deployment_id</code> via the query string. Otherwise, if no <code>deployment_id</code> is specified, all flight plans belonging to your company will be retrieved.</p>
 
@@ -451,7 +451,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>POST /plans</code></p>
+<p><code>POST /flight_plans</code></p>
 
 <p>Create a new flight plan for a deployment belonging to the company of the user.</p>
 
@@ -592,7 +592,7 @@
 <span class="p">});</span>
 
 </code></pre>
-<p><code>GET /plans/{flight_plan_id}</code></p>
+<p><code>GET /flight_plans/{flight_plan_id}</code></p>
 
 <p>Get a specific flight plan for a deployment belonging to the company of the user.</p>
 
@@ -749,7 +749,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>PATCH /plans/{flight_plan_id}</code></p>
+<p><code>PATCH /flight_plans/{flight_plan_id}</code></p>
 
 <p>To update a flight plan, you can pass in any subset of the following properties in the request body:</p>
 
@@ -853,7 +853,7 @@
 <span class="p">});</span>
 
 </code></pre>
-<p><code>DELETE /plans/{flight_plan_id}</code></p>
+<p><code>DELETE /flight_plans/{flight_plan_id}</code></p>
 
 <p>Delete a specific flight plan for a deployment belonging to the company of the user.</p>
 

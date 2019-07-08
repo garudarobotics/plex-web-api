@@ -2711,9 +2711,9 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>GET /plans</code></p>
+<p><code>GET /flight_plans</code></p>
 
-<p><code>GET /plans?deployment_id=</code></p>
+<p><code>GET /flight_plans?deployment_id=</code></p>
 
 <p>You can get all flight plans belonging to your company or belonging to a specific deplyoment via this endpoint. If you wish to filter and retrieve flight plans from only a specific deployment, you should specify the <code>deployment_id</code> via the query string. Otherwise, if no <code>deployment_id</code> is specified, all flight plans belonging to your company will be retrieved.</p>
 
@@ -2874,7 +2874,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>POST /plans</code></p>
+<p><code>POST /flight_plans</code></p>
 
 <p>Create a new flight plan for a deployment belonging to the company of the user.</p>
 
@@ -3015,7 +3015,7 @@
 <span class="p">});</span>
 
 </code></pre>
-<p><code>GET /plans/{flight_plan_id}</code></p>
+<p><code>GET /flight_plans/{flight_plan_id}</code></p>
 
 <p>Get a specific flight plan for a deployment belonging to the company of the user.</p>
 
@@ -3172,7 +3172,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>PATCH /plans/{flight_plan_id}</code></p>
+<p><code>PATCH /flight_plans/{flight_plan_id}</code></p>
 
 <p>To update a flight plan, you can pass in any subset of the following properties in the request body:</p>
 
@@ -3276,7 +3276,7 @@
 <span class="p">});</span>
 
 </code></pre>
-<p><code>DELETE /plans/{flight_plan_id}</code></p>
+<p><code>DELETE /flight_plans/{flight_plan_id}</code></p>
 
 <p>Delete a specific flight plan for a deployment belonging to the company of the user.</p>
 
@@ -3436,13 +3436,13 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>GET /sessions</code></p>
+<p><code>GET /flight_sessions</code></p>
 
-<p><code>GET /sessions?deployment_id=&lt;DEPLOYMENT_ID&gt;</code></p>
+<p><code>GET /flight_sessions?deployment_id=&lt;DEPLOYMENT_ID&gt;</code></p>
 
-<p><code>GET /sessions?flight_plan_id=&lt;FLIGHT_PLAN_ID&gt;</code></p>
+<p><code>GET /flight_sessions?flight_plan_id=&lt;FLIGHT_PLAN_ID&gt;</code></p>
 
-<p><code>GET /sessions?deployment_id=&lt;DEPLOYMENT_ID&gt;&amp;flight_plan_id=&lt;FLIGHT_PLAN_ID&gt;</code></p>
+<p><code>GET /flight_sessions?deployment_id=&lt;DEPLOYMENT_ID&gt;&amp;flight_plan_id=&lt;FLIGHT_PLAN_ID&gt;</code></p>
 
 <p>You can get all the flight sessions belonging to your company, filtered by <code>deployment_id</code> or <code>flight_plan_id</code> which can be specified as a query string. If both query strings are specified, only <code>flight sessions</code> that match both will be fetched. If none of the queries are specified, all flight sessions belonging to your company will be retrieved.</p>
 
@@ -3529,7 +3529,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>POST /sessions</code></p>
+<p><code>POST /flight_sessions</code></p>
 
 <p>This endpoint allows you to create a new <code>flight session</code> for a specific deployment.</p>
 
@@ -3631,7 +3631,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>GET /sessions/{flight_session_id}</code></p>
+<p><code>GET /flight_sessions/{flight_session_id}</code></p>
 
 <p>Get a specific flight session for a deployment belonging to the company of the user.</p>
 <h3 id='update-a-flight-session'>Update a flight session</h3>
@@ -3708,7 +3708,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>PATCH /sessions/{flight_session_id}</code></p>
+<p><code>PATCH /flight_sessions/{flight_session_id}</code></p>
 
 <p>Update a specific flight session for a deployment belonging to the company of the user.</p>
 
@@ -3802,7 +3802,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code>DELETE /sessions/{flight_session_id}</code></p>
+<p><code>DELETE /flight_sessions/{flight_session_id}</code></p>
 
 <p>Delete a specific flight session for a deployment belonging to the company of the user.</p>
 

@@ -225,23 +225,15 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#getting-started" class="toc-h1 toc-link" data-title="Getting Started">Getting Started</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#register" class="toc-h2 toc-link" data-title="Authentication">Register</a>
-                      <ul class="toc-list-h3">
-                          <li>
-                            <a href="#adding-users-to-your-company" class="toc-h3 toc-link" data-title="Authentication">Adding users to your company</a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li>
-                    <a href="#login" class="toc-h2 toc-link" data-title="Authentication">Login</a>
-                  </li>
-                  <li>
-                    <a href="#developer-api-key" class="toc-h2 toc-link" data-title="Authentication">Developer API Key</a>
+                    <a href="#garuda-plex-api-key" class="toc-h2 toc-link" data-title="Getting Started">Garuda Plex API Key</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
             <a href="#planning-and-records-api" class="toc-h1 toc-link" data-title="Planning and Records API">Planning and Records API</a>
@@ -530,43 +522,105 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Garuda Plex API provides a simple-to-use REST API that allows you to manage all things drone related. With our vast libraries of APIs and services, you can easily manage your drone equipment, personnel, operations, deployments, plans, permits and more.</p>
+<p>Garuda Robotics provides a suite of APIs that extend the Garuda Plex Platform, allowing you to create your own proprietary applications to address a variety of drone use cases. The APIs are available for the entire lifecycle of drone operations, from <strong>pre-flight planning</strong>, to <strong>live flights</strong>, to <strong>post-flight analytics</strong>.</p>
+<h1 id='getting-started'>Getting Started</h1>
+<p>To get started, you will require 2 items:</p>
 
-<p>This API reference page provides you with detailed and complete information on how you can use these APIs for your specific needs and how you can easily integrate them into your own applications.</p>
+<ol>
+<li><strong>An API Key</strong></li>
+<li><strong>A Garuda Plex Account</strong></li>
+</ol>
+
+<p>Please speak to your account manager to request for an API Key. If you do not have an account manager or if you are an individual developer, please register your interest <a href="https://forms.gle/fjg1rdKMdCfkGa7o6">here</a>.</p>
+
+<p>To sign up for a Garuda Plex account, head down to the <a href="https://plex.garuda.io/signup">Garuda Plex sign up page</a> and complete the sign up process.</p>
+<h2 id='garuda-plex-api-key'>Garuda Plex API Key</h2>
+<p>This API Key must be kept <strong>secret</strong>. Exposing your API Key publicly can result in your account being compromised. By using the API Key to access your Garuda Plex account, you are subjected to same <a href="https://garuda.io/terms/">terms of use</a> of Garuda Plex.</p>
+
+<p>Some best practices to keep your API Key secure:</p>
+
+<ul>
+<li>Do not embed your API Key directly in code. Instead, store them as environment variables or in separate files.</li>
+<li>Do not store your API Key in any file that will be committed to your code repository. This is especially important when using a public source control system like GitHub, where anyone can view your committed files and potentially get access to your API Key.</li>
+</ul>
 <h1 id='authentication'>Authentication</h1>
-<p>Before you can make calls to Garuda Plex APIs, you have to be an authenticated and authorized Plex user. Garuda Plex uses the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> flow, which can be easily integrated into your own applications.</p>
+<p>APIs that involve interacting with your organization&#39;s data, such as pilots and drones, requires <strong>authentication</strong>. Other APIs such as weather and airspace data only require your API Key.</p>
 
-<p>Garuda Plex highly recommends that you go through some documentation and understand the flow of how OIDC works before integrating this into your own application. Nevertheless, we have provided you with a brief quick start guide that should get you up and running quickly.</p>
-<h2 id='register'>Register</h2>
-<p>In order to register for a free Garuda Plex account, head down to the <a href="https://plex.garuda.io/signup">Garuda Plex sign up page</a> and enter your details accordingly. A confirmation email will be sent to you that will verify your account and prompt you to input your preferred password. After inputting your password, you will have a registered Garuda Plex account.</p>
-<h3 id='adding-users-to-your-company'>Adding users to your company</h3>
-<p>After registering for a new Plex account, you will automatically be assigned as an admin for your company. You can choose to add more users to your company via Garuda Plex:</p>
+<p>For authentication, Garuda Plex uses the <strong><a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> implicit flow</strong>. Here&#39;s how you can add Garuda Plex authentication to your own application:</p>
 
-<ol>
-<li>Navigate to the homepage, and select &quot;Manage my company&quot; on the left navigation bar.</li>
-<li>Under &quot;Company Users&quot;, select the &quot;New User&quot; button.</li>
-<li>A dialog box should popup that allows you to add a new user to your company.</li>
-</ol>
-<h2 id='login'>Login</h2>
+<p><img src="images/oidc_flow.jpeg" alt="oidc_flow" /></p>
+
+<p><strong>(1)</strong> Your application directs the user to <strong>Garuda Plex Identity Service</strong> URL with the required query parameters to allow the user to login to Garuda Plex. Refer to the right for an example. The required parameters are as follows:</p>
+
 <blockquote>
-<p><img src="images/oidc_flow.jpg" alt="oidc_flow" /></p>
+<p>URL Template (contains whitespace for readability):</p>
 </blockquote>
+<pre class="highlight plaintext"><code>https://&lt;URL&gt;?
+  client_id=&lt;CLIENT_ID&gt;&amp;
+  redirect_url=&lt;REDIRECT_URL&gt;&amp;
+  response_type=&lt;RESPONSE_TYPES&gt;&amp;
+  scope=&lt;SCOPES&gt;&amp;
+  nonce=&lt;NONCE&gt;
+</code></pre>
+<blockquote>
+<p>Example URL:</p>
+</blockquote>
+<pre class="highlight plaintext"><code>https://identity.stg.garuda.io/auth?
+  client_id=de5dee51-ded8-43b3-a51d-476545039ecb&amp;
+  redirect_uri=https%3A%2F%2Fyour-website%2Fcallback&amp;
+  response_type=id_token%20token&amp;
+  scope=openid%20email&amp;
+  nonce=cf6a9372cad19c4809a325167a519230
+</code></pre>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>client_id</code></td>
+<td>The client ID that is provided to you when you register as a developer (provided along with API Key)</td>
+</tr>
+<tr>
+<td><code>redirect_uri</code></td>
+<td>Page to return to after successful login. Has to be URL encoded.</td>
+</tr>
+<tr>
+<td><code>response_type</code></td>
+<td>OpenID response type. This will be provided to you when you register as a developer.</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>OpenID scope. The following are supported: <code>openid</code>, <code>offline_access</code>, <code>email</code>, <code>profile</code>, <code>address</code>, <code>plex</code></td>
+</tr>
+<tr>
+<td><code>nonce</code></td>
+<td>A case sensitive string value used to associate a Client session with an ID Token, and to mitigate replay attacks. <code>nonce</code> will be returned to the client together with the authorization token.Use the <code>nonce</code> to validate the token received against the initial authorization request</td>
+</tr>
+</tbody></table>
 
-<p>The diagram on the right shows a brief OIDC authentcation flow and how it generally works. However, we highly recommend that you use a suitable library for your application that will help to make integrating the authentication flow easier.</p>
+<p><strong>(2)</strong> Garuda Plex Identity Service will validate your user&#39;s credentials.</p>
 
-<ol>
-<li>Your application directs the user to Garuda Plex Identity Login URL with the required query parameters to allow the user to login to Garuda Plex.</li>
-<li>The Login page for Garuda Plex will be opened in a browser and the user will login as per normal with username and password.</li>
-<li> After Gaurda Plex validates the user credentials, the user will be redirected back to your application via the <code>redirect_uri</code>, with the authorization code and state attached in the query string of the URL.</li>
-<li>Your application then requests an access token from the <code>https://identity.stg.garuda.io/token</code> endpoint with the authorization code.</li>
-<li>Once you have retrieved an access token from Garuda Plex Identity, this access token will allow you to be authorized to call Garuda Plex APIs.</li>
-</ol>
-<h2 id='developer-api-key'>Developer API Key</h2>
-<p>In addition to the access token associated with a verified Garuda Plex account, you will also need a Developer Key (or API Key) in order to make calls to Garuda Plex APIs. The Developer Key can be obtained by signing up through our <a href="https://forms.gle/fjg1rdKMdCfkGa7o6">Garuda Plex Developer Portal</a> and registering your application with us. After which, you will receive a Developer Key that you can use to make authorized calls to Garuda Plex APIs.</p>
+<blockquote>
+<p>Example redirect URL:</p>
+</blockquote>
+<pre class="highlight plaintext"><code>https://your-website/callback?
+  id_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNpZy1ycy0wIn&amp;
+  access_token=eyJ0eXAiOiJKV1QiR5kpXVCIscCI6ILCJhbGciOiJSUzI6InI1NiIsImtpZC&amp;
+  expires_in=3600&amp;
+  token_type=Bearer&amp;
+  session_state=bfefcc5422b376ec61650c6b165f0d758f9a4b741460c72
+</code></pre>
+<p><strong>(3)</strong> If validation is successful, the user will be redirected back to your application via the <code>redirect_uri</code>, with the requested tokens attached in the query string of the URL. Use the <code>access_token</code> attached to make authenticated calls to Garuda Plex Platform. (<em>Note: Tokens have been shortened for brevity</em>)</p>
 <h1 id='planning-and-records-api'>Planning and Records API</h1>
 <p>The Planning and Records APIs allows you to manage <strong>projects</strong>, <strong>deployments</strong>, <strong>flight plans</strong> and <strong>flight sessions</strong>.</p>
 <h2 id='projects'>Projects</h2>
-<p>To start working with deployments and flight planning, you have to first create a <code>project</code>. A project allows you to organise multiple <code>deployments</code> in one place, and to associate multiple <code>deployments</code> with each other. Within a <code>project</code>, you are also free to specify a project <code>description</code>, <code>objectives</code>, and <code>location</code>, where applicable.</p>
+<p>All activities on Garuda Plex start with a <code>project</code> being specified. It’s a unit of engagement for the Drone Operator and the Customer, whoever it may be. Real world <code>projects</code> include, a flight test project, a mapping project, a 3D modelling project, an infrastructure inspection project, or an elaborate flight demonstration project.</p>
+
+<p>The Customer, or its agent (such as the Sales Person or the Project Manager), is responsible to create a <code>project</code>. If you’re writing workflow applications, you can collect the requirements in your application and create a <code>project</code> programmatically through the API, and the Drone Operator would be able to plan <code>deployment</code> and <code>flights</code> using Garuda Plex web front-end. You can connect Garuda Plex to your billing or invoicing infrastructure to receive a status update about the completion of the <code>project</code>.</p>
+
+<p>On the other hand, if you are working to extend the operational workflow or flight capabilities for the Drone Operator, you can read the requirements from the planned <code>project</code>, and make sure that you carry it out according to requirements, and update the <code>project</code> as work is completed.</p>
 
 <p>A <code>project</code> has the following properties:</p>
 
@@ -580,7 +634,7 @@
 <tr>
 <td><code>_id</code></td>
 <td>String</td>
-<td>The ID code of the project (use this for updating and deleting the project)</td>
+<td>The unique ID of the project (use this for updating and deleting the project)</td>
 </tr>
 <tr>
 <td><code>title</code></td>
@@ -590,22 +644,22 @@
 <tr>
 <td><code>project_id</code></td>
 <td>String</td>
-<td>Unique ID of the project</td>
+<td>Unique URL-friendly ID (Slug) of the project</td>
 </tr>
 <tr>
 <td><code>company_id</code></td>
 <td>String</td>
-<td>Company ID that the project is tagged to</td>
+<td>Company ID of the project</td>
 </tr>
 <tr>
 <td><code>date</code></td>
 <td>String</td>
-<td>Starting date of the project</td>
+<td>Start date of the project</td>
 </tr>
 <tr>
 <td><code>objective</code></td>
 <td>String</td>
-<td>Short description of the objectives of the project</td>
+<td>Objective of the project</td>
 </tr>
 <tr>
 <td><code>description</code></td>
@@ -615,7 +669,7 @@
 <tr>
 <td><code>location</code></td>
 <td>String</td>
-<td>Location of the project</td>
+<td>Name of the location of the project</td>
 </tr>
 </tbody></table>
 <h3 id='get-all-projects'>Get all projects</h3>

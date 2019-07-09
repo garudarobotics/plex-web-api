@@ -1,5 +1,9 @@
 <h2 id='projects'>Projects</h2>
-<p>To start working with deployments and flight planning, you have to first create a <code>project</code>. A project allows you to organise multiple <code>deployments</code> in one place, and to associate multiple <code>deployments</code> with each other. Within a <code>project</code>, you are also free to specify a project <code>description</code>, <code>objectives</code>, and <code>location</code>, where applicable.</p>
+<p>All activities on Garuda Plex start with a <code>project</code> being specified. It’s a unit of engagement for the Drone Operator and the Customer, whoever it may be. Real world <code>projects</code> include, a flight test project, a mapping project, a 3D modelling project, an infrastructure inspection project, or an elaborate flight demonstration project.</p>
+
+<p>The Customer, or its agent (such as the Sales Person or the Project Manager), is responsible to create a <code>project</code>. If you’re writing workflow applications, you can collect the requirements in your application and create a <code>project</code> programmatically through the API, and the Drone Operator would be able to plan <code>deployment</code> and <code>flights</code> using Garuda Plex web front-end. You can connect Garuda Plex to your billing or invoicing infrastructure to receive a status update about the completion of the <code>project</code>.</p>
+
+<p>On the other hand, if you are working to extend the operational workflow or flight capabilities for the Drone Operator, you can read the requirements from the planned <code>project</code>, and make sure that you carry it out according to requirements, and update the <code>project</code> as work is completed.</p>
 
 <p>A <code>project</code> has the following properties:</p>
 
@@ -13,7 +17,7 @@
 <tr>
 <td><code>_id</code></td>
 <td>String</td>
-<td>The ID code of the project (use this for updating and deleting the project)</td>
+<td>The unique ID of the project (use this for updating and deleting the project)</td>
 </tr>
 <tr>
 <td><code>title</code></td>
@@ -23,22 +27,22 @@
 <tr>
 <td><code>project_id</code></td>
 <td>String</td>
-<td>Unique ID of the project</td>
+<td>Unique URL-friendly ID (Slug) of the project</td>
 </tr>
 <tr>
 <td><code>company_id</code></td>
 <td>String</td>
-<td>Company ID that the project is tagged to</td>
+<td>Company ID of the project</td>
 </tr>
 <tr>
 <td><code>date</code></td>
 <td>String</td>
-<td>Starting date of the project</td>
+<td>Start date of the project</td>
 </tr>
 <tr>
 <td><code>objective</code></td>
 <td>String</td>
-<td>Short description of the objectives of the project</td>
+<td>Objective of the project</td>
 </tr>
 <tr>
 <td><code>description</code></td>
@@ -48,7 +52,7 @@
 <tr>
 <td><code>location</code></td>
 <td>String</td>
-<td>Location of the project</td>
+<td>Name of the location of the project</td>
 </tr>
 </tbody></table>
 <h3 id='get-all-projects'>Get all projects</h3>

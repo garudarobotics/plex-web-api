@@ -1,0 +1,208 @@
+<h1 id='airspace-api'>Airspace API</h1>
+<p>Specification for Airspace API for airspace information gathered by Garuda Robotics</p>
+<h2 id='airspace-data'>Airspace Data</h2><h3 id='get-latest-airspace-data'>Get latest airspace data</h3>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.garuda.io/v2/airspace/{country_code}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.garuda.io/v2/airspace/{country_code}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -X GET <span class="s1">'https://api.garuda.io/v2/airspace/{country_code}'</span> <span class="se">\</span>
+     -H <span class="s1">'X-API-Key: &lt;API_KEY&gt;'</span> <span class="se">\</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
+
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.garuda.io/v2/airspace/{country_code}'</span><span class="p">,</span>
+<span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FeatureCollection"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lastUpdatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-10T03:09:32.731Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"National Day 2017"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"military_property"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"National Day 2017 temporary restricted area"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restricted"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"owner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"government ministry"</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"official website"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="s2">"validity"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-10T03:09:32.731Z"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-10T03:09:32.731Z"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><code>GET /airspace/{country_code}</code></p>
+
+<p>This endpoint allows you to retrieve the latest available airspace data, based on the country code that is specified. A <a href="https://www.iso.org/obp/ui/#search">valid ISO 3166-1 alpha-3 country code</a> is required as a URL parameter.</p>
+
+<p>The airspace data will be returned as a GeoJSON <code>FeatureCollection</code> object. Each <code>Feature</code> within the <code>FeatureCollection</code> is considered an <code>airspace</code> object, with the following properties:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>String</td>
+<td>Airspace ID</td>
+</tr>
+<tr>
+<td><code>lastUpdatedDate</code></td>
+<td>String</td>
+<td>Airspace last updated date</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>String</td>
+<td>GeoJSON RFC7946 Feature object type</td>
+</tr>
+<tr>
+<td><code>geometry</code></td>
+<td>Object</td>
+<td>Valid GeoJSON geometry object follow RFC7946 GeoJSON section 3.1 specification</td>
+</tr>
+<tr>
+<td><code>properties</code></td>
+<td>Object</td>
+<td>Object representing the properties of this airspace</td>
+</tr>
+</tbody></table>
+
+<p>Each <code>airspace</code> has a field <code>properties</code>, which contain the following information:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td>String</td>
+<td>Name of location / airspace or event</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>String</td>
+<td>Category of airspace</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>String</td>
+<td>Additional note about location / airspace or event</td>
+</tr>
+<tr>
+<td><code>rules</code></td>
+<td>Array</td>
+<td>Array of <code>rule</code> objects that each describe the rules applicable to this airspace</td>
+</tr>
+</tbody></table>
+
+<p>Each <code>rule</code> object has the following properties:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>String</td>
+<td><code>rule</code> unique ID</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>String</td>
+<td>Additional note about rule</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>String</td>
+<td>Enumerated strings of rule types: <code>restricted</code>, <code>danger</code>, <code>protected</code>, <code>prohibited</code>, <code>national-park</code>, <code>aerodrome</code></td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>Object</td>
+<td>Information about entity that own the rule. Has the properties <code>name</code> and <code>type</code></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>Object</td>
+<td>Information on where specified rule is published. Has the properties <code>name</code>, <code>type</code>, and <code>url</code></td>
+</tr>
+<tr>
+<td><code>validity</code></td>
+<td>Object</td>
+<td>If validity properties is not given, its assumed that the rule is permanent. Has the properties <code>start</code> and <code>end</code>.</td>
+</tr>
+</tbody></table>
+
+<div></div>

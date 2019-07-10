@@ -2,13 +2,7 @@
 
 Thank you for your interest. We are still cooking at the moment. Please contact us if you need more information or raise issue in Github
 
-You can preview our draft recipe:
-
-1. [Airspace API](https://garudarobotics.github.io/plex-web-api/airspace)
-2. [Command and Control API](https://garudarobotics.github.io/plex-web-api/command-control)
-3. [Fleet API](https://garudarobotics.github.io/plex-web-api/fleet)
-4. [Flight API](https://garudarobotics.github.io/plex-web-api/flight)
-
+You can preview our draft recipe at **[Garuda Plex Platform Documentation](https://garudarobotics.github.io/plex-web-api)**.
 
 API access to Garuda Plex is currently only open to a closed group of developers. 
 

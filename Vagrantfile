@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -yq ruby2.4 ruby2.4-dev
       sudo apt-get install -yq pkg-config build-essential nodejs git libxml2-dev libxslt-dev
       sudo apt-get autoremove -yq
+      curl -sL deb.nodesource.com/setup_10.x | sudo bash - && sudo apt-get install -y nodejs
       gem2.4 install --no-ri --no-rdoc bundler
     SHELL
 

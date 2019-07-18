@@ -9,7 +9,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 toc_footers:
   - <a href='https://garuda.io'>Garuda Robotics</a>
-  - <a href='https://forms.gle/fjg1rdKMdCfkGa7o6'>Sign Up for a Developer Key</a>
+  - <a href='https://forms.gle/sUUa9eefPPGPsUhGA'>Sign Up for a Developer Key</a>
 
 includes:
   - introduction

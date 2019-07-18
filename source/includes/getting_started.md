@@ -5,7 +5,7 @@ To get started, you will require 2 items:
 1. **An API Key**
 2. **A Garuda Plex Account**
 
-Please speak to your account manager to request for an API Key. If you do not have an account manager or if you are an individual developer, please register your interest [here](https://forms.gle/fjg1rdKMdCfkGa7o6).
+Please speak to your account manager to request for an API Key. If you do not have an account manager or if you are an individual developer, please register your interest [here](https://forms.gle/sUUa9eefPPGPsUhGA).
 
 To sign up for a Garuda Plex account, head down to the [Garuda Plex sign up page](https://plex.garuda.io/signup) and complete the sign up process.
 

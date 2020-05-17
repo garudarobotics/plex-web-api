@@ -122,6 +122,28 @@ The breakdown of network info in the telemetry:
 | `statusnum`      | String  | The numeric flag indicates the network conditions. Noted that this number is *ONLY* available while using SCM  
 | `log`      | Object  | The log given by network modules (either DLM or SCM) as current network status record. This object is highly cosutomised by DLM and SCM which used for debug purpose                                                     |
 
+## DAA (Detect and Avoid) Telemetry
+
+DAA telemetry is the information generated from DAA related devices built-in on the drone. DAA telemetry consists of the information of the obstacles detected in front of the drone.
+
+The breakdown of DAA telemetry:
+
+| Property       | Type    | Description                                                                               |
+| -------------- | ------- | ----------------------------------------------------------------------------------------- |
+| `droneId`      | String  | Drone ID of this telemetry                                                                |
+| `obstacles`    | Object  | Information of the obstacles detected by DAA                                              |
+
+The breakdown of obstacle object:
+
+| Property       | Type    | Description                                                                               |
+| -------------- | ------- | ----------------------------------------------------------------------------------------- |
+| `x1`           | String  | Leftmost x coordinate of the coordinate bounds                                            |
+| `x2`           | String  | Rightmost x coordinate of the coordinate bounds                                           |
+| `y1`           | String  | Leftmost y coordinate of the coordinate bounds                                            |
+| `y2`           | String  | Rightmost y coordinate of the coordinate bounds                                           |
+| `d`            | String  | Distance of the obstacle from the drone                                                   |
+| `t`            | String  | The detected the obstacle with the corresponding information                              |
+
 ### Submitting telemetry
 
 Garuda Plex APIs uses web sockets to receive telemetry from users. Given an `access_token`, `drone_id` and your `company_id`, you will be able to connect to the web socket and send live telemetry.

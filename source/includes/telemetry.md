@@ -112,15 +112,15 @@ The flight states of the drone follows a state diagram and changes depending on 
 
 The breakdown of network info in the telemetry:
 
-| Network property       | Type    | Description                                                                               |
-| -------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `id`      | String  | ID which assigned to corresponding network by Garuda Robotics                                                                |
-| `ip`      | String  | IPv4 address of the network
-| `rssi`      | String  | RSSI (Received signal strength indication) of the network which should be number in string. This value indicates how good the GCC network module can sense the network base station nearby
-| `quality`      | String  | The network quality which can be either of good, caution and bad. This value is computed based on the network module specs and its current RSSI value. This value indicates how good is the network condition                                                    |
-| `status`      | String  | The network status which can be either of active, selected and error. The active status means the network is active to use but it's not used by GCC now. The selected status means the network is current used by GCC. The error status means the network is currently not available to be used.                                                      |
-| `statusnum`      | String  | The numeric flag indicates the network conditions. Noted that this number is *ONLY* available while using SCM  
-| `log`      | Object  | The log given by network modules (either DLM or SCM) as current network status record. This object is highly cosutomised by DLM and SCM which used for debug purpose                                                     |
+| Network property       | Type    | Description                                                                                                                                                                                                                                                                                      |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                   | String  | ID which assigned to corresponding network by Garuda Robotics                                                                                                                                                                                                                                    |
+| `ip`                   | String  | IPv4 address of the network                                                                                                                                                                                                                                                                      |
+| `rssi`                 | String  | RSSI (Received signal strength indication) of the network which should be number in string. This value indicates how good the GCC network module can sense the network base station nearby.                                                                                                      |
+| `quality`              | String  | The network quality which can be either of good, caution and bad. This value is computed based on the network module specs and its current RSSI value. This value indicates how good is the network condition.                                                                                   |
+| `status`               | String  | The network status which can be either of active, selected and error. The active status means the network is active to use but it's not used by GCC now. The selected status means the network is current used by GCC. The error status means the network is currently not available to be used. |
+| `statusnum`            | String  | The numeric flag indicates the network conditions. Noted that this number is *ONLY* available while using SCM.                                                                                                                                                                                   |
+| `log`                  | Object  | The log given by network modules (either DLM or SCM) as current network status record. This object is highly cosutomised by DLM and SCM which used for debug purpose.                                                                                                                            |
 
 ## DAA (Detect and Avoid) Telemetry
 

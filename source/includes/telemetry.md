@@ -42,7 +42,26 @@ Each of these `telemetry` object is a JSON object that has the following format 
   "homeLong": "-214.7483648",
   "homeAlt": "None",
   "rssi": "123.123",
-  "network_name": "Singtel"
+  "networks": [
+       {
+          "id" : "AreteM",
+          "ip" : "10.11.12.13",
+          "rssi" : "-53",
+          "quality" : "good",
+          "status" : "active",
+          "statusnum" : "12",
+          "log" : { "..." }
+       },
+       {
+          "id" : "SingTel",
+          "ip" : "100.101.102.103",
+          "rssi" : "-69",
+          "quality" : "good",
+          "status" : "selected",
+          "statusnum" : "12",
+          "log" : { "..." }
+       }
+    ]
 }
 ```
 
@@ -74,7 +93,7 @@ Each of these `telemetry` object is a JSON object that has the following format 
 | `homeLong`     | String  | Longitude of home point                                                                   |
 | `homeAlt`      | String  | Altitude of home point, in meters above mean sea level                                    |
 | `rssi`         | String  | Received signal strength indicator on connected network (by percentage)                   |
-| `network_name` | String  | Name of the connected network                                                             |
+| `network` | Array  |  List of network info objects with each of the object represents the current status of corresponding networks provided to GCC                                                           |
 
 
 The flight states of the drone follows a state diagram and changes depending on at which state of the flight the drone is in:
@@ -90,6 +109,40 @@ The flight states of the drone follows a state diagram and changes depending on 
 | `GUIDED`      | When the drone is in manual navigation, going to specific point, etc.                                   |
 | `LAND`        | When the drone is landing.                                                                              |
 | `OG`          | When the drone has landed (on ground).                                                                  |
+
+The breakdown of network info in the telemetry:
+
+| Network property       | Type    | Description                                                                                                                                                                                                                                                                                      |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                   | String  | ID which assigned to corresponding network by Garuda Robotics                                                                                                                                                                                                                                    |
+| `ip`                   | String  | IPv4 address of the network                                                                                                                                                                                                                                                                      |
+| `rssi`                 | String  | RSSI (Received signal strength indication) of the network which should be number in string. This value indicates how good the GCC network module can sense the network base station nearby.                                                                                                      |
+| `quality`              | String  | The network quality which can be either of good, caution and bad. This value is computed based on the network module specs and its current RSSI value. This value indicates how good is the network condition.                                                                                   |
+| `status`               | String  | The network status which can be either of active, selected and error. The active status means the network is active to use but it's not used by GCC now. The selected status means the network is current used by GCC. The error status means the network is currently not available to be used. |
+| `statusnum`            | String  | The numeric flag indicates the network conditions. Noted that this number is *ONLY* available while using SCM.                                                                                                                                                                                   |
+| `log`                  | Object  | The log given by network modules (either DLM or SCM) as current network status record. This object is highly cosutomised by DLM and SCM which used for debug purpose.                                                                                                                            |
+
+## DAA (Detect and Avoid) Telemetry
+
+DAA telemetry is the information generated from DAA related devices built-in on the drone. DAA telemetry consists of the information of the obstacles detected in front of the drone.
+
+The breakdown of DAA telemetry:
+
+| Property       | Type    | Description                                                                               |
+| -------------- | ------- | ----------------------------------------------------------------------------------------- |
+| `droneId`      | String  | Drone ID of this telemetry                                                                |
+| `obstacles`    | Object  | Information of the obstacles detected by DAA                                              |
+
+The breakdown of obstacle object:
+
+| Property       | Type    | Description                                                                               |
+| -------------- | ------- | ----------------------------------------------------------------------------------------- |
+| `x1`           | String  | Leftmost x coordinate of the coordinate bounds                                            |
+| `x2`           | String  | Rightmost x coordinate of the coordinate bounds                                           |
+| `y1`           | String  | Leftmost y coordinate of the coordinate bounds                                            |
+| `y2`           | String  | Rightmost y coordinate of the coordinate bounds                                           |
+| `d`            | String  | Distance of the obstacle from the drone                                                   |
+| `t`            | String  | The detected the obstacle with the corresponding information                              |
 
 ### Submitting telemetry
 

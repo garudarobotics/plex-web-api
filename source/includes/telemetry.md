@@ -42,6 +42,7 @@ Each of these `telemetry` object is a JSON object that has the following format 
   "homeLong": "-214.7483648",
   "homeAlt": "None",
   "rssi": "123.123",
+  "network_name": "Singtel",
   "networks": [
        {
           "id" : "AreteM",
@@ -93,10 +94,10 @@ Each of these `telemetry` object is a JSON object that has the following format 
 | `homeLong`     | String  | Longitude of home point                                                                   |
 | `homeAlt`      | String  | Altitude of home point, in meters above mean sea level                                    |
 | `rssi`         | String  | Received signal strength indicator on connected network (by percentage)                   |
-| `network` | Array  |  List of network info objects with each of the object represents the current status of corresponding networks provided to GCC                                                           |
+| `network_name` | String  | Name of the connected network (deprecated)                                                |
+| `networks`     | Array   | Available networks, with the connected network having status = 'selected'                 |
 
-
-The flight states of the drone follows a state diagram and changes depending on at which state of the flight the drone is in:
+*flightState*: The flight states of the drone follows a state diagram and changes depending on at which state of the flight the drone is in:
 
 > ![drone-state-diagram](../images/drone_state_diagram.jpg)
 
@@ -110,17 +111,17 @@ The flight states of the drone follows a state diagram and changes depending on 
 | `LAND`        | When the drone is landing.                                                                              |
 | `OG`          | When the drone has landed (on ground).                                                                  |
 
-The breakdown of network info in the telemetry:
+*networks*: The network info fields has the following values:
 
-| Network property       | Type    | Description                                                                                                                                                                                                                                                                                      |
-| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                   | String  | ID which assigned to corresponding network by Garuda Robotics                                                                                                                                                                                                                                    |
-| `ip`                   | String  | IPv4 address of the network                                                                                                                                                                                                                                                                      |
-| `rssi`                 | String  | RSSI (Received signal strength indication) of the network which should be number in string. This value indicates how good the GCC network module can sense the network base station nearby.                                                                                                      |
-| `quality`              | String  | The network quality which can be either of good, caution and bad. This value is computed based on the network module specs and its current RSSI value. This value indicates how good is the network condition.                                                                                   |
-| `status`               | String  | The network status which can be either of active, selected and error. The active status means the network is active to use but it's not used by GCC now. The selected status means the network is current used by GCC. The error status means the network is currently not available to be used. |
-| `statusnum`            | String  | The numeric flag indicates the network conditions. Noted that this number is *ONLY* available while using SCM.                                                                                                                                                                                   |
-| `log`                  | Object  | The log given by network modules (either DLM or SCM) as current network status record. This object is highly cosutomised by DLM and SCM which used for debug purpose.                                                                                                                            |
+| Property      | Type    | Description                                                                              |
+| ------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `id`          | String  | Network ID                                                                               |
+| `ip`          | String  | IPv4 Address                                                                             |
+| `rssi`        | String  | Received Signal Strength Indication (0: no network, 31: very good network)               |
+| `quality`     | String  | Enum: `good`, `caution`, `bad`. Calculated based on RSSI + modem specific adjustments    |
+| `status`      | String  | Enum: `active`, `selected`, `error`. `active` means the network is connected but not used. `selected` means the network is connected and used. `error` means the network is not connected. |
+| `statusnum`   | String  | (Deprecated) Numeric status indicator flag for Thales Secure Communications Module (SCM) |
+| `log`         | Object  | (Deprecated) Object containing debugging logs for networks by Arete M and Thales         |
 
 ## DAA (Detect and Avoid) Telemetry
 

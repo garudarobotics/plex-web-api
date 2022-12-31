@@ -1,8 +1,11 @@
 @charset "utf-8";
-@import 'normalize';
-@import 'variables';
-@import 'icon-font';
-// @import 'rtl'; // uncomment to switch to RTL format
+@use "sass:color";
+@use 'normalize';
+@use 'variables';
+@use 'icon-font';
+/*
+ @import 'rtl'; // uncomment to switch to RTL format
+*/
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -25,13 +28,13 @@ under the License.
 ////////////////////////////////////////////////////////////////////////////////
 
 html, body {
-  color: $main-text;
+  color: variables.$main-text;
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @extend %default-font;
-  background-color: $main-bg;
+  background-color: variables.$main-bg;
   height: 100%;
   -webkit-text-size-adjust: none; /* Never autoresize text */
 }
@@ -57,8 +60,8 @@ html, body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: $nav-width;
-  background-color: $nav-bg;
+  width: variables.$nav-width;
+  background-color: variables.$nav-bg;
   font-size: 13px;
   font-weight: bold;
 
@@ -76,30 +79,30 @@ html, body {
     display: block;
     margin: 10px auto;
     max-width: 90%;
-    margin-bottom: $logo-margin;
+    margin-bottom: variables.$logo-margin;
   }
 
   &>.search {
     position: relative;
 
     input {
-      background: $nav-bg;
+      background: variables.$nav-bg;
       border-width: 0 0 1px 0;
-      border-color: $search-box-border-color;
+      border-color: variables.$search-box-border-color;
       padding: 6px 0 6px 20px;
       box-sizing: border-box;
-      margin: $nav-v-padding $nav-padding;
-      width: $nav-width - ($nav-padding*2);
+      margin: variables.$nav-v-padding variables.$nav-padding;
+      width: variables.$nav-width - (variables.$nav-padding*2);
       outline: none;
-      color: $nav-text;
+      color: variables.$nav-text;
       border-radius: 0; /* ios has a default border radius */
     }
 
     &:before {
       position: absolute;
       top: 17px;
-      left: $nav-padding;
-      color: $nav-text;
+      left: variables.$nav-padding;
+      color: variables.$nav-text;
       @extend %icon-search;
     }
   }
@@ -113,19 +116,19 @@ html, body {
     transition-property: height, margin;
     transition-duration: 180ms;
     transition-timing-function: ease-in-out;
-    background: $nav-subitem-bg;
+    background: variables.$nav-subitem-bg;
     &.visible {
       height: 30%;
       margin-bottom: 1em;
     }
 
     li {
-      margin: 1em $nav-padding;
+      margin: 1em variables.$nav-padding;
       line-height: 1;
     }
 
     a {
-      color: $nav-text;
+      color: variables.$nav-text;
       text-decoration: none;
 
       &:hover {
@@ -146,7 +149,7 @@ html, body {
   }
 
   li {
-    color: $nav-text;
+    color: variables.$nav-text;
     transition-property: background;
     transition-timing-function: linear;
     transition-duration: 200ms;
@@ -154,44 +157,44 @@ html, body {
 
   // This is the currently selected ToC entry
   .toc-link.active {
-    background-color: $nav-active-bg;
-    color: $nav-active-text;
+    background-color: variables.$nav-active-bg;
+    color: variables.$nav-active-text;
   }
 
   // this is parent links of the currently selected ToC entry
   .toc-link.active-parent {
-    background-color: $nav-active-parent-bg;
-    color: $nav-active-parent-text;
+    background-color: variables.$nav-active-parent-bg;
+    color: variables.$nav-active-parent-text;
   }
 
   .toc-list-h2 {
     display: none;
-    background-color: $nav-subitem-bg;
+    background-color: variables.$nav-subitem-bg;
     font-weight: 500;
   }
 
   .toc-h2 {
-    padding-left: $nav-padding + $nav-indent;
+    padding-left: variables.$nav-padding + variables.$nav-indent;
     font-size: 12px;
   }
 
   .toc-list-h3 {
     display: none;
-    background-color: $nav-subitem-bg;
+    background-color: variables.$nav-subitem-bg;
   }
   
   .toc-h3 {
-    padding-left: $nav-padding + $nav-padding + $nav-indent;
+    padding-left: variables.$nav-padding + variables.$nav-padding + variables.$nav-indent;
     font-size: 12px;
   }
 
   .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
-    border-top: 1px dashed $nav-footer-border-color;
+    border-top: 1px dashed variables.$nav-footer-border-color;
 
     li,a {
-      color: $nav-text;
+      color: variables.$nav-text;
       text-decoration: none;
     }
 
@@ -208,13 +211,13 @@ html, body {
 }
 
 .toc-link, .toc-footer li {
-  padding: 0 $nav-padding 0 $nav-padding;
+  padding: 0 variables.$nav-padding 0 variables.$nav-padding;
   display: block;
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-decoration: none;
-  color: $nav-text;
+  color: variables.$nav-text;
   transition-property: background;
   transition-timing-function: linear;
   transition-duration: 130ms;
@@ -224,14 +227,14 @@ html, body {
 #nav-button {
   span {
     display: block;
-    $side-pad: $main-padding / 2 - 8px;
+    $side-pad: variables.$main-padding / 2 - 8px;
     padding: $side-pad $side-pad $side-pad;
-    background-color: rgba($main-bg, 0.7);
+    background-color: rgba(variables.$main-bg, 0.7);
     transform-origin: 0 0;
     transform: rotate(-90deg) translate(-100%, 0);
     border-radius: 0 0 0 5px;
   }
-  padding: 0 1.5em 5em 0; // increase touch size area
+  padding: 0 1.5em 5em 0; /* // increase touch size area */
   display: none;
   position: fixed;
   top: 0;
@@ -250,7 +253,7 @@ html, body {
   transition: left 0.3s ease-in-out;
 
   &:hover { opacity: 1; }
-  &.open {left: $nav-width}
+  &.open {left: variables.$nav-width}
 }
 
 
@@ -259,10 +262,10 @@ html, body {
 ////////////////////////////////////////////////////////////////////////////////
 
 .page-wrapper {
-  margin-left: $nav-width;
+  margin-left: variables.$nav-width;
   position: relative;
   z-index: 10;
-  background-color: $main-bg;
+  background-color: variables.$main-bg;
   min-height: 100%;
 
   padding-bottom: 1px; // prevent margin overflow
@@ -273,8 +276,8 @@ html, body {
   // I know, it's hackish, but it's the simplist way to make the left
   // half of the content always this background color.
   .dark-box {
-    width: $examples-width;
-    background-color: $examples-bg;
+    width: variables.$examples-width;
+    background-color: variables.$examples-bg;
     position: absolute;
     right: 0;
     top: 0;
@@ -284,31 +287,31 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    border-bottom: 5px solid variables.$lang-select-active-bg;
   }
 }
 
 .lang-selector {
-  background-color: $lang-select-bg;
+  background-color: variables.$lang-select-bg;
   width: 100%;
   font-weight: bold;
   a {
     display: block;
     float:left;
-    color: $lang-select-text;
+    color: variables.$lang-select-text;
     text-decoration: none;
     padding: 0 10px;
     line-height: 30px;
     outline: 0;
 
     &:active, &:focus {
-      background-color: $lang-select-pressed-bg;
-      color: $lang-select-pressed-text;
+      background-color: variables.$lang-select-pressed-bg;
+      color: variables.$lang-select-pressed-text;
     }
 
     &.active {
-      background-color: $lang-select-active-bg;
-      color: $lang-select-active-text;
+      background-color: variables.$lang-select-active-bg;
+      color: variables.$lang-select-active-text;
     }
   }
 
@@ -325,9 +328,9 @@ html, body {
 // This is all the stuff with the light background in the left half of the page
 
 .content {
-  // fixes webkit rendering bug for some: see #538
+  /* // fixes webkit rendering bug for some: see #538 */
   -webkit-transform: translateZ(0);
-  // to place content above the dark box
+  /* // to place content above the dark box */
   position: relative;
   z-index: 30;
 
@@ -338,8 +341,8 @@ html, body {
   }
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
-    margin-right: $examples-width;
-    padding: 0 $main-padding;
+    margin-right: variables.$examples-width;
+    padding: 0 variables.$main-padding;
     box-sizing: border-box;
     display: block;
 
@@ -347,7 +350,7 @@ html, body {
   }
 
   &>ul, &>ol {
-    padding-left: $main-padding + 15px;
+    padding-left: variables.$main-padding + 15px;
   }
 
   // the div is the tocify hidden div for placeholding stuff
@@ -360,7 +363,7 @@ html, body {
     font-size: 25px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    margin-bottom: $h1-margin-bottom;
+    margin-bottom: variables.$h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
@@ -406,7 +409,7 @@ html, body {
   // h2s right after h1s should bump right up
   // against the h1s.
   h1 + h2, h1 + div + h2 {
-    margin-top: $h1-margin-bottom * -1;
+    margin-top: variables.$h1-margin-bottom * -1;
     border-top: none;
   }
 
@@ -423,8 +426,8 @@ html, body {
 
   hr {
     margin: 2em 0;
-    border-top: 2px solid $examples-bg;
-    border-bottom: 2px solid $main-bg;
+    border-top: 2px solid variables.$examples-bg;
+    border-bottom: 2px solid variables.$main-bg;
   }
 
   table {
@@ -454,11 +457,11 @@ html, body {
     }
 
     tr:nth-child(odd)>td {
-      background-color: lighten($main-bg,4.2%);
+      background-color: color.adjust(variables.$main-bg,$lightness: 4.2%);
     }
 
     tr:nth-child(even)>td {
-      background-color: lighten($main-bg,2.4%);
+      background-color: color.adjust(variables.$main-bg,$lightness: 2.4%);
     }
   }
 
@@ -497,15 +500,15 @@ html, body {
     padding-bottom: 1em;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
-    background: $aside-notice-bg;
+    background: variables.$aside-notice-bg;
     line-height: 1.6;
 
     &.warning {
-      background-color: $aside-warning-bg;
+      background-color: variables.$aside-warning-bg;
     }
 
     &.success {
-      background-color: $aside-success-bg;
+      background-color: variables.$aside-success-bg;
     }
   }
 
@@ -541,8 +544,8 @@ html, body {
     clear: none;
     margin: 0px 28px 14px 28px;
     left: 0;
-    margin-right: $examples-width !important;
-    width: 45% !important;     // May need to adjust this
+    margin-right: variables.$examples-width !important;
+    width: 45% !important;    /* // May need to adjust this */
   }
 }
 
@@ -553,11 +556,11 @@ html, body {
 
 .content {
   pre, blockquote {
-    background-color: $code-bg;
+    background-color: variables.$code-bg;
     color: #fff;
 
     margin: 0;
-    width: $examples-width;
+    width: variables.$examples-width;
 
     float:right;
     clear:right;
@@ -579,13 +582,13 @@ html, body {
     @extend %code-font;
     padding-top: 2em;
     padding-bottom: 2em;
-    padding: 2em $main-padding;
+    padding: 2em variables.$main-padding;
   }
 
   blockquote {
     &>p {
-      background-color: $code-annotation-bg;
-      padding: $code-annotation-padding 2em;
+      background-color: variables.$code-annotation-bg;
+      padding: variables.$code-annotation-padding 2em;
       color: #eee;
     }
   }
@@ -598,9 +601,9 @@ html, body {
 // These are the styles for phones and tablets
 // There are also a couple styles disperesed
 
-@media (max-width: $tablet-width) {
+@media (max-width: variables.$tablet-width) {
   .toc-wrapper {
-    left: -$nav-width;
+    left: -(variables.$nav-width);
 
     &.open {
       left: 0;
@@ -621,7 +624,7 @@ html, body {
   }
 }
 
-@media (max-width: $phone-width) {
+@media (max-width: variables.$phone-width) {
   .dark-box {
     display: none;
   }
@@ -644,7 +647,7 @@ html, body {
   }
 
   %right-col + %left-col {
-    margin-top: $main-padding;
+    margin-top: variables.$main-padding;
   }
 }
 
@@ -653,5 +656,5 @@ html, body {
 }
 
 .highlight, .highlight .w {
-  background-color: $code-bg;
+  background-color: variables.$code-bg;
 }
